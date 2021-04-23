@@ -1,61 +1,22 @@
 import React from 'react';
 
-import { makeStyles, Card, Typography, Button } from '@material-ui/core';
+import { Card, Typography, Button } from '@material-ui/core';
+import { useRouter } from 'next/router';
+
+import classes from '../styles/Home.module.scss';
 
 const Home: React.FC = () => {
-	const useStyles = makeStyles(() => ({
-		background: {
-			backgroundColor: '#E5EBF0',
-			width: '100%',
-			height: '100%',
-			position: 'absolute',
-			display: 'flex',
-			flexDirection: 'column',
-			alignItems: 'center',
-			justifyContent: 'center',
-		},
-		Card: {
-			width: '50%',
-			height: '65%',
-			display: 'flex',
-			flexDirection: 'column',
-			alignItems: 'center',
-			borderRadius: '20px',
-		},
-		title: {
-			fontFamily: 'Rubik, sans-serif',
-			fontSize: '40px',
-			color: '#07003B',
-			fontWeight: 'bold',
-			marginTop: '4%',
-		},
-		subTitle: {
-			fontFamily: 'Rubik, sans-serif',
-			fontSize: '20px',
-			color: '#07003B',
-			padding: '15px',
-			textAlign: 'center',
-		},
-		Button: {
-			borderRadius: '20px',
-			backgroundColor: '#FD3A4B',
-			color: 'white',
-			width: '30%',
-			marginTop: '15px',
-			height: '50px',
-			alignSelf: 'center',
-			'&:hover': {
-				color: 'black',
-				borderRadius: '20px',
-				border: '2px solid #FD3A4B',
-			},
-		},
-	}));
-
-	const classes = useStyles();
+	const router = useRouter();
 	return (
 		<div className={classes.background}>
-			<Card className={classes.Card} elevation={10}>
+			<Card
+				className={classes.Card}
+				elevation={10}
+				raised
+				style={{
+					borderRadius: '20px',
+				}}
+			>
 				<Typography className={classes.title}>Welcome to Fantasy 11</Typography>
 				<Typography className={classes.subTitle}>
 					Fantasy 11 is a Game of Skill where you create a team of real players
@@ -68,7 +29,24 @@ const Home: React.FC = () => {
 				<Typography className={classes.subTitle}>
 					Login to create your Fantasy 11 Team!!
 				</Typography>
-				<Button className={classes.Button}>Login</Button>
+				<div className={classes.ButtonGroup}>
+					<Button
+						className={classes.Button}
+						onClick={() => {
+							router.push('/login');
+						}}
+					>
+						Login
+					</Button>
+					<Button
+						className={classes.Button}
+						onClick={() => {
+							router.push('/login');
+						}}
+					>
+						Register
+					</Button>
+				</div>
 			</Card>
 		</div>
 	);
