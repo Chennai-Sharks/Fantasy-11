@@ -1,48 +1,25 @@
 {
-  "events": [
-      {
-          "Events": "caught",
-          "Points": "25"
-      },
-      {
-          "Events": "bowled",
-          "Points": "33"
-      },
-      {
-          "Events": "run out",
-          "Points": "25"
-      },
-      {
-          "Events": "lbw",
-          "Points": "33"
-      },
-      {
-          "Events": "retired hurt",
-          "Points": "0"
-      },
-      {
-          "Events": "stumped",
-          "Points": "25"
-      },
-      {
-          "Events": "caught and bowled",
-          "Points": "40"
-      },
-      {
-          "Events": "hit wicket",
-          "Points": "25"
-      },
-      {
-          "Events": "Per Run",
-          "Points": "1"
-      },
-      {
-          "Events": "50 runs scored",
-          "Points": "58"
-      },
-      {
-          "Events": "100 runs scored",
-          "Points": "116"
-      }
-  ]
+  [{
+    "caught": "25"
+  }, {
+    "bowled": "33"
+  }, {
+    "run out": "25"
+  }, {
+    "lbw": "33"
+  }, {
+    "retired hurt": "0"
+  }, {
+    "stumped": "25"
+  }, {
+    "caught and bowled": "40"
+  }, {
+    "hit wicket": "25"
+  }, {
+    "Per Run": "1"
+  }, {
+    "50 runs scored": "58"
+  }, {
+    "100 runs scored": "116"
+  }]
 }

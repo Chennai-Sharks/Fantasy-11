@@ -6,6 +6,11 @@ const crypto = require('crypto');
 const cookieParser = require('cookie-parser');
 
 //register auth route
+//checks if the user already exists and registers
+//After registering re-route to "login"
+//req.body should contain the phone,email and password otherwise just email and password
+//i've written the code for phone,email and Password
+//Change the "models/user.js" file to accomodate only email and password
 router.post('/register', async (req, res) => {
 
   //this block of code is to check if the email doesn't already exists in the db
@@ -39,6 +44,9 @@ router.post('/register', async (req, res) => {
 });
 
 //login auth route
+//after re-routing from register ask for email and password and check if it's correct
+//if the email and password are correct re-route to "sendOTP" to generate the otp
+//req.body should contain the email and password
 router.post('/login', async (req, res) => {
 
   //this block of code is to check if the user has registered already by checking for it in the DB
@@ -56,6 +64,8 @@ router.post('/login', async (req, res) => {
   res.header('auth_Token', token).send(token);
 });
 
+
+//ignore all this lol
 const accountSid = process.env.ACCOUNT_SID
 const authToken = process.env.AUTH_TOKEN
 const client = require('twilio')(accountSid,authToken)
@@ -65,6 +75,8 @@ const JWT_REFRESH_TOKEN = process.env.JWT_REFRESH_TOKEN
 let refreshTokens = []
 const smsKey = process.env.SMS_SECRET_KEY
 
+//this is to send the otp to the number given in the req.body
+//req.body should contain only the phone number
 router.post('/sendOTP', (req, res) => {
 	const phone = req.body.phone;
 	const otp = Math.floor(100000 + Math.random() * 900000);
@@ -87,6 +99,9 @@ router.post('/sendOTP', (req, res) => {
 	//res.status(200).send({ phone, hash: fullHash });          // Use this way in Production
 });
 
+//this is for verifying whether the Otp entered is correct
+//After the user enters the phone number, the page must reload asking to enter the Otp
+//re-route to this api call toverify the otp
 router.post('/verifyOTP', (req, res) => {
 	const phone = req.body.phone;
 	const hash = req.body.hash;
@@ -128,6 +143,7 @@ router.post('/verifyOTP', (req, res) => {
 	}
 });
 
+//this generates the authentication tokens and ID
 router.post('/home', authenticateUser, (req, res) => {
 	console.log('home private route');
 	res.status(202).send('Private Protected Route - Home');
@@ -152,6 +168,7 @@ async function authenticateUser(req, res, next) {
 	});
 }
 
+//this generates all the refresh tokens and ID
 router.post('/refresh', (req, res) => {
 	const refreshToken = req.cookies.refreshToken;
 	if (!refreshToken) return res.status(403).send({ message: 'Refresh token not found, login again' });
@@ -184,6 +201,8 @@ router.post('/refresh', (req, res) => {
 	});
 });
 
+//this is for logging out the user
+//route to this call when the user clicks the logout button
 router.get('/logout', (req, res) => {
 	res
 		.clearCookie('refreshToken')
