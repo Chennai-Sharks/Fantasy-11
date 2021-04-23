@@ -6,7 +6,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import classes from '../../styles/Login.module.scss';
 import styles from '../../styles/Home.module.scss';
 
-const LoginScreen: React.FC = () => {
+const PhoneLoginForm: React.FC = () => {
 	return (
 		<React.Fragment>
 			<Head>
@@ -65,4 +65,4 @@ const LoginScreen: React.FC = () => {
 	);
 };
 
-export default LoginScreen;
+export default PhoneLoginForm;

@@ -29,14 +29,24 @@ const Home: React.FC = () => {
 				<Typography className={classes.subTitle}>
 					Login to create your Fantasy 11 Team!!
 				</Typography>
-				<Button
-					className={classes.Button}
-					onClick={() => {
-						router.push('/login');
-					}}
-				>
-					Login
-				</Button>
+				<div className={classes.ButtonGroup}>
+					<Button
+						className={classes.Button}
+						onClick={() => {
+							router.push('/login');
+						}}
+					>
+						Login
+					</Button>
+					<Button
+						className={classes.Button}
+						onClick={() => {
+							router.push('/login');
+						}}
+					>
+						Register
+					</Button>
+				</div>
 			</Card>
 		</div>
 	);

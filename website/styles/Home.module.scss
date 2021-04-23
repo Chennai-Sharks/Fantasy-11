@@ -55,6 +55,7 @@
 	color: white;
 	width: 30%;
 	margin-top: 15px;
+	margin-left: 10px;
 	height: 50px;
 	align-self: center;
 	&:hover {
@@ -62,4 +63,11 @@
 		border-radius: 20px;
 		border: 2px solid #fd3a4b;
 	}
+}
+
+.ButtonGroup {
+	display: flex;
+	width: 100%;
+	flex-direction: row;
+	justify-content: center;
 }
