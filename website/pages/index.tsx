@@ -1,47 +1,75 @@
-import Footer from '../components/Footer/Footer';
-import classes from '../styles/Home.module.scss';
+import React from 'react';
+
+import { makeStyles, Card, Typography, Button } from '@material-ui/core';
 
 const Home: React.FC = () => {
+	const useStyles = makeStyles(() => ({
+		background: {
+			backgroundColor: '#E5EBF0',
+			width: '100%',
+			height: '100%',
+			position: 'absolute',
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'center',
+			justifyContent: 'center',
+		},
+		Card: {
+			width: '50%',
+			height: '65%',
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'center',
+			borderRadius: '20px',
+		},
+		title: {
+			fontFamily: 'Rubik, sans-serif',
+			fontSize: '40px',
+			color: '#07003B',
+			fontWeight: 'bold',
+			marginTop: '4%',
+		},
+		subTitle: {
+			fontFamily: 'Rubik, sans-serif',
+			fontSize: '20px',
+			color: '#07003B',
+			padding: '15px',
+			textAlign: 'center',
+		},
+		Button: {
+			borderRadius: '20px',
+			backgroundColor: '#FD3A4B',
+			color: 'white',
+			width: '30%',
+			marginTop: '15px',
+			height: '50px',
+			alignSelf: 'center',
+			'&:hover': {
+				color: 'black',
+				borderRadius: '20px',
+				border: '2px solid #FD3A4B',
+			},
+		},
+	}));
+
+	const classes = useStyles();
 	return (
-		<div className={classes.container}>
-			<main className={classes.main}>
-				<h1 className={classes.title}>
-					Modern <a href='https://nextjs.org'>Next.js</a> Starter Kit
-				</h1>
-
-				<p className={classes.description}>
-					Get started by editing{' '}
-					<code className={classes.code}>pages/index.tsx</code>
-				</p>
-
-				<p className={classes.description}>
-					Features included in this starter kit:
-				</p>
-
-				<div className={classes.grid}>
-					<div className={classes.card}>
-						<h3>Typescript &rarr;</h3>
-						<p>Full Typescript support is added.</p>
-					</div>
-
-					<div className={classes.card}>
-						<h3>SCSS Support &rarr;</h3>
-						<p>Sass Modules is installed by default.</p>
-					</div>
-
-					<div className={classes.card}>
-						<h3>Material UI &rarr;</h3>
-						<p>SSR Material UI is added. No extra configuration needed</p>
-					</div>
-
-					<div className={classes.card}>
-						<h3>Next Images &rarr;</h3>
-						<p>Import images in Next.js. Works out of the box!!</p>
-					</div>
-				</div>
-			</main>
-
-			<Footer />
+		<div className={classes.background}>
+			<Card className={classes.Card} elevation={10}>
+				<Typography className={classes.title}>Welcome to Fantasy 11</Typography>
+				<Typography className={classes.subTitle}>
+					Fantasy 11 is a Game of Skill where you create a team of real players
+					for an upcoming match and compete with other fans for big prizes.
+				</Typography>
+				<Typography className={classes.subTitle}>
+					Your team earns points based on your players’ performances in the
+					real-life match, so make sure you make the right choices!
+				</Typography>
+				<Typography className={classes.subTitle}>
+					Login to create your Fantasy 11 Team
+				</Typography>
+				<Button className={classes.Button}>Login</Button>
+			</Card>
 		</div>
 	);
 };
