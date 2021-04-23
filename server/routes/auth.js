@@ -64,7 +64,7 @@ const JWT_REFRESH_TOKEN = process.env.JWT_REFRESH_TOKEN
 
 const smsKey = process.env.SMS_SECRET_KEY
 
-app.post('/sendOTP', (req, res) => {
+router.post('/sendOTP', (req, res) => {
 	const phone = req.body.phone;
 	const otp = Math.floor(100000 + Math.random() * 900000);
 	const ttl = 2 * 60 * 1000;

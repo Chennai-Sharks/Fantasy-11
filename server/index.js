@@ -10,6 +10,7 @@ dotenv.config(); //To access/config the DB connection token
 
 //Import Routes
 const authRoute = require('./routes/auth');
+const matchRoute = require('./routes/match');
 
 //Connect to DB
 const connectDB = require('./config/db');
@@ -22,5 +23,6 @@ app.use(cors());
 
 //Route Middlewares
 app.use('/api/users', authRoute);
+app.use('/api/match',matchRoute);
 
 app.listen(port, () => console.log(`Server is running on port ${port}`.yellow.bold));
