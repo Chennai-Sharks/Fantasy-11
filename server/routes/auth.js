@@ -84,7 +84,7 @@ app.post('/sendOTP', (req, res) => {
 
 	res.status(200).send({ phone, hash: fullHash, otp });  // this bypass otp via api only for development instead hitting twilio api all the time
 	//res.status(200).send({ phone, hash: fullHash });          // Use this way in Production
-}); 
+});
 
 
 module.exports = router;
