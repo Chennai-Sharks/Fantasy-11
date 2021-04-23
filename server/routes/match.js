@@ -3,7 +3,7 @@ const router = require('express').Router();
 var fs = require('fs');
 var files = fs.readdirSync(__dirname+'/../JSON Files/')
 
-// Match route 
+// Match route
 router.get('/', async (req, res)=>{
     var chosenFile = files[Math.floor(Math.random()*files.length)];
     console.log(chosenFile);
@@ -24,7 +24,7 @@ router.get('/', async (req, res)=>{
              ballData = firstInnings[i][ball[0]];
             if(!players.includes(ballData.batsman))
                 players.push(ballData.batsman);
-            
+
             if(!players.includes(ballData.non_striker))
                 players.push(ballData.non_striker);
 
@@ -38,7 +38,7 @@ router.get('/', async (req, res)=>{
              ballData = secondInnings[i][ball[0]];
             if(!players.includes(ballData.batsman))
                 players.push(ballData.batsman);
-            
+
             if(!players.includes(ballData.non_striker))
                 players.push(ballData.non_striker);
 

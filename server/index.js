@@ -26,6 +26,6 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 //Route Middlewares
 app.use('/api/users', authRoute);
-app.use('/api/match',matchRoute);
+app.use('/api/match', matchRoute);
 
 app.listen(port, () => console.log(`Server is running on port ${port}`.yellow.bold));
