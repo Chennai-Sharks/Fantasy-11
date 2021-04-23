@@ -1,0 +1,25 @@
+{
+	"name": "fantasy-11",
+	"version": "1.0.0",
+	"description": "In Progress",
+	"main": "index.js",
+	"private": true,
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start-web": "cd website && npm dev"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Chennai-Sharks/Fantasy-11.git"
+	},
+	"contributors": [
+		"Poujhit MU <poujhit.dev@gmail.com> (https://github.com/Poujhit/)",
+		"Nikhilesh S <nikhileshjr08@gmail.com> (https://github.com/NikhileshJr08)",
+		"R Naveen Sriram <naveensriram2000@gmail.com> (https://github.com/NaveenSriram-dev/)"
+	],
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/Chennai-Sharks/Fantasy-11/issues"
+	},
+	"homepage": "https://github.com/Chennai-Sharks/Fantasy-11#readme"
+}
