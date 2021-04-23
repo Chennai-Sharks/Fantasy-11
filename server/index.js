@@ -1,1 +1,18 @@
-console.log('hello world');
+const express = require('express');
+const app = express();
+const colors = require('colors');
+const dotenv = require('dotenv');
+var cors = require('cors');
+
+dotenv.config(); //To access/config the DB connection token
+
+//Connect to DB
+const connectDB = require('./config/db');
+connectDB();
+const port = process.env.PORT;
+
+//Middleware
+app.use(express.json());
+app.use(cors());
+
+app.listen(port, () => console.log(`Server is running on port ${port}`.yellow.bold));
