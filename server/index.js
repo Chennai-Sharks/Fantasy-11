@@ -3,6 +3,7 @@ const app = express();
 const colors = require('colors');
 const dotenv = require('dotenv');
 var cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const User = require('./models/User');
 
@@ -20,6 +21,8 @@ const port = process.env.PORT;
 //Middleware
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 //Route Middlewares
 app.use('/api/users', authRoute);
