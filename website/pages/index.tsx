@@ -66,7 +66,7 @@ const Home: React.FC = () => {
 					real-life match, so make sure you make the right choices!
 				</Typography>
 				<Typography className={classes.subTitle}>
-					Login to create your Fantasy 11 Team
+					Login to create your Fantasy 11 Team!!
 				</Typography>
 				<Button className={classes.Button}>Login</Button>
 			</Card>
