@@ -16,7 +16,7 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
 	return (
 		<React.Fragment>
 			<Head>
-				<title>Next.js Starter Kit</title>
+				<title>Fantasy 11</title>
 			</Head>
 			<Component {...pageProps} />
 		</React.Fragment>
