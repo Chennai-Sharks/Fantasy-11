@@ -5,50 +5,21 @@ import { useQuery } from 'react-query';
 import { MoonLoader } from 'react-spinners';
 
 import classes from './MatchCard.module.scss';
-const MatchCard: React.FC = () => {
-	const [openAlert, setOpenAlert] = React.useState(false);
-	const [snackContent, setsnackContent] = React.useState(' ');
 
-	const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-		if (reason === 'clickaway') {
-			return;
-		}
+interface MatchCardProps {
+	one: string;
+	two: string;
+	onTap: () => void;
+}
 
-		setOpenAlert(false);
-	};
-
-	// const { isLoading, isError, data, error } = useQuery('matches', async () => {
-	// 	const { data } = await axios.get('http://localhost:4000/api/match');
-	// 	return data;
-	// });
-
-	// if (isLoading) {
-	// 	return <MoonLoader />;
-	// }
-
-	// if (isError) {
-	// 	setsnackContent((error as Error).message);
-	// 	return <Button>Try Again</Button>;
-	// }
-
+const MatchCard: React.FC<MatchCardProps> = (props) => {
 	return (
 		<React.Fragment>
-			<Card raised className={classes.MatchCard}>
-				<Typography>one</Typography>
-				<Typography>one</Typography>
-				<Typography>one</Typography>
+			<Card raised className={classes.MatchCard} onClick={props.onTap}>
+				<Typography className={classes.subTitle}>{props.one}</Typography>
+				<Typography className={classes.subTitle}>Vs</Typography>
+				<Typography className={classes.subTitle}>{props.two}</Typography>
 			</Card>
-			<Snackbar
-				open={openAlert}
-				autoHideDuration={3000}
-				onClose={handleClose}
-				message={snackContent}
-				action={
-					<Button onClick={handleClose} style={{ color: 'white' }}>
-						Close
-					</Button>
-				}
-			/>
 		</React.Fragment>
 	);
 };
