@@ -45,7 +45,7 @@ router.get('/players/:match', async(req, res)=>{
              ballData = firstInnings[i][ball[0]];
             if(!players.includes(ballData.batsman))
                 players.push(ballData.batsman);
-            
+
             if(!players.includes(ballData.non_striker))
                 players.push(ballData.non_striker);
 
@@ -59,7 +59,7 @@ router.get('/players/:match', async(req, res)=>{
              ballData = secondInnings[i][ball[0]];
             if(!players.includes(ballData.batsman))
                 players.push(ballData.batsman);
-            
+
             if(!players.includes(ballData.non_striker))
                 players.push(ballData.non_striker);
 
