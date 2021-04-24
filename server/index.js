@@ -4,6 +4,8 @@ const colors = require('colors');
 const dotenv = require('dotenv');
 var cors = require('cors');
 const cookieParser = require('cookie-parser');
+var io = require('socket.io').listen(app)
+var socketRoute = require('./routes/socket');
 
 const User = require('./models/User');
 
