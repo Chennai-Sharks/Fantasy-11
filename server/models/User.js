@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 
+const pointHistorySchema = new mongoose.Schema({
+
+});
+
 const userSchema = new mongoose.Schema({
   phone: {
     type: Number,
@@ -17,6 +21,7 @@ const userSchema = new mongoose.Schema({
     max: 1000,
     min: 8
   },
+  pointHistory: [pointHistorySchema],
   date: {
     type: Date,
     default: Date.now
