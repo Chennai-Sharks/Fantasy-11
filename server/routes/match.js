@@ -27,14 +27,15 @@ router.get('/', async (req, res)=>{
     res.send(resData);
 });
 
-router.get('/players/:match', async(req, res)=>{
-
-        fs.readFile('./JSON Files/'+req.params.match.toString() ,'utf-8' ,(err, jsonString)=>{
+router.get('/players/', async(req, res)=>{
+        
+        fs.readFile('./JSON Files/'+req.body.match.toString() ,'utf-8' ,(err, jsonString)=>{
         if(err) console.log(err);
 
         const data = JSON.parse(jsonString);
         var resData = {};
         players = [];
+        credits = [];
         firstInnings = data.innings[0]["1st innings"].deliveries;
         secondInnings = data.innings[1]["2nd innings"].deliveries;
         ball =[];
@@ -44,41 +45,64 @@ router.get('/players/:match', async(req, res)=>{
              ball = Object.keys(firstInnings[i]);
              ballData = firstInnings[i][ball[0]];
             if(!players.includes(ballData.batsman))
+            {
                 players.push(ballData.batsman);
-
+                credits.push(playerData[ballData.batsman])
+            }            
             if(!players.includes(ballData.non_striker))
+            {
                 players.push(ballData.non_striker);
-
+                credits.push(playerData[ballData.non_striker])
+            }            
             if(!players.includes(ballData.bowler))
+            {
                 players.push(ballData.bowler);
+                credits.push(playerData[ballData.bowler])
+            }            
         }
+
         // players of team2
         for(i=0;i<secondInnings.length;i++)
         {
              ball = Object.keys(secondInnings[i]);
              ballData = secondInnings[i][ball[0]];
             if(!players.includes(ballData.batsman))
+            {
                 players.push(ballData.batsman);
-
+                credits.push(playerData[ballData.batsman])
+            }            
             if(!players.includes(ballData.non_striker))
+            {
                 players.push(ballData.non_striker);
-
+                credits.push(playerData[ballData.non_striker])
+            }            
             if(!players.includes(ballData.bowler))
+            {
                 players.push(ballData.bowler);
+                credits.push(playerData[ballData.bowler])
+            }            
         }
+      
         extra = 22 - players.length;
-        console.log(extra);
+        console.log(extra)
+      //  console.log(players)
+        if(extra!=0)
+        {
+            playerList = Object.keys(playerData);
+        }
         while(extra!=0)
         {
             x = Math.floor(Math.random()*314)
-            batsman = Object.keys(x);
+            batsman = playerList[x]
             if(!players.includes(batsman))
             {
                 players.push(batsman);
+                credits.push(playerData[batsman])
                 extra--;
-            }
+            }            
         }
-        resData.players=players;
+        resData.players = players;
+        resData.credits = credits;
         res.send(resData);
 
     })
