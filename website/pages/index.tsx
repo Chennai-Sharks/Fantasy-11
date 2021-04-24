@@ -41,7 +41,7 @@ const Home: React.FC = () => {
 					<Button
 						className={classes.Button}
 						onClick={() => {
-							router.push('/login');
+							router.push('/register');
 						}}
 					>
 						Register
