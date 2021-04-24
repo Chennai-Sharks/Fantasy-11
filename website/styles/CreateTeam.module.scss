@@ -1,0 +1,41 @@
+@import './MediaQuery';
+
+.background {
+	background-color: #e5ebf0;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	// align-items: center;
+	// justify-content: center;
+}
+
+.leftPortionCard {
+	width: 40%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow-x: hidden;
+	overflow-y: auto;
+	border-radius: 0px;
+	align-items: center;
+
+	// border-right: 5px solid #fd3a4b;
+}
+
+.title {
+	font-family: Rubik, sans-serif;
+	font-size: 35px;
+	color: #07003b;
+	margin-top: 10px;
+	font-weight: bold;
+	@include responsive(mobile) {
+		text-align: center;
+		font-size: 35px;
+	}
+	@include responsive(tablet) {
+		text-align: center;
+		font-size: 35px;
+	}
+}
