@@ -25,7 +25,6 @@ const CreateTeamScreen: React.FC = () => {
 						<Typography variant='h6'>Welcome to Fantasy 11 League</Typography>
 					</Toolbar>
 				</AppBar>
-				<Typography className={classes.title}>Available Matches</Typography>
 				{/* {isLoading ? (
 					<MoonLoader />
 				) : isError ? (
