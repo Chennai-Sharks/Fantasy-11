@@ -86,14 +86,19 @@ const RegisterScreen: React.FC = () => {
 					<div className={classes.rightPortionCard}>
 						<Button
 							className={classes.Button}
+							style={{
+								fontSize: '12px',
+								fontWeight: 'bold',
+							}}
 							startIcon={<FacebookIcon style={{ color: '#4267B2' }} />}
 						>
-							Register Using Facebook
+							Register using Facebook
 						</Button>
 						<Typography
 							className={styles.title}
 							style={{
 								fontSize: '20px',
+								marginTop: '2%',
 							}}
 						>
 							Or
