@@ -1,7 +1,7 @@
 import { Button, Card, TextField, Typography } from '@material-ui/core';
 import React from 'react';
 
-import classes from './AuthScreen.module.scss';
+import classes from '../../styles/Login.module.scss';
 import styles from '../../styles/Home.module.scss';
 import { Field, Form, Formik } from 'formik';
 
@@ -11,7 +11,7 @@ interface UserDataForm {
 	otp: string;
 }
 
-const AuthContainer: React.FC = () => {
+const LoginForm: React.FC = () => {
 	const initialValues: UserDataForm = { email: '', password: '', otp: '' };
 
 	return (
@@ -43,7 +43,7 @@ const AuthContainer: React.FC = () => {
 				// 	})
 				// 	.catch((_) => setOpenAlert(true));
 
-				// actions.setSubmitting(false);
+				actions.setSubmitting(false);
 			}}
 		>
 			{({ isSubmitting, errors }) => (
@@ -51,36 +51,38 @@ const AuthContainer: React.FC = () => {
 					style={{
 						display: 'flex',
 						flexDirection: 'column',
-						width: '100%',
-						height: '100%',
+						width: '80%',
+						height: '50%',
 						marginTop: '10px',
 					}}
 				>
-					<div className={classes.TextFieldStyle}>
-						<Field
-							variant='outlined'
-							type='input'
-							autoFocus={true}
-							name='email'
-							fullWidth
-							label='Email'
-							error={!!errors.email}
-							helperText={errors.email}
-							as={TextField}
-						/>
-					</div>
-					<div className={classes.TextFieldStyle}>
-						<Field
-							variant='outlined'
-							type='password'
-							fullWidth
-							error={!!errors.password}
-							label='Password'
-							helperText={errors.password}
-							name='password'
-							as={TextField}
-						/>
-					</div>
+					<Field
+						variant='outlined'
+						type='input'
+						autoFocus={true}
+						name='email'
+						style={{
+							marginBottom: '30px',
+						}}
+						fullWidth
+						label='Email'
+						error={!!errors.email}
+						helperText={errors.email}
+						as={TextField}
+					/>
+					<Field
+						variant='outlined'
+						type='password'
+						fullWidth
+						style={{
+							marginBottom: '20px',
+						}}
+						error={!!errors.password}
+						label='Password'
+						helperText={errors.password}
+						name='password'
+						as={TextField}
+					/>
 					<Button
 						disabled={isSubmitting}
 						className={classes.LoginorSignupButton}
@@ -105,4 +107,4 @@ const AuthContainer: React.FC = () => {
 	);
 };
 
-export default AuthContainer;
+export default LoginForm;
