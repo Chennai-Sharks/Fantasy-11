@@ -7,21 +7,26 @@ import {
 	TextField,
 	Typography,
 } from '@material-ui/core';
-import FacebookIcon from '@material-ui/icons/Facebook';
+import FacebookLogin from 'react-facebook-login';
 
 import classes from '../../styles/Login.module.scss';
 import styles from '../../styles/Home.module.scss';
 import { Field, Form, Formik } from 'formik';
 import { useMutation } from 'react-query';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import HashLoader from 'react-spinners/HashLoader';
 import PopUpDialog from '../../components/Dialog';
 import { useRouter } from 'next/router';
+import userDataStore from '../../stores/UserDataStore';
 
 interface RegisterUser {
 	email: string;
 	phone: string;
 	password: string;
+}
+interface AuthServerResponse {
+	phone: string;
+	email: string;
 }
 
 const RegisterScreen: React.FC = () => {
@@ -31,15 +36,17 @@ const RegisterScreen: React.FC = () => {
 		password: '',
 	};
 
+	const responseFacebook = (response: any) => {
+		console.log(response);
+	};
+
 	const router = useRouter();
+
+	const userData = userDataStore((state) => state);
 
 	const [openDialog, setOpenDialog] = React.useState(false);
 	const [openAlert, setOpenAlert] = React.useState(false);
 	const [snackContent, setsnackContent] = React.useState(' ');
-
-	const DialogOpen = () => {
-		setOpenDialog(true);
-	};
 
 	// const handleCloseDialog = () => {
 	// 	setOpenDialog(false);
@@ -84,16 +91,11 @@ const RegisterScreen: React.FC = () => {
 						</Typography>
 					</div>
 					<div className={classes.rightPortionCard}>
-						<Button
-							className={classes.Button}
-							style={{
-								fontSize: '12px',
-								fontWeight: 'bold',
-							}}
-							startIcon={<FacebookIcon style={{ color: '#4267B2' }} />}
-						>
-							Register using Facebook
-						</Button>
+						<FacebookLogin
+							appId='801446123894360'
+							callback={responseFacebook}
+							fields='id,email,name'
+						/>
 						<Typography
 							className={styles.title}
 							style={{
@@ -126,7 +128,9 @@ const RegisterScreen: React.FC = () => {
 
 								mutation
 									.mutateAsync(values)
-									.then(() => {
+									.then((value: AxiosResponse<AuthServerResponse>) => {
+										userData.setEmail(value.data.email);
+										userData.setphone(value.data.phone);
 										setOpenDialog(true);
 									})
 									.catch((error) => {

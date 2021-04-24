@@ -2,12 +2,16 @@ import Head from 'next/head';
 import React from 'react';
 import { Button, Card, Typography } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
+import FacebookLogin from 'react-facebook-login';
 
 import classes from '../../styles/Login.module.scss';
 import styles from '../../styles/Home.module.scss';
 import LoginForm from '../../containers/Auth/LoginForm';
 
 const PhoneLoginForm: React.FC = () => {
+	const responseFacebook = (response: any) => {
+		console.log(response);
+	};
 	return (
 		<React.Fragment>
 			<Head>
@@ -33,12 +37,11 @@ const PhoneLoginForm: React.FC = () => {
 						</Typography>
 					</div>
 					<div className={classes.rightPortionCard}>
-						<Button
-							className={classes.Button}
-							startIcon={<FacebookIcon style={{ color: '#4267B2' }} />}
-						>
-							Login With Facebook
-						</Button>
+						<FacebookLogin
+							appId='801446123894360'
+							callback={responseFacebook}
+							fields='id,email,name'
+						/>
 						<Typography
 							className={styles.title}
 							style={{
