@@ -84,8 +84,8 @@ router.get('/players/:match', async(req, res)=>{
     })
 });
 
-//to send the match matchInfo
-router.get('/matchInfo', async (req,res) => {
+//to send the pre-match matchInfo
+router.get('/preMatchInfo', async (req,res) => {
   let resData = {};
   resData.matchInfo = [];
   try{
@@ -106,7 +106,27 @@ router.get('/matchInfo', async (req,res) => {
   } catch(err){
     res.status(400).json({message: err});
   }
+});
 
+//to send the post-match matchInfo
+router.get('/postMatchInfo', async (req,res) => {
+  let resData = {};
+  resData.matchInfo = [];
+  try{
+    chosenFile = req.body.files;
+    jsonString = fs.readFileSync('./JSON Files/' + chosenFile.toString(), {endcoding: 'utf8', flag: 'r'});
+
+    const data = JSON.parse(jsonString);
+    resData.matchInfo.push ({
+      "match" : chosenFile,
+      "matchWinner" : data.info.outcome.winner,
+      "matchWinningMargin": data.info.outcome.by,
+      "playerOfTheMatch": data.info.player_of_match
+    })
+    res.send(resData);
+  } catch(err){
+    res.status(400).json({message: err});
+  }
 });
 
 module.exports = router;
