@@ -6,9 +6,9 @@ var files = fs.readdirSync(__dirname+'/../JSON Files/')
 playerData = fs.readFileSync(__dirname+'/../models/data.json', {encoding:'utf8', flag:'r'});
 playerData =  JSON.parse(playerData);
 
-// Match route 
+// Match route
 router.get('/', async (req, res)=>{
-   
+
     var resData = {};
     resData.teamInfo = [];
     for(var i=0;i<4;i++)
@@ -20,12 +20,12 @@ router.get('/', async (req, res)=>{
         const data = JSON.parse(jsonString);
         // console.log(data.info.teams);
         resData.teamInfo.push ({
-            "match" : chosenFile,
-            "teams" : data.info.teams
+          "match" : chosenFile,
+          "teams" : data.info.teams
         })
     }
     res.send(resData);
-})
+});
 
 router.get('/players/', async(req, res)=>{
         
@@ -106,6 +106,51 @@ router.get('/players/', async(req, res)=>{
         res.send(resData);
 
     })
-})
+});
+
+//to send the pre-match matchInfo
+router.get('/preMatchInfo', async (req,res) => {
+  let resData = {};
+  resData.matchInfo = [];
+  try{
+    chosenFile = req.body.files;
+    jsonString = fs.readFileSync('./JSON Files/' + chosenFile.toString(), {endcoding: 'utf8', flag: 'r'});
+
+    const data = JSON.parse(jsonString);
+    resData.matchInfo.push ({
+      "match" : chosenFile,
+      "city" : data.info.city,
+      "competition": data.info.competition,
+      "tossDecision": data.info.toss.decision,
+      "tossWinningTeam": data.info.toss.winner,
+      "umpires": data.info.umpires,
+      "venue": data.info.venue
+    })
+    res.send(resData);
+  } catch(err){
+    res.status(400).json({message: err});
+  }
+});
+
+//to send the post-match matchInfo
+router.get('/postMatchInfo', async (req,res) => {
+  let resData = {};
+  resData.matchInfo = [];
+  try{
+    chosenFile = req.body.files;
+    jsonString = fs.readFileSync('./JSON Files/' + chosenFile.toString(), {endcoding: 'utf8', flag: 'r'});
+
+    const data = JSON.parse(jsonString);
+    resData.matchInfo.push ({
+      "match" : chosenFile,
+      "matchWinner" : data.info.outcome.winner,
+      "matchWinningMargin": data.info.outcome.by,
+      "playerOfTheMatch": data.info.player_of_match
+    })
+    res.send(resData);
+  } catch(err){
+    res.status(400).json({message: err});
+  }
+});
 
 module.exports = router;
