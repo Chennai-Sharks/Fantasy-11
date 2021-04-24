@@ -24,7 +24,7 @@ const port = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
-app.use(cors({ origin: 'http://localhost:4000', credentials: true }));
+
 
 //Route Middlewares
 app.use('/api/users', authRoute);
