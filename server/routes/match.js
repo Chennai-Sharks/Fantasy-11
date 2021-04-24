@@ -3,17 +3,38 @@ const router = require('express').Router();
 var fs = require('fs');
 var files = fs.readdirSync(__dirname+'/../JSON Files/')
 
+playerData = fs.readFileSync(__dirname+'/../models/data.json', {encoding:'utf8', flag:'r'});
+playerData =  JSON.parse(playerData);
+
 // Match route 
 router.get('/', async (req, res)=>{
-    var chosenFile = files[Math.floor(Math.random()*files.length)];
-    console.log(chosenFile);
-    fs.readFile('./JSON Files/'+chosenFile.toString() ,'utf-8' ,(err, jsonString)=>{
+   
+    var resData = {};
+    resData.teamInfo = [];
+    for(var i=0;i<4;i++)
+    {
+        chosenFile = files[Math.floor(Math.random()*files.length)];
+        console.log(chosenFile);
+        jsonString = fs.readFileSync('./JSON Files/'+chosenFile.toString() , {encoding:'utf8', flag:'r'});
+
+        const data = JSON.parse(jsonString);
+        // console.log(data.info.teams);
+        resData.teamInfo.push ({
+            "match" : chosenFile,
+            "teams" : data.info.teams
+        })
+    }
+    res.send(resData);
+})
+
+router.get('/players/:match', async(req, res)=>{
+        
+        fs.readFile('./JSON Files/'+req.params.match.toString() ,'utf-8' ,(err, jsonString)=>{
         if(err) console.log(err);
 
         const data = JSON.parse(jsonString);
         var resData = {};
         players = [];
-        resData.teams = data.info.teams;
         firstInnings = data.innings[0]["1st innings"].deliveries;
         secondInnings = data.innings[1]["2nd innings"].deliveries;
         ball =[];
@@ -45,7 +66,18 @@ router.get('/', async (req, res)=>{
             if(!players.includes(ballData.bowler))
                 players.push(ballData.bowler);
         }
-
+        extra = 22 - players.length;
+        console.log(extra);
+        while(extra!=0)
+        {
+            x = Math.floor(Math.random()*314)
+            batsman = Object.keys(x);
+            if(!players.includes(batsman))
+            {
+                players.push(batsman);
+                extra--;
+            }
+        }
         resData.players=players;
         res.send(resData);
 
