@@ -38,7 +38,7 @@ function LinearProgressWithLabel(
 }
 
 const CreateTeamScreen: React.FC = () => {
-	const [progress, setProgress] = React.useState(9.09090909091);
+	const [progress, setProgress] = React.useState(0);
 	const router = useRouter();
 
 	const matchStore = versusMatchStore((state) => state);

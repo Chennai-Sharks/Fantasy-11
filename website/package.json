@@ -21,6 +21,7 @@
 		"react-query": "^3.13.11",
 		"react-responsive": "^8.2.0",
 		"react-spinners": "^0.10.6",
+		"socket.io-client": "^4.0.1",
 		"universal-cookie": "^4.0.4",
 		"zustand": "^3.4.1"
 	},
