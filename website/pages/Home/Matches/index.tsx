@@ -8,10 +8,11 @@ import MatchCard from '../../../containers/Match/MatchCard';
 import { useRouter } from 'next/router';
 
 import classes from '../../../styles/Match.module.scss';
+import versusMatchStore from '../../../stores/VersusMatchStore';
 const MatchScreen: React.FC = () => {
 	const router = useRouter();
 
-	const { isLoading, isError, data } = useQuery(
+	const { isLoading, isError, data, refetch } = useQuery(
 		'matches',
 		async () => {
 			const { data } = await axios.get('http://localhost:4000/api/match');
@@ -23,6 +24,8 @@ const MatchScreen: React.FC = () => {
 			refetchOnWindowFocus: false,
 		}
 	);
+
+	const matchStore = versusMatchStore((state) => state);
 
 	return (
 		<div className={classes.background}>
@@ -36,7 +39,7 @@ const MatchScreen: React.FC = () => {
 				{isLoading ? (
 					<MoonLoader />
 				) : isError ? (
-					<Button>Try Again</Button>
+					<Button onClick={() => refetch()}>Try Again</Button>
 				) : (
 					(data.teamInfo as Array<{
 						match: string;
@@ -45,16 +48,17 @@ const MatchScreen: React.FC = () => {
 						return (
 							<MatchCard
 								key={index}
-								onTap={() =>
+								onTap={() => {
 									// console.log(eachMatchInfo['match'].substring(0, 6))
-
+									matchStore.setoneTeam(eachMatchInfo['teams'][0]);
+									matchStore.setTwoTeam(eachMatchInfo['teams'][1]);
 									router.push(
 										`matches/create-team/${eachMatchInfo['match'].substring(
 											0,
 											6
 										)}`
-									)
-								}
+									);
+								}}
 								one={eachMatchInfo['teams'][0]}
 								two={eachMatchInfo['teams'][1]}
 							/>
