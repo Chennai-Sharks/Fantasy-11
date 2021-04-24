@@ -5,6 +5,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 
 import classes from '../../styles/Login.module.scss';
 import styles from '../../styles/Home.module.scss';
+import LoginForm from '../../containers/Auth/LoginForm';
 
 const PhoneLoginForm: React.FC = () => {
 	return (
@@ -42,22 +43,12 @@ const PhoneLoginForm: React.FC = () => {
 							className={styles.title}
 							style={{
 								fontSize: '20px',
+								marginTop: '10px',
 							}}
 						>
 							Or
 						</Typography>
-						<Button className={classes.Button}>Login using OTP</Button>
-						<Typography
-							className={styles.title}
-							style={{
-								fontSize: '20px',
-							}}
-						>
-							Or
-						</Typography>
-						<Button className={classes.Button}>
-							Login Using Email and Passoword
-						</Button>
+						<LoginForm />
 					</div>
 				</Card>
 			</div>
