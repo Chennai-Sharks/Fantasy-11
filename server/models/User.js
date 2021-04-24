@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userHistorySchema = new mongoose.Schema({
+const pointHistorySchema = new mongoose.Schema({
 
 });
 
@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     max: 1000,
     min: 8
   },
-  userHistory: [userHistorySchema],
+  pointHistory: [pointHistorySchema],
   date: {
     type: Date,
     default: Date.now

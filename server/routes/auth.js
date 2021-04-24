@@ -115,7 +115,6 @@ router.post('/verifyOTP', (req, res) => {
 	let data = `${phone}.${otp}.${expires}`;
 	let newCalculatedHash = crypto.createHmac('sha256', smsKey).update(data).digest('hex');
 	if (newCalculatedHash === hashValue) {
-		console.log('user confirmed');
 		const accessToken = jwt.sign({ data: phone }, JWT_AUTH_TOKEN, { expiresIn: '30s' });
 		const refreshToken = jwt.sign({ data: phone }, JWT_REFRESH_TOKEN, { expiresIn: '1y' });
 		refreshTokens.push(refreshToken);
