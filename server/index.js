@@ -4,8 +4,7 @@ const colors = require('colors');
 const dotenv = require('dotenv');
 var cors = require('cors');
 const cookieParser = require('cookie-parser');
-var io = require('socket.io').listen(app)
-var socketRoute = require('./routes/socket');
+const io = require('socket.io')(3000);
 
 const User = require('./models/User');
 
@@ -15,6 +14,8 @@ dotenv.config(); //To access/config the DB connection token
 const authRoute = require('./routes/auth');
 const matchRoute = require('./routes/match');
 const scoreboardRoute = require('./routes/scoreboard');
+const socketRoute = require('./routes/socket');
+
 //Connect to DB
 const connectDB = require('./config/db');
 connectDB();
@@ -30,5 +31,6 @@ app.use(cookieParser());
 app.use('/api/users', authRoute);
 app.use('/api/match', matchRoute);
 app.use('/api/scoreboard', scoreboardRoute);
+app.use('/api/socket', socketRoute);
 
 app.listen(port, () => console.log(`Server is running on port ${port}`.yellow.bold));
