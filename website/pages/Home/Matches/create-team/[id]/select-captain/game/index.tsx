@@ -19,6 +19,8 @@ import classes from '../../../../../../../styles/CreateTeam.module.scss';
 
 let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
+type playerPoints = {};
+
 const SelectCaptainScreen: React.FC = () => {
 	const matchStore = versusMatchStore((state) => state);
 	const selectedplayers = selectedPlayersStore((state) => state);
@@ -28,7 +30,7 @@ const SelectCaptainScreen: React.FC = () => {
 
 	const [totalScore, setTotalScore] = React.useState(0);
 	const [wickets, setWickets] = React.useState(0);
-	const [playerPoints, setPlayerPoints] = React.useState({});
+	const [playerPoints, setPlayerPoints] = React.useState<any>({});
 
 	const myRedirectFunction = function () {
 		if (typeof window !== 'undefined') {
@@ -47,17 +49,30 @@ const SelectCaptainScreen: React.FC = () => {
 			transports: ['websocket'],
 		};
 
-		socket = io('ws://localhost:5000/', connectionOptions);
+		socket = io('http://localhost:5000/', connectionOptions);
+
+		console.log(selectedplayers.selectedPlayers);
 
 		socket.emit(
 			'startMatch',
-			selectedplayers.selectedPlayers,
+			{
+				players: selectedplayers.selectedPlayers,
+			},
+
 			`${idstore.id}.json`
 		);
-	});
+		console.log('coneected');
+	}, [selectedplayers.selectedPlayers, idstore.id]);
 
 	React.useEffect(() => {
-		socket.on('score', (data) => console.log(data));
+		socket.on('score', (data) => {
+			setWickets(data['wickets']);
+			setTotalScore(data['total']);
+			setPlayerPoints(data['playerPoints']);
+			console.log(data);
+		});
+
+		console.log('coneected');
 	});
 
 	return (
@@ -80,6 +95,18 @@ const SelectCaptainScreen: React.FC = () => {
 						{matchStore.oneTeam} vs {matchStore.twoTeam}
 					</Typography>
 				</AppBar>
+				<Card>
+					<Typography>Wickets: {wickets}</Typography>
+					<Typography>Total Score: {totalScore}</Typography>
+					<Typography>Player Points:</Typography>
+					{Object.keys(playerPoints).map((EachPlayer, index) => {
+						return (
+							<Typography key={index}>
+								{EachPlayer}:{playerPoints[EachPlayer]}
+							</Typography>
+						);
+					})}
+				</Card>
 			</Card>
 		</div>
 	);

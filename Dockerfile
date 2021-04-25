@@ -16,4 +16,4 @@ COPY ./server/ .
 CMD node index.js
 
 # Expose this port to the outside world.
-EXPOSE 3000
+EXPOSE 4000 5000
