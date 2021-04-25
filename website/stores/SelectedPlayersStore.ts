@@ -6,7 +6,7 @@ type State = {
 	setSelectedPlayers: (email: string[]) => void;
 };
 
-const jwtStore = create<State>((set) => ({
+const selectedPlayersStore = create<State>((set) => ({
 	selectedPlayers: [''],
 
 	setSelectedPlayers: (selectedPlayers) =>
@@ -16,4 +16,4 @@ const jwtStore = create<State>((set) => ({
 		})),
 }));
 
-export default jwtStore;
+export default selectedPlayersStore;
