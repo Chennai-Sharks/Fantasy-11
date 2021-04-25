@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-web": "cd website && npm dev"
+    "start-web": "cd website && npm dev",
+    "start": "cd server && npm start"
   },
   "repository": {
     "type": "git",
