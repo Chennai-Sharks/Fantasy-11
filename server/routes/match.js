@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const verify = require('./verifyToken');
 
 var fs = require('fs');
 var files = fs.readdirSync(__dirname+'/../JSON Files/')
@@ -7,7 +8,7 @@ playerData = fs.readFileSync(__dirname+'/../models/data.json', {encoding:'utf8',
 playerData =  JSON.parse(playerData);
 
 // Match route
-router.get('/', async (req, res)=>{
+router.get('/', verify ,async (req, res)=>{
 
     var resData = {};
     resData.teamInfo = [];
@@ -27,7 +28,7 @@ router.get('/', async (req, res)=>{
     res.send(resData);
 });
 
-router.get('/players/:match', async(req, res)=>{
+router.get('/players/:match', verify ,async(req, res)=>{
 
         fs.readFile('./JSON Files/'+req.params.match.toString() ,'utf-8' ,(err, jsonString)=>{
         if(err) console.log(err);
@@ -109,7 +110,7 @@ router.get('/players/:match', async(req, res)=>{
 });
 
 //to send the pre-match matchInfo
-router.get('/preMatchInfo', async (req,res) => {
+router.get('/preMatchInfo',verify, async (req,res) => {
   let resData = {};
   resData.matchInfo = [];
   try{
@@ -133,7 +134,7 @@ router.get('/preMatchInfo', async (req,res) => {
 });
 
 //to send the post-match matchInfo
-router.get('/postMatchInfo', async (req,res) => {
+router.get('/postMatchInfo',verify, async (req,res) => {
   let resData = {};
   resData.matchInfo = [];
   try{
@@ -154,9 +155,9 @@ router.get('/postMatchInfo', async (req,res) => {
 });
 
 // send list of points of players and the match details(i.e teams playing) for this route in body
-router.post('/points',async(req,res)=>{
+router.post('/points',verify ,async(req,res)=>{
 	userId
-	const user = await User.findOne({_id : userId });
+	const user = await User.findOne({_id : req.user.id });
 	user.pointHistory.push({
 		match: req.body.match[0].toString +' vs '+ req.body.match[1].toString,
 		points : req.body.totalPoints   // to be edited 

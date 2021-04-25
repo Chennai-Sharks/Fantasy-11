@@ -1,10 +1,12 @@
 <div align = "left">
   <h1>
     <img alt="header" src="/src/assets/logo.png" width="1200"></img>
-  <h1>
-    
- Welcome to the IPL Fantasy 11 App. Fantasy 11 is a Game of Skill where you create a team of real players for an upcoming match and compete with other fans for big prizes.
- Your team earns points based on your players’ performances in the real-life match, so make sure you make the right choices!
+  </h1>
+  <h3>
+    Welcome to the IPL Fantasy 11 App. Fantasy 11 is a Game of Skill where you create a team of real players for an upcoming match and compete with other fans for big prizes.
+    Your team earns points based on your players’ performances in the real-life match, so make sure you make the right choices!
+  </h3>
+ ----
   
   ## Contents
    - [**Features**](#features)
@@ -15,6 +17,7 @@
    - [**Contributing**](#contributing)
    - [**License**](#license)
 
+----
 
 ### Features
   
@@ -34,19 +37,17 @@
   - Installing dependencies for server
   ```
   cd into the weebsite folder
-  Install dependencies
   npm install/yarn install 
   ```
   - Starting the client
   ```
   cd into the website folder
-  npm run dev
+  npm run dev/yarn dev
   ```
   
   - Installing dependencies for server
   ```
   cd into the server folder
-  Install dependencies
   npm install/yarn install
   ```
   - Starting up the server
@@ -58,9 +59,9 @@
 
 ### Screenshots of the app
 
-| Register Page                        | Login Page                           | Send OTP page                                 | 
-| ------------------------------------ | ------------------------------------ | --------------------------------------------- | 
-| <img src="screenshots/register.png"> | <img src="screenshots/login.png">    | <img src="screenshots/update_password.png">   | 
+| Register Page                             | Login Page                                | Send OTP page                                 | 
+| ------------------------------------      | ------------------------------------      | --------------------------------------------- | 
+| <img src="/src/assets/Register page.png"> | <img src="/src/assets/Login Page.png">    | <img src="/src/assets/OTP page.png">          | 
 
 | Match Selection Page                        |  Selecting Players page               | Selecting Captain and vice-captain page    |
 | ------------------------------------------- | ------------------------------------- | ------------------------------------------ |
@@ -127,3 +128,4 @@ This project is open source and available under the [MIT License](https://github
 ----
 
    <p align="center">Made with :heart:, :computer: and some :coffee:</p>
+</div>
