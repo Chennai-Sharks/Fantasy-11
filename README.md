@@ -1,3 +1,88 @@
-# Fantasy 11
+<div align = "left">
+  <h1>
+    <img alt="header" src="/src/assets/logo.png" width="1200"></img>
+  <h1>
+    
+  Welcome to the IPL Fantasy 11 App. Fantasy 11 is a Game of Skill where you create a team of real players for an upcoming match and compete with other fans for big prizes.
+  Your team earns points based on your players’ performances in the real-life match, so make sure you make the right choices!
+  
+  ## Contents
+   - [**Features**](#features)
+   - [**Project Setup**](#project-setup)
+   - [**Screenshots of the app**](#screenshots-of-the-app)
+   - [**Tools**](#tools)
+   - [Contributors](#contributors)
 
-In Progress
+
+### Features
+  
+  - Login and Signup via
+    - username - Password
+    - Facebook
+    - Phone OTP
+  - Random Dummy Match Selection
+  - Fantasy team creation based on selected match
+  - Selection of team captain and vice-captain
+  - Scoreboard
+
+----
+
+### Project Setup
+  
+  ```
+  cd into the client folder
+  cd into the server folder
+  ```
+----
+
+### Screenshots of the app
+
+| Register Page                        | Login Page                           | Send OTP page                                 | 
+| ------------------------------------ | ------------------------------------ | --------------------------------------------- | 
+| <img src="screenshots/register.png"> | <img src="screenshots/login.png">    | <img src="screenshots/update_password.png">   | 
+
+| Match Selection Page                        |  Selecting Players page               | Selecting Captain and vice-captain page    |
+| ------------------------------------------- | ------------------------------------- | ------------------------------------------ |
+| <img src="screenshots/forgot_password.png"> | <img src="screenshots/dashboard.png"> | <img src="screenshots/create_contact.png"> |
+
+| Match simulation page                       |  Scoreboard page                      | 
+| ------------------------------------------- | ------------------------------------- | 
+| <img src="screenshots/forgot_password.png"> | <img src="screenshots/dashboard.png"> | 
+
+----
+
+## Tools
+* [React](https://reactjs.org/)
+* [NodeJS](https://nodejs.org/en/) * [ExpressJS](https://expressjs.com/)
+* [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+* [socket.io](https://socket.io/)
+* [Visual Studio Code](https://code.visualstudio.com/) * [Atom](https://atom.io/)
+* [NPM](https://www.npmjs.com/) * [Yarn](https://yarnpkg.com/)
+
+----
+
+## Contributors
+
+<table>
+  <thead>
+    <tr>
+      <th><a href="https://github.com/Poujhit">Poujhit MR</a></th>
+      <th><a href="https://github.com/NaveenSriramR">Naveen Sriram R</a></th>
+      <th><a href="https://github.com/NikhileshJr08">Nikhilesh S</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+       <td align="center"><a href="https://github.com/Poujhit"><img width="64" src="https://avatars1.githubusercontent.com/u/39209037" alt="f"></a></td>
+       <td align="center"><a href="https://github.com/NaveenSriramR"><img width="64" src="https://avatars2.githubusercontent.com/u/40058339" alt="f"></a></td>
+       <td align="center"><a href="https://github.com/NikhileshJr08"><img width="64" src="https://avatars3.githubusercontent.com/u/54794049" alt="f"></a></td>
+    </tr>
+    </tbody>
+</table>
+
+----
+
+
+    
+               
+               
