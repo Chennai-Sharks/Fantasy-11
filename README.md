@@ -34,19 +34,17 @@
   - Installing dependencies for server
   ```
   cd into the weebsite folder
-  Install dependencies
   npm install/yarn install 
   ```
   - Starting the client
   ```
   cd into the website folder
-  npm run dev
+  npm run dev/yarn dev
   ```
   
   - Installing dependencies for server
   ```
   cd into the server folder
-  Install dependencies
   npm install/yarn install
   ```
   - Starting up the server
