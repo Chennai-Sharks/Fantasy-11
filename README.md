@@ -30,9 +30,21 @@
 
 ### Project Setup
   
+  
   ```
-  cd into the client folder
+  cd into the website folder
+  ```
+  
+  - Installing dependencies
+  ```
   cd into the server folder
+  Install dependencies
+  npm install  
+  ```
+  - Starting up the server
+  ``` 
+  cd into server
+  npm start
   ```
 ----
 
@@ -90,16 +102,10 @@
 - We welcome all suggestions and changes
 - Fork the repository, make the desired changes and open a pull request
 
-  Fork? Pull request? What is all that? I don't know how to use GitHub!
-  If you are new to Git or GitHub, check out this [small tutorial from our team](https://github.com/ASS-G/Git-Training-Kit) and [GitHub](https://guides.github.com/activities/hello-world/)
+Fork? Pull request? What is all that? I don't know how to use GitHub!
+If you are new to Git or GitHub, check out this [small tutorial from our team](https://github.com/ASS-G/Git-Training-Kit) and [GitHub](https://guides.github.com/activities/hello-world/)
 
 ----
 
 ## LICENSE
 This project is open source and available under the [MIT License](https://github.com/Chennai-Sharks/Fantasy-11).
-
-
-
-    
-               
-               
