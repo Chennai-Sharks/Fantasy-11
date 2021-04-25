@@ -35,7 +35,7 @@ app.use('/api/match', matchRoute);
 app.use('/api/scoreboard', scoreboardRoute);
 
 // Socket initialisation
-io.on("connection", async(socket) => {
+io.on("connection", (socket) => {
     console.log("New client connected");
     // for(i=0;i<5;i++)
     // {
@@ -46,10 +46,13 @@ io.on("connection", async(socket) => {
     // }
     require('./routes/socket')(socket);
     
+    socket.on('disconnect',()=>socket.disconnect())
+    
     // socket.on("disconnect", () => {
     //   console.log("Client disconnected");
     //   clearInterval(interval);
     // });
+    
   });
 
 app.listen(port, () => console.log(`Server is running on port ${port}`.yellow.bold));

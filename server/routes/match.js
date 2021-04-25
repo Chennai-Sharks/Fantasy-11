@@ -159,7 +159,7 @@ router.post('/points',async(req,res)=>{
 	const user = await User.findOne({_id : userId });
 	user.pointHistory.push({
 		match: req.body.match[0].toString +' vs '+ req.body.match[1].toString,
-		points : totalPoints   // to be edited 
+		points : req.body.totalPoints   // to be edited 
 	})
 	user.save();
 })

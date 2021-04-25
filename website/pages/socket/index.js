@@ -10,12 +10,12 @@ function App() {
     "A Mishra",
     "HH Gibbs",
     "DP Nannes",
-    "Y Nagar",
-    "S Ladda",
-    "A Symonds",
-    "UT Yadav",
-     "RG Sharma",
-    "MC Henriques"
+    "RP Singh",
+    "PP Ojha",
+    "AB de Villiers",
+    "R Sharma",
+    "KD Karthik",
+    "M Manhas"
   ]}
   var socket = socketIOClient(ENDPOINT);
   // socket.on('test',(data)=>console.log(data))
@@ -24,7 +24,9 @@ function App() {
  	//socket.emit("salutations", "Hello!", { "mr": "john" }, Uint8Array.from([1, 2, 3, 4]));
   
     socket.emit('startMatch',(playerData),(match));
-
+    
+    socket.on('first_innings',(data)=>console.log(data+" has finished playing"))
+    socket.on('second_innings',(data)=>console.log(data+" is going to play"))
     socket.on('score',(data)=>console.log(data))
 // // handle the event sent with socket.send()
  socket.on("testreply", (data) => {
