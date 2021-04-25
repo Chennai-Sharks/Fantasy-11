@@ -1,25 +1,19 @@
 {
   [{
-    "caught": "25"
+    "caught": 25
   }, {
-    "bowled": "33"
+    "bowled": 33
   }, {
-    "run out": "25"
+    "run out": 25
   }, {
-    "lbw": "33"
+    "lbw": 33
   }, {
-    "retired hurt": "0"
+    "retired hurt": 0
   }, {
-    "stumped": "25"
+    "stumped": 25
   }, {
-    "caught and bowled": "40"
+    "caught and bowled": 40
   }, {
-    "hit wicket": "25"
-  }, {
-    "Per Run": "1"
-  }, {
-    "50 runs scored": "58"
-  }, {
-    "100 runs scored": "116"
+    "hit wicket": 25
   }]
 }
