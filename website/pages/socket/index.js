@@ -1,6 +1,6 @@
 import React from 'react';
 import socketIOClient from 'socket.io-client';
-const ENDPOINT = 'ws://localhost:5000';
+const ENDPOINT = 'ws://fantasy11-app.herokuapp.com:5000';
 
 function App() {
 	var match = '419120.json';

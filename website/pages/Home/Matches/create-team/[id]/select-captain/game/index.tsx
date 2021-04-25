@@ -26,6 +26,7 @@ const SelectCaptainScreen: React.FC = () => {
 	const selectedplayers = selectedPlayersStore((state) => state);
 	const idstore = idStore((state) => state);
 	const captaindata = captainStore((state) => state);
+	let totalpoints: number = 0;
 
 	const router = useRouter();
 
@@ -51,7 +52,7 @@ const SelectCaptainScreen: React.FC = () => {
 			transports: ['websocket'],
 		};
 
-		socket = io('http://localhost:5000/', connectionOptions);
+		socket = io('https://fantasy11-app.herokuapp.com/5000/', connectionOptions);
 
 		console.log(selectedplayers.selectedPlayers);
 
@@ -60,7 +61,7 @@ const SelectCaptainScreen: React.FC = () => {
 			{
 				players: selectedplayers.selectedPlayers,
 				captain: captaindata.captain,
-				'vice-captain': captaindata.vicecaptain,
+				viceCaptain: captaindata.vicecaptain,
 			},
 
 			`${idstore.id}.json`
@@ -77,13 +78,9 @@ const SelectCaptainScreen: React.FC = () => {
 		socket.on('score', (data) => {
 			setWickets(data['wickets']);
 			setTotalScore(data['total']);
-			b(a + 1);
 			setPlayerPoints(data['playerPoints']);
-			console.log(data);
-			console.log(a);
 		});
-
-		console.log('coneected');
+		console.log(totalpoints);
 	});
 
 	return (
@@ -111,6 +108,8 @@ const SelectCaptainScreen: React.FC = () => {
 					<Typography>Total Score: {totalScore}</Typography>
 					<Typography>Player Points:</Typography>
 					{Object.keys(playerPoints).map((EachPlayer, index) => {
+						totalpoints = totalpoints + playerPoints[EachPlayer];
+
 						return (
 							<Typography key={index}>
 								{EachPlayer}:{playerPoints[EachPlayer]}
@@ -118,6 +117,7 @@ const SelectCaptainScreen: React.FC = () => {
 						);
 					})}
 				</Card>
+				<Button onClick={() => {}}>Click here to see the scoreCard</Button>
 			</Card>
 		</div>
 	);
