@@ -1,3 +1,6 @@
+var fs = require('fs');
+const { StyleSheetPage } = require("twilio/lib/rest/autopilot/v1/assistant/styleSheet");
+
 events ={
     "caught": "25",
     "bowled": "33",
@@ -12,7 +15,7 @@ events ={
   }
 // fielder points ,catch and stumped is 15 pts
 
-module.exports = function(socket) {
+async function soc(socket) {
    
         socket.on("test",(data) => {
             console.log(data);
@@ -24,19 +27,20 @@ module.exports = function(socket) {
         total = 0;
         wickets = 0;
         for(i=0;i<11;i++)
-            playerPoints[playerData[i]] = 0;
+            playerPoints[playerData.players[i]] = 0;
         // match data
-        jsonString = fs.readFileSync('./JSON Files/'+match.toString() , {encoding:'utf8', flag:'r'});
+        jsonString = fs.readFileSync('./JSON Files/'+match.toString() , {encoding:'utf-8', flag:'r'});
         const data = JSON.parse(jsonString);
 
         firstInnings = data.innings[0]["1st innings"].deliveries;
         socket.emit('first_innings',data.innings[0]["1st innings"].team);
-        for(i=0;i<firstInnings.length;i++)
+        for(i=0;i<5;i++)
         {
-            setTimeout(()=>{
-
+           // await new Promise(resolve => setTimeout(resolve, 5000));
+          
+            setTimeout((i)=>{
                 ball = Object.keys(firstInnings[i]);
-                ballData = firstInnings[i][ball[0]];
+                ballData = firstInnings[i][ball[0]];     
 
                 //point calculations for wickets
                 if(ballData.hasOwnProperty('wicket'))
@@ -76,24 +80,31 @@ module.exports = function(socket) {
                 }
                 total+=ballData.runs.total;
 
-            },5000)
+              //  socket.emit('score',ballData)
+            socket.emit('score',{
+                'total':total,
+                'wickets':wickets,
+                'playerPoints':playerPoints
+            })
+        }, i*5000,i); // setTimeout closing 
+        } // for loop closing 
+            // // end of first innings
+            // total = 0;
+            // wickets = 0;
 
-            // end of first innings
-            total = 0;
-            wickets = 0;
-
-            // start of second innings
-            secondInnings = data.innings[1]["2nd innings"].deliveries;
-            socket.emit('second_innings',data.innings[1]["2nd innings"].team);
+            // // start of second innings
+            // secondInnings = data.innings[1]["2nd innings"].deliveries;
+            // socket.emit('second_innings',data.innings[1]["2nd innings"].team);
 
 
-            // end of second innings
-            playerPoints[playerData.captain]*=2;
-            playerPoints[playerData.vice-captain]*=1.5;
+            // // end of second innings
+            // playerPoints[playerData.captain]*=2;
+            // playerPoints[playerData.vice-captain]*=1.5;
             socket.emit('matchEnd',playerPoints)
-        }
+        
 
         console.log('startMatch triggered');
       });
     };
 
+module.exports = soc;

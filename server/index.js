@@ -35,9 +35,15 @@ app.use('/api/match', matchRoute);
 app.use('/api/scoreboard', scoreboardRoute);
 
 // Socket initialisation
-io.on("connection", (socket) => {
+io.on("connection", async(socket) => {
     console.log("New client connected");
-    socket.emit('test',{ "hi" : " message from server"})
+    // for(i=0;i<5;i++)
+    // {
+    //   await new Promise(resolve => setTimeout(resolve, 5000));
+    //    //setInterval(() => {
+    //     socket.emit('test',{ "iteration" : i})
+    //  // }, 5000);
+    // }
     require('./routes/socket')(socket);
     
     // socket.on("disconnect", () => {
