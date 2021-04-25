@@ -19,6 +19,7 @@ import LinearProgress, {
 	LinearProgressProps,
 } from '@material-ui/core/LinearProgress';
 import versusMatchStore from '../../../../stores/VersusMatchStore';
+import EachPlayer from '../../../../containers/Create-Match/EachPlayer';
 
 function LinearProgressWithLabel(
 	props: LinearProgressProps & { value: number }
@@ -29,7 +30,7 @@ function LinearProgressWithLabel(
 				<LinearProgress variant='determinate' {...props} />
 			</Box>
 			<Box minWidth={35}>
-				<Typography variant='body2' color='textSecondary'>{`${Math.round(
+				<Typography variant='body2' style={{ color: 'white' }}>{`${Math.round(
 					props.value
 				)}%`}</Typography>
 			</Box>
@@ -42,16 +43,36 @@ const CreateTeamScreen: React.FC = () => {
 	const router = useRouter();
 
 	const matchStore = versusMatchStore((state) => state);
+	const [selectedplayers, setselectedplayers] = React.useState(['']);
 
-	const [totalCredits, minustotalCredits] = React.useState(100);
-	const {
-		query: { dynamic, id },
-	} = router;
+	const [totalCredits, settotalCredits] = React.useState(100);
+	let id: string;
+
+	React.useEffect(() => {
+		console.log(router.isReady);
+		if (router.isReady) id = router.query['id'] as string;
+	});
+
+	const { isLoading, isError, data, refetch } = useQuery(
+		'playerlist',
+		async () => {
+			const { data } = await axios.get(
+				`http://localhost:4000/api/match/players/${id}.json`
+			);
+			return data;
+		},
+		{
+			retry: false,
+			retryDelay: 10000,
+			refetchOnWindowFocus: false,
+		}
+	);
 
 	const useStyles = makeStyles({
 		root: {
 			width: '100%',
 			marginLeft: '5px',
+			marginTop: '10px',
 		},
 	});
 	const style = useStyles();
@@ -74,24 +95,78 @@ const CreateTeamScreen: React.FC = () => {
 						</Typography>
 
 						<Typography variant='h6' style={{ marginLeft: '50%' }}>
-							Credits left {totalCredits}
+							Credits left {`${totalCredits}`}
 						</Typography>
 					</Toolbar>
-					<Typography variant='h6'>
+					<Typography variant='h6' style={{ textAlign: 'center' }}>
 						{matchStore.oneTeam} vs {matchStore.twoTeam}
 					</Typography>
 					<div className={style.root}>
 						<LinearProgressWithLabel value={progress} />
 					</div>
 				</AppBar>
+				<div className={classes.topTile}>
+					<Typography variant='h6' style={{ marginLeft: '20px' }}>
+						Players
+					</Typography>
+					<Typography variant='h6' style={{ marginRight: '20%' }}>
+						Credits
+					</Typography>
+				</div>
 
-				{/* {isLoading ? (
+				{isLoading ? (
 					<MoonLoader />
 				) : isError ? (
 					<Button>Try Again</Button>
 				) : (
-					<div>hello</div>
-				)} */}
+					(data['players'] as string[]).map((eachPlayerName, index) => {
+						return (
+							<EachPlayer
+								playername={eachPlayerName}
+								key={index}
+								credits={data['credits'][index]}
+								isnotplusFunction={() => {
+									setProgress((prevProgress) =>
+										prevProgress <= 20 ? 0 : prevProgress - 9.09090909091
+									);
+
+									settotalCredits(
+										(totalcredits) =>
+											totalcredits + (data['credits'][index] as number)
+									);
+									console.log(totalCredits);
+
+									// setselectedplayers((state) => {
+									// 	let newplayerslist = [...state];
+									// 	newplayerslist = newplayerslist.filter(
+									// 		(item) => item !== eachPlayerName
+									// 	);
+									// 	return newplayerslist;
+									// });
+									console.log(selectedplayers);
+								}}
+								isplusFunction={() => {
+									if (progress === 100 || totalCredits === 0) {
+										return;
+									}
+									console.log(totalCredits);
+
+									setProgress((prevProgress) =>
+										prevProgress >= 85 ? 100 : prevProgress + 9.09090909091
+									);
+									settotalCredits(
+										(totalcredits) =>
+											totalcredits - (data['credits'][index] as number)
+									);
+									console.log(totalCredits);
+
+									// setselectedplayers((state) => [...state, eachPlayerName]);
+								}}
+							/>
+						);
+					})
+				)}
+
 				<Button
 					onClick={() =>
 						setProgress((prevProgress) =>

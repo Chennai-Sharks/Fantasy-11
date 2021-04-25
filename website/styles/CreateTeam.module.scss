@@ -39,3 +39,10 @@
 		font-size: 35px;
 	}
 }
+
+.topTile {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-self: stretch;
+}
