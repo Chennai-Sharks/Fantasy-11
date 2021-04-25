@@ -81,7 +81,8 @@
 * [Postman](https://www.postman.com/)
 * [Visual Studio Code](https://code.visualstudio.com/) 
 * [Atom](https://atom.io/)
-* [NPM](https://www.npmjs.com/) * [Yarn](https://yarnpkg.com/)
+* [NPM](https://www.npmjs.com/) 
+* [Yarn](https://yarnpkg.com/)
 
 ----
 
@@ -101,7 +102,12 @@
        <td align="center"><a href="https://github.com/NaveenSriramR"><img width="64" src="https://avatars.githubusercontent.com/u/62332925" alt="f"></a></td>
        <td align="center"><a href="https://github.com/NikhileshJr08"><img width="64" src="https://avatars.githubusercontent.com/u/63784914" alt="f"></a></td>
     </tr>
-    </tbody>
+    <tr>
+        <td align="center"> :hammer::construction::pencil: </td>
+        <td align="center"> :hammer::construction: </td>
+        <td align="center"> :warning::pencil: </td>
+    </tr>
+  </tbody>
 </table>
 
 ----
