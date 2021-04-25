@@ -5,6 +5,8 @@
     
  Welcome to the IPL Fantasy 11 App. Fantasy 11 is a Game of Skill where you create a team of real players for an upcoming match and compete with other fans for big prizes.
  Your team earns points based on your players’ performances in the real-life match, so make sure you make the right choices!
+ 
+ ----
   
   ## Contents
    - [**Features**](#features)
@@ -125,3 +127,4 @@ This project is open source and available under the [MIT License](https://github
 ----
 
    <p align="center">Made with :heart:, :computer: and some :coffee:</p>
+</div>
