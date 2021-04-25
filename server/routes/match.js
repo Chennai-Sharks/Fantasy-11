@@ -27,9 +27,9 @@ router.get('/', async (req, res)=>{
     res.send(resData);
 });
 
-router.get('/players/', async(req, res)=>{
+router.get('/players/:match', async(req, res)=>{
         
-        fs.readFile('./JSON Files/'+req.body.match.toString() ,'utf-8' ,(err, jsonString)=>{
+        fs.readFile('./JSON Files/'+req.params.match.toString() ,'utf-8' ,(err, jsonString)=>{
         if(err) console.log(err);
 
         const data = JSON.parse(jsonString);
@@ -153,4 +153,14 @@ router.get('/postMatchInfo', async (req,res) => {
   }
 });
 
+// send list of points of players and the match details(i.e teams playing) for this route in body
+router.post('/points',async(req,res)=>{
+	userId 
+	const user = await User.findOne({_id : userId });
+	user.pointHistory.push({
+		match: req.body.match[0].toString +' vs '+ req.body.match[1].toString,
+		points : totalPoints   // to be edited 
+	})
+	user.save();
+})
 module.exports = router;
