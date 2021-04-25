@@ -29,7 +29,7 @@ router.get('/', async (req, res)=>{
 
 router.get('/players/:match', async(req, res)=>{
 
-        fs.readFile('./JSON Files/'+req.body.match.toString() ,'utf-8' ,(err, jsonString)=>{
+        fs.readFile('./JSON Files/'+req.params.match.toString() ,'utf-8' ,(err, jsonString)=>{
         if(err) console.log(err);
 
         const data = JSON.parse(jsonString);
