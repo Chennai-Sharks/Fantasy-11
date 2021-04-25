@@ -12,11 +12,14 @@ events ={
   }
 // fielder points ,catch and stumped is 15 pts
 
-const io = require("socket.io");
+module.exports = function(socket) {
+   
+        socket.on("test",(data) => {
+            console.log(data);
+            socket.emit("testreply","hello world from server");
+        });
 
-exports = module.exports = function(io){
-    io.sockets.on('connection', function (socket) {
-      socket.on('startMatch', function (playerData,match) {
+      socket.on('startMatch', (playerData,match)=>{
         playerPoints = {}
         total = 0;
         wickets = 0;
@@ -85,11 +88,12 @@ exports = module.exports = function(io){
 
 
             // end of second innings
-
+            playerPoints[playerData.captain]*=2;
+            playerPoints[playerData.vice-captain]*=1.5;
             socket.emit('matchEnd',playerPoints)
         }
 
         console.log('startMatch triggered');
       });
-    });
-  }
+    };
+
