@@ -64,6 +64,15 @@ router.post('/login', async (req, res) => {
   res.header('auth_Token', token).send(token);
 });
 
+//facebook login which checks if the email is present or not
+router.get('/facebook/login', async (req,res) => {
+  const user = await User.findOne({email: req.body.email});
+  if(!user) return res.status(400).send("Email not found");
+
+  const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
+  res.header('authToken', token).send(token);
+});
+
 
 //ignore all this lol
 const accountSid = process.env.ACCOUNT_SID
