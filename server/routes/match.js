@@ -28,7 +28,7 @@ router.get('/', async (req, res)=>{
 });
 
 router.get('/players/:match', async(req, res)=>{
-        
+
         fs.readFile('./JSON Files/'+req.body.match.toString() ,'utf-8' ,(err, jsonString)=>{
         if(err) console.log(err);
 
@@ -48,17 +48,17 @@ router.get('/players/:match', async(req, res)=>{
             {
                 players.push(ballData.batsman);
                 credits.push(playerData[ballData.batsman])
-            }            
+            }
             if(!players.includes(ballData.non_striker))
             {
                 players.push(ballData.non_striker);
                 credits.push(playerData[ballData.non_striker])
-            }            
+            }
             if(!players.includes(ballData.bowler))
             {
                 players.push(ballData.bowler);
                 credits.push(playerData[ballData.bowler])
-            }            
+            }
         }
 
         // players of team2
@@ -70,19 +70,19 @@ router.get('/players/:match', async(req, res)=>{
             {
                 players.push(ballData.batsman);
                 credits.push(playerData[ballData.batsman])
-            }            
+            }
             if(!players.includes(ballData.non_striker))
             {
                 players.push(ballData.non_striker);
                 credits.push(playerData[ballData.non_striker])
-            }            
+            }
             if(!players.includes(ballData.bowler))
             {
                 players.push(ballData.bowler);
                 credits.push(playerData[ballData.bowler])
-            }            
+            }
         }
-      
+
         extra = 22 - players.length;
         console.log(extra)
       //  console.log(players)
@@ -99,7 +99,7 @@ router.get('/players/:match', async(req, res)=>{
                 players.push(batsman);
                 credits.push(playerData[batsman])
                 extra--;
-            }            
+            }
         }
         resData.players = players;
         resData.credits = credits;
@@ -155,11 +155,11 @@ router.get('/postMatchInfo', async (req,res) => {
 
 // send list of points of players and the match details(i.e teams playing) for this route in body
 router.post('/points',async(req,res)=>{
-	userId 
+	userId
 	const user = await User.findOne({_id : userId });
 	user.pointHistory.push({
 		match: req.body.match[0].toString +' vs '+ req.body.match[1].toString,
-		points : totalPoints   // to be edited 
+		points : totalPoints   // to be edited
 	})
 	user.save();
 })
