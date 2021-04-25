@@ -1,106 +1,170 @@
 var fs = require('fs');
-const {
-  StyleSheetPage
-} = require("twilio/lib/rest/autopilot/v1/assistant/styleSheet");
 
-events = {
-  "caught": "25",
-  "bowled": "33",
-  "run out": "25",
-  "lbw": "33",
-  "retired hurt": "0",
-  "stumped": "25",
-  "caught and bowled": "40",
-  "hit wicket": "25",
-  // "50_runs": "58",
-  // "100_runs": "116"
-}
+events ={
+    "caught": 25,
+    "bowled": 33,
+    "run out": 25,
+    "lbw": 33,
+    "retired hurt": 0,
+    "stumped": 25,
+    "caught and bowled": 40,
+    "hit wicket": 25,
+    // "50_runs": "58",
+    // "100_runs": "116"
+  }
 // fielder points ,catch and stumped is 15 pts
 
 async function soc(socket) {
+   
+        socket.on("test",(data) => {
+            console.log(data);
+            socket.emit("testreply","hello world from server");
+        });
 
-  socket.on("test", (data) => {
-    console.log(data);
-    socket.emit("testreply", "hello world from server");
-  });
+      socket.on('startMatch', (playerData,match)=>{
+        playerPoints = {}
+      var  total = 0;
+      var   wickets = 0;
+        for(i=0;i<11;i++)
+            playerPoints[playerData.players[i]] = 0;
+        // match data
+        jsonString = fs.readFileSync('./JSON Files/'+match.toString() , {encoding:'utf-8', flag:'r'});
+        const data = JSON.parse(jsonString);
 
-  socket.on('startMatch', (playerData, match) => {
-    playerPoints = {}
-    total = 0;
-    wickets = 0;
-    for (i = 0; i < 11; i++)
-      playerPoints[playerData.players[i]] = 0;
-    // match data
-    jsonString = fs.readFileSync('./JSON Files/' + match.toString(), {
-      encoding: 'utf-8',
-      flag: 'r'
-    });
-    const data = JSON.parse(jsonString);
+        firstInnings = data.innings[0]["1st innings"].deliveries;
+        socket.emit('first_innings',data.innings[0]["1st innings"].team);
+        // for(i=0;i<firstInnings.length;i++)
+        // {
+        //    // await new Promise(resolve => setTimeout(resolve, 5000));
+          
+        //     setTimeout((i)=>{
+        //         ball = Object.keys(firstInnings[i]);
+        //         ballData = firstInnings[i][ball[0]];     
 
-    firstInnings = data.innings[0]["1st innings"].deliveries;
-    socket.emit('first_innings', data.innings[0]["1st innings"].team);
-    for (i = 0; i < 5; i++) {
-      // await new Promise(resolve => setTimeout(resolve, 5000));
+        //         //point calculations for wickets
+        //         if(ballData.hasOwnProperty('wicket'))
+        //         {
+        //             wickets++;
+        //             if(ballData.wicket.kind=='caught' || ballData.wicket.kind=='stumped')
+        //             {
+        //                 if(playerPoints.hasOwnProperty(ballData.bowler))
+        //                     playerPoints[ballData.bowler]+= 25 ;
 
-      setTimeout((i) => {
-        ball = Object.keys(firstInnings[i]);
-        ballData = firstInnings[i][ball[0]];
+        //                 if(ballData.hasOwnProperty('fielders'))
+        //                     ballData.wicket.fielders.forEach( fielder => {
+        //                         if(playerPoints.hasOwnProperty(fielder))
+        //                             playerPoints[fielder]+= 15 ;
+        //                     });
+        //             }
 
-        //point calculations for wickets
-        if (ballData.hasOwnProperty('wicket')) {
-          wickets++;
-          if (ballData.wicket.kind == 'caught' || ballData.wicket.kind == 'stumped') {
-            if (playerPoints.hasOwnProperty(ballData.bowler))
-              playerPoints[ballData.bowler] += 25;
+        //             else if(ballData.wicket.kind =='run out')
+        //             {
+        //                 if(playerPoints.hasOwnProperty(ballData.wicket.fielders[0]))
+        //                     playerPoints[ballData.wicket.fielders[0]] += 25 ;
+        //             }
 
-            if (ballData.hasOwnProperty('fielders'))
-              ballData.wicket.fielders.forEach(fielder => {
-                if (playerPoints.hasOwnProperty(fielder))
-                  playerPoints[fielder] += 15;
-              });
-          } else if (ballData.wicket.kind == 'run out') {
-            if (playerPoints.hasOwnProperty(ballData.wicket.fielders[0]))
-              playerPoints[ballData.wicket.fielders[0]] += 25;
-          }
+        //             // this is for all other wicket kinds
+        //             else if(playerPoints.hasOwnProperty(ballData.bowler))
+        //                 playerPoints[ballData.bowler]+=events[ballData.wicket.kind];
 
-          // this is for all other wicket kinds
-          else if (playerPoints.hasOwnProperty(ballData.bowler))
-            playerPoints[ballData.bowler] += events[ballData.wicket.kind];
+        //         }
 
-        } else(ballData.runs.batsman != 0 && playerPoints.hasOwnProperty(ballData.batsman)) {
-          playerPoints[ballData.batsman] += ballData.runs.batsman;
-          if (playerPoints[ballData.batsman] > 100)
-            playerPoints[ballData.batsman] += 8;
-          else if (playerPoints[ballData.batsman] > 50)
-            playerPoints[ballData.batsman] += 8;
-        }
-        total += ballData.runs.total;
+        //         else( ballData.runs.batsman!=0)
+        //          if( playerPoints.hasOwnProperty(ballData.batsman))
+        //         {
+        //             playerPoints[ballData.batsman]+=ballData.runs.batsman;
+        //             if(playerPoints[ballData.batsman]>100)
+        //             playerPoints[ballData.batsman]+=8;
+        //             else if(playerPoints[ballData.batsman]>50)
+        //             playerPoints[ballData.batsman]+=8;
+        //         }
+        //         total+=ballData.runs.total;
 
-        //  socket.emit('score',ballData)
-        socket.emit('score', {
-          'total': total,
-          'wickets': wickets,
-          'playerPoints': playerPoints
-        })
-      }, i * 5000, i); // setTimeout closing
-    } // for loop closing
-    // // end of first innings
-    // total = 0;
-    // wickets = 0;
+        //       //  socket.emit('score',ballData)
+        //     socket.emit('score',{
+        //         'total':total,
+        //         'wickets':wickets,
+        //         'playerPoints':playerPoints
+        //     })
+        // }, i*500,i); // setTimeout closing 
+        // } // for loop closing 
+        socket.emit('first_innings',data.innings[0]["1st innings"].team);
+            // // end of first innings
+        socket.emit('second_innings',data.innings[1]["2nd innings"].team);
 
-    // // start of second innings
-    // secondInnings = data.innings[1]["2nd innings"].deliveries;
-    // socket.emit('second_innings',data.innings[1]["2nd innings"].team);
+            // // start of second innings
+        
+        total1 = 0;
+        wickets1 = 0;
+        secondInnings = data.innings[1]["2nd innings"].deliveries;
 
+        for(i=0;i<secondInnings.length;i++)
+        {
+           // await new Promise(resolve => setTimeout(resolve, 5000));
+          
+            setTimeout((i)=>{
+                ball = Object.keys(secondInnings[i]);
+                ballData = secondInnings[i][ball[0]];     
 
-    // // end of second innings
-    // playerPoints[playerData.captain]*=2;
-    // playerPoints[playerData.vice-captain]*=1.5;
-    socket.emit('matchEnd', playerPoints)
+                //point calculations for wickets
+                if(ballData.hasOwnProperty('wicket'))
+                {
+                    wickets1++;
+                    if(ballData.wicket.kind=='caught' || ballData.wicket.kind=='stumped')
+                    {
+                        if(playerPoints.hasOwnProperty(ballData.bowler))
+                            playerPoints[ballData.bowler]+= 25 ;
 
+                        if(ballData.hasOwnProperty('fielders'))
+                            ballData.wicket.fielders.forEach( fielder => {
+                                if(playerPoints.hasOwnProperty(fielder))
+                                    playerPoints[fielder]+= 15 ;
+                            });
+                    }
 
-    console.log('startMatch triggered');
-  });
-};
+                    else if(ballData.wicket.kind =='run out')
+                    {
+                        if(playerPoints.hasOwnProperty(ballData.wicket.fielders[0]))
+                            playerPoints[ballData.wicket.fielders[0]] += 25 ;
+                    }
+
+                    // this is for all other wicket kinds
+                    else if(playerPoints.hasOwnProperty(ballData.bowler))
+                        playerPoints[ballData.bowler]+=events[ballData.wicket.kind];
+
+                }
+
+                else( ballData.runs.batsman!=0)
+                 if( playerPoints.hasOwnProperty(ballData.batsman))
+                {
+                    playerPoints[ballData.batsman]+=ballData.runs.batsman;
+                    if(playerPoints[ballData.batsman]>100)
+                    playerPoints[ballData.batsman]+=8;
+                    else if(playerPoints[ballData.batsman]>50)
+                    playerPoints[ballData.batsman]+=8;
+                }
+                total1+=ballData.runs.total;
+
+              //  socket.emit('score',ballData)
+            socket.emit('score',{
+                'total':total1,
+                'wickets':wickets1,
+                'playerPoints':playerPoints
+            })
+        }, i*500,i); // setTimeout closing 
+        } // for loop closing 
+        
+       
+        
+            // // end of second innings
+            // playerPoints[playerData.captain]*=2;
+            // playerPoints[playerData.vice-captain]*=1.5;
+            socket.emit('matchEnd',playerPoints)
+        
+
+        console.log('startMatch triggered');
+      });
+
+    };
 
 module.exports = soc;

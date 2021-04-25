@@ -88,38 +88,6 @@ const SelectCaptainScreen: React.FC = () => {
 						</Card>
 					);
 				})}
-				{/* <Card className={classes.PlayerCard}>
-					<Typography className={classes.subTitle}>
-						{props.playername}
-					</Typography>
-					<Typography
-						className={classes.subTitle}
-						style={{ marginLeft: '36%' }}
-					>
-						{props.credits}
-					</Typography>
-					<IconButton
-						style={{ marginRight: '20px' }}
-						onClick={() => {
-							// console.log(inc);
-							// if (inc === 12) return;
-							if (isplus) {
-								props.isplusFunction();
-								// setinc((previnc) => previnc + 1);
-							} else {
-								props.isnotplusFunction();
-								// setinc((previnc) => previnc - 1);
-							}
-							setisplus(!isplus);
-						}}
-					>
-						{isplus ? (
-							<AddIcon style={{ color: '#07003b' }} />
-						) : (
-							<RemoveIcon style={{ color: '#07003b' }} />
-						)}
-					</IconButton>
-				</Card> */}
 			</Card>
 			<div>captain:{captain.captain}</div>
 			<div>vice captain :{captain.vicecaptain}</div>

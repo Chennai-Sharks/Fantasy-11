@@ -134,7 +134,10 @@ const RegisterScreen: React.FC = () => {
 										setOpenDialog(true);
 									})
 									.catch((error) => {
-										setsnackContent(error.toString());
+										setsnackContent(
+											error.toString() +
+												' You are already registered., login now'
+										);
 										setOpenAlert(true);
 									});
 

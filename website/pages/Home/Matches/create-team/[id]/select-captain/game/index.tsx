@@ -8,6 +8,8 @@ import {
 } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import React from 'react';
+import io, { Socket } from 'socket.io-client';
+import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
 import captainStore from '../../../../../../../stores/CaptainStore';
 import idStore from '../../../../../../../stores/saveidStore';
 import selectedPlayersStore from '../../../../../../../stores/SelectedPlayersStore';
@@ -15,13 +17,18 @@ import versusMatchStore from '../../../../../../../stores/VersusMatchStore';
 
 import classes from '../../../../../../../styles/CreateTeam.module.scss';
 
+let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
+
 const SelectCaptainScreen: React.FC = () => {
 	const matchStore = versusMatchStore((state) => state);
 	const selectedplayers = selectedPlayersStore((state) => state);
-	const captain = captainStore((state) => state);
+	const idstore = idStore((state) => state);
 
 	const router = useRouter();
-	const idstore = idStore((state) => state);
+
+	const [totalScore, setTotalScore] = React.useState(0);
+	const [wickets, setWickets] = React.useState(0);
+	const [playerPoints, setPlayerPoints] = React.useState({});
 
 	const myRedirectFunction = function () {
 		if (typeof window !== 'undefined') {
@@ -31,6 +38,27 @@ const SelectCaptainScreen: React.FC = () => {
 			});
 		}
 	};
+
+	React.useEffect(() => {
+		const connectionOptions: any = {
+			'force new connection': true,
+			reconnectionAttempts: 'Infinity',
+			timeout: 10000,
+			transports: ['websocket'],
+		};
+
+		socket = io('ws://localhost:5000/', connectionOptions);
+
+		socket.emit(
+			'startMatch',
+			selectedplayers.selectedPlayers,
+			`${idstore.id}.json`
+		);
+	});
+
+	React.useEffect(() => {
+		socket.on('score', (data) => console.log(data));
+	});
 
 	return (
 		<div className={classes.background}>
