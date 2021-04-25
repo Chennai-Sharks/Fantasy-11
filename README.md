@@ -10,25 +10,79 @@
    - [**Features**](#features)
    - [**Project Setup**](#project-setup)
    - [**Screenshots of the app**](#screenshots-of-the-app)
+   - [**Tools**](#tools)
+   - [Contributors](#contributors)
 
 
 ### Features
   
-   #### Something
-   - dklsfjakl
-   - alskfjlkdsf
-   - lkdsjfl
-   - kdsjflkjds
-   - fkljdslkfj
-   - dskjf
-   - lkdsjflk
-   - dsjfkl;jdslkfjdskl
-   - jfkldsj
-   - fkljdsklfj
-   - dsljflksdj
-   - fljds
-   - fj
-   - lskl
-   - f          
+  - Login and Signup via
+    - username - Password
+    - Facebook
+    - Phone OTP
+  - Random Dummy Match Selection
+  - Fantasy team creation based on selected match
+  - Selection of team captain and vice-captain
+  - Scoreboard
+
+----
+
+### Project Setup
+  
+  ```
+  cd into the client folder
+  cd into the server folder
+  ```
+----
+
+### Screenshots of the app
+
+| Register Page                        | Login Page                           | Send OTP page                                 | 
+| ------------------------------------ | ------------------------------------ | --------------------------------------------- | 
+| <img src="screenshots/register.png"> | <img src="screenshots/login.png">    | <img src="screenshots/update_password.png">   | 
+
+| Match Selection Page                        |  Selecting Players page               | Selecting Captain and vice-captain page    |
+| ------------------------------------------- | ------------------------------------- | ------------------------------------------ |
+| <img src="screenshots/forgot_password.png"> | <img src="screenshots/dashboard.png"> | <img src="screenshots/create_contact.png"> |
+
+| Match simulation page                       |  Scoreboard page                      | 
+| ------------------------------------------- | ------------------------------------- | 
+| <img src="screenshots/forgot_password.png"> | <img src="screenshots/dashboard.png"> | 
+
+----
+
+## Tools
+* [React](https://reactjs.org/)
+* [NodeJS](https://nodejs.org/en/) * [ExpressJS](https://expressjs.com/)
+* [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+* [socket.io](https://socket.io/)
+* [Visual Studio Code](https://code.visualstudio.com/) * [Atom](https://atom.io/)
+* [NPM](https://www.npmjs.com/) * [Yarn](https://yarnpkg.com/)
+
+----
+
+## Contributors
+
+<table>
+  <thead>
+    <tr>
+      <th><a href="https://github.com/Poujhit">Poujhit MR</a></th>
+      <th><a href="https://github.com/NaveenSriramR">Naveen Sriram R</a></th>
+      <th><a href="https://github.com/NikhileshJr08">Nikhilesh S</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+       <td align="center"><a href="https://github.com/Poujhit"><img width="64" src="https://avatars1.githubusercontent.com/u/39209037" alt="f"></a></td>
+       <td align="center"><a href="https://github.com/NaveenSriramR"><img width="64" src="https://avatars2.githubusercontent.com/u/40058339" alt="f"></a></td>
+       <td align="center"><a href="https://github.com/NikhileshJr08"><img width="64" src="https://avatars3.githubusercontent.com/u/54794049" alt="f"></a></td>
+    </tr>
+    </tbody>
+</table>
+
+----
+
+
+    
                
                
