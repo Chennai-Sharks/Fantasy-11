@@ -4,17 +4,19 @@ const colors = require('colors');
 const dotenv = require('dotenv');
 var cors = require('cors');
 const cookieParser = require('cookie-parser');
-const io = require('socket.io')(3000);
+const server = app.listen(3000)
+const io = require('socket.io')(server);
 
 const User = require('./models/User');
-
+// server.listen(3000, () => {
+//     console.log(`listening on 3000`);
+// });
 dotenv.config(); //To access/config the DB connection token
 
 //Import Routes
 const authRoute = require('./routes/auth');
 const matchRoute = require('./routes/match');
 const scoreboardRoute = require('./routes/scoreboard');
-const socketRoute = require('./routes/socket');
 
 //Connect to DB
 const connectDB = require('./config/db');
@@ -31,6 +33,17 @@ app.use(cookieParser());
 app.use('/api/users', authRoute);
 app.use('/api/match', matchRoute);
 app.use('/api/scoreboard', scoreboardRoute);
-app.use('/api/socket', socketRoute);
+
+// Socket initialisation
+io.on("connection", (socket) => {
+    console.log("New client connected");
+    socket.emit('test',"vanakam di maaple server lendhu")
+    require('./routes/socket')(socket);
+    
+    // socket.on("disconnect", () => {
+    //   console.log("Client disconnected");
+    //   clearInterval(interval);
+    // });
+  });
 
 app.listen(port, () => console.log(`Server is running on port ${port}`.yellow.bold));
