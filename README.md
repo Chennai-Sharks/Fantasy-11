@@ -34,19 +34,17 @@
   - Installing dependencies for server
   ```
   cd into the weebsite folder
-  Install dependencies
   npm install/yarn install 
   ```
   - Starting the client
   ```
   cd into the website folder
-  npm run dev
+  npm run dev/yarn dev
   ```
   
   - Installing dependencies for server
   ```
   cd into the server folder
-  Install dependencies
   npm install/yarn install
   ```
   - Starting up the server
@@ -58,9 +56,9 @@
 
 ### Screenshots of the app
 
-| Register Page                        | Login Page                           | Send OTP page                                 | 
-| ------------------------------------ | ------------------------------------ | --------------------------------------------- | 
-| <img src="screenshots/register.png"> | <img src="screenshots/login.png">    | <img src="screenshots/update_password.png">   | 
+| Register Page                             | Login Page                                | Send OTP page                                 | 
+| ------------------------------------      | ------------------------------------      | --------------------------------------------- | 
+| <img src="/src/assets/Register page.png"> | <img src="/src/assets/Login Page.png">    | <img src="/src/assets/OTP page.png">          | 
 
 | Match Selection Page                        |  Selecting Players page               | Selecting Captain and vice-captain page    |
 | ------------------------------------------- | ------------------------------------- | ------------------------------------------ |

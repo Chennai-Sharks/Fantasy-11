@@ -25,11 +25,13 @@ const SelectCaptainScreen: React.FC = () => {
 	const matchStore = versusMatchStore((state) => state);
 	const selectedplayers = selectedPlayersStore((state) => state);
 	const idstore = idStore((state) => state);
+	const captaindata = captainStore((state) => state);
 
 	const router = useRouter();
 
 	const [totalScore, setTotalScore] = React.useState(0);
 	const [wickets, setWickets] = React.useState(0);
+	const [a, b] = React.useState(0);
 	const [playerPoints, setPlayerPoints] = React.useState<any>({});
 
 	const myRedirectFunction = function () {
@@ -57,19 +59,28 @@ const SelectCaptainScreen: React.FC = () => {
 			'startMatch',
 			{
 				players: selectedplayers.selectedPlayers,
+				captain: captaindata.captain,
+				'vice-captain': captaindata.vicecaptain,
 			},
 
 			`${idstore.id}.json`
 		);
 		console.log('coneected');
-	}, [selectedplayers.selectedPlayers, idstore.id]);
+	}, [
+		selectedplayers.selectedPlayers,
+		idstore.id,
+		captaindata.captain,
+		captaindata.setvicecaptain,
+	]);
 
 	React.useEffect(() => {
 		socket.on('score', (data) => {
 			setWickets(data['wickets']);
 			setTotalScore(data['total']);
+			b(a + 1);
 			setPlayerPoints(data['playerPoints']);
 			console.log(data);
+			console.log(a);
 		});
 
 		console.log('coneected');
