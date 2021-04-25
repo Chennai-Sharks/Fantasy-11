@@ -11,7 +11,6 @@ interface EachPlayerProps {
 	credits: string;
 	isplusFunction: () => void;
 	isnotplusFunction: () => void;
-	isdiabled: boolean;
 }
 
 const EachPlayer: React.FC<EachPlayerProps> = (props) => {
@@ -21,14 +20,13 @@ const EachPlayer: React.FC<EachPlayerProps> = (props) => {
 	// console.log(inc);
 
 	return (
-		<div className={classes.PlayerCard}>
+		<Card className={classes.PlayerCard}>
 			<Typography className={classes.subTitle}>{props.playername}</Typography>
 			<Typography className={classes.subTitle} style={{ marginLeft: '36%' }}>
 				{props.credits}
 			</Typography>
 			<IconButton
 				style={{ marginRight: '20px' }}
-				disabled={props.isdiabled}
 				onClick={() => {
 					// console.log(inc);
 					// if (inc === 12) return;
@@ -48,7 +46,7 @@ const EachPlayer: React.FC<EachPlayerProps> = (props) => {
 					<RemoveIcon style={{ color: '#07003b' }} />
 				)}
 			</IconButton>
-		</div>
+		</Card>
 	);
 };
 

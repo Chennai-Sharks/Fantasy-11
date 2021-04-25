@@ -5,8 +5,8 @@ const dotenv = require('dotenv');
 var cors = require('cors');
 const cookieParser = require('cookie-parser');
 const server = app.listen(5000)
-
 const io = require('socket.io')(server);
+
 const User = require('./models/User');
 // server.listen(3000, () => {
 //     console.log(`listening on 3000`);
@@ -37,13 +37,7 @@ app.use('/api/scoreboard', scoreboardRoute);
 // Socket initialisation
 io.on("connection", (socket) => {
     console.log("New client connected");
-    // for(i=0;i<5;i++)
-    // {
-    //   await new Promise(resolve => setTimeout(resolve, 5000));
-    //    //setInterval(() => {
-    //     socket.emit('test',{ "iteration" : i})
-    //  // }, 5000);
-    // }
+    socket.emit('test',"vanakam di maaple server lendhu")
     require('./routes/socket')(socket);
     
     socket.on('disconnect',()=>socket.disconnect())

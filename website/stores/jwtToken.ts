@@ -12,7 +12,7 @@ const jwtStore = create<State>((set) => ({
 	setJwt: (email) =>
 		set((state) => ({
 			...state,
-			email: email,
+			jwt: email,
 		})),
 }));
 
