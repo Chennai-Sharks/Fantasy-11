@@ -6,7 +6,6 @@ router.get('/:id', async (req,res) => {
     let score = await User.findById(req.params.id);
     score = score.pointHistory;
     res.json(score);
-
   } catch(err) {
     res.status(400).send("Invalid ID");
   }
