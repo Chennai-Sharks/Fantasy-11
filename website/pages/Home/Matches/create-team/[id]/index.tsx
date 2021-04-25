@@ -5,6 +5,7 @@ import {
 	AppBar,
 	Button,
 	Card,
+	Fab,
 	makeStyles,
 	Toolbar,
 	Typography,
@@ -12,14 +13,16 @@ import {
 import axios from 'axios';
 import { useQuery } from 'react-query';
 
-import classes from '../../../../styles/CreateTeam.module.scss';
+import classes from '../../../../../styles/CreateTeam.module.scss';
 import { MoonLoader } from 'react-spinners';
 import Box from '@material-ui/core/Box';
 import LinearProgress, {
 	LinearProgressProps,
 } from '@material-ui/core/LinearProgress';
-import versusMatchStore from '../../../../stores/VersusMatchStore';
-import EachPlayer from '../../../../containers/Create-Match/EachPlayer';
+import versusMatchStore from '../../../../../stores/VersusMatchStore';
+import EachPlayer from '../../../../../containers/Create-Match/EachPlayer';
+import selectedPlayersStore from '../../../../../stores/SelectedPlayersStore';
+import idStore from '../../../../../stores/saveidStore';
 
 function LinearProgressWithLabel(
 	props: LinearProgressProps & { value: number }
@@ -40,10 +43,21 @@ function LinearProgressWithLabel(
 
 const CreateTeamScreen: React.FC = () => {
 	const [progress, setProgress] = React.useState(0);
+	const [creditprogress, setcreditProgress] = React.useState(100);
+
+	const idstore = idStore((state) => state);
+
 	const router = useRouter();
 
+	const [inc, setinc] = React.useState(0);
+
 	const matchStore = versusMatchStore((state) => state);
+	const players = selectedPlayersStore((state) => state);
+
 	const [selectedplayers, setselectedplayers] = React.useState(['']);
+	const [dis, setdis] = React.useState(false);
+
+	console.log(selectedplayers);
 
 	const [totalCredits, settotalCredits] = React.useState(100);
 	let id: string;
@@ -94,15 +108,22 @@ const CreateTeamScreen: React.FC = () => {
 							Create Team
 						</Typography>
 
-						<Typography variant='h6' style={{ marginLeft: '50%' }}>
+						{/* <Typography variant='h6' style={{ marginLeft: '50%' }}>
 							Credits left {`${totalCredits}`}
-						</Typography>
+						</Typography> */}
 					</Toolbar>
 					<Typography variant='h6' style={{ textAlign: 'center' }}>
 						{matchStore.oneTeam} vs {matchStore.twoTeam}
 					</Typography>
 					<div className={style.root}>
 						<LinearProgressWithLabel value={progress} />
+						{/* <Typography
+							variant='h6'
+							style={{ margin: '10px', textAlign: 'center' }}
+						>
+							Credits
+						</Typography>
+						<LinearProgressWithLabel value={creditprogress} /> */}
 					</div>
 				</AppBar>
 				<div className={classes.topTile}>
@@ -125,58 +146,80 @@ const CreateTeamScreen: React.FC = () => {
 								playername={eachPlayerName}
 								key={index}
 								credits={data['credits'][index]}
+								isdiabled={dis}
 								isnotplusFunction={() => {
-									setProgress((prevProgress) =>
-										prevProgress <= 20 ? 0 : prevProgress - 9.09090909091
-									);
+									// setcreditProgress(
+									// 	(prevprog) => prevprog + (data['credits'][index] as number)
+									// );
 
-									settotalCredits(
-										(totalcredits) =>
-											totalcredits + (data['credits'][index] as number)
-									);
-									console.log(totalCredits);
+									// console.log(totalCredits);
+									if (inc === 0) return;
 
-									// setselectedplayers((state) => {
-									// 	let newplayerslist = [...state];
-									// 	newplayerslist = newplayerslist.filter(
-									// 		(item) => item !== eachPlayerName
-									// 	);
-									// 	return newplayerslist;
-									// });
+									setselectedplayers((state) => {
+										let newplayerslist = [...state];
+										newplayerslist = newplayerslist.filter(
+											(item) => item !== eachPlayerName
+										);
+
+										return newplayerslist;
+									});
+									if (inc !== 11) {
+										setdis(false);
+										setProgress((prevProgress) =>
+											prevProgress <= 20 ? 0 : prevProgress - 9.09090909091
+										);
+									} else {
+										setdis(true);
+									}
+									setinc((previnc) => previnc - 1);
+
 									console.log(selectedplayers);
 								}}
 								isplusFunction={() => {
-									if (progress === 100 || totalCredits === 0) {
+									if (progress === 100 || totalCredits === 0 || inc === 11) {
+										setdis(true);
+
 										return;
 									}
-									console.log(totalCredits);
+									setdis(false);
 
 									setProgress((prevProgress) =>
 										prevProgress >= 85 ? 100 : prevProgress + 9.09090909091
 									);
-									settotalCredits(
-										(totalcredits) =>
-											totalcredits - (data['credits'][index] as number)
+									setcreditProgress(
+										(prevprog) => prevprog - (data['credits'][index] as number)
 									);
-									console.log(totalCredits);
+									// settotalCredits(
+									// 	(totalcredits) =>
+									// 		totalcredits - (data['credits'][index] as number)
+									// );
+									// console.log(totalCredits);
+									setinc((previnc) => previnc + 1);
 
-									// setselectedplayers((state) => [...state, eachPlayerName]);
+									setselectedplayers((state) => [...state, eachPlayerName]);
 								}}
 							/>
 						);
 					})
 				)}
 
-				<Button
-					onClick={() =>
-						setProgress((prevProgress) =>
-							prevProgress >= 85 ? 100 : prevProgress + 9.09090909091
-						)
-					}
-				>
-					hello
-				</Button>
+				<Button></Button>
 			</Card>
+			<Fab
+				variant='extended'
+				size='small'
+				color='primary'
+				aria-label='add'
+				onClick={() => {
+					if (inc !== 11) return;
+					selectedplayers.shift();
+					players.setSelectedPlayers(selectedplayers);
+					idstore.id = id;
+					router.push(`${id}/select-captain`);
+				}}
+			>
+				Continue
+			</Fab>
 		</div>
 	);
 };
