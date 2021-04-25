@@ -12,6 +12,7 @@
    - [**Screenshots of the app**](#screenshots-of-the-app)
    - [**Tools**](#tools)
    - [**Contributors**](#contributors)
+   - [**Contributing**](#contributing)
    - [**License**](#license)
 
 
@@ -30,16 +31,23 @@
 
 ### Project Setup
   
-  
+  - Installing dependencies for server
+  ```
+  cd into the weebsite folder
+  Install dependencies
+  npm install/yarn install 
+  ```
+  - Starting the client
   ```
   cd into the website folder
+  npm run dev
   ```
   
-  - Installing dependencies
+  - Installing dependencies for server
   ```
   cd into the server folder
   Install dependencies
-  npm install  
+  npm install/yarn install
   ```
   - Starting up the server
   ``` 
@@ -82,7 +90,7 @@
 <table>
   <thead>
     <tr>
-      <th><a href="https://github.com/Poujhit">Poujhit MR</a></th>
+      <th><a href="https://github.com/Poujhit">Poujhit MU</a></th>
       <th><a href="https://github.com/NaveenSriramR">Naveen Sriram R</a></th>
       <th><a href="https://github.com/NikhileshJr08">Nikhilesh S</a></th>
     </tr>
