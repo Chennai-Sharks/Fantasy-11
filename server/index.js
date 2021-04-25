@@ -39,11 +39,14 @@ io.on("connection", (socket) => {
     console.log("New client connected");
     socket.emit('test',"vanakam di maaple server lendhu")
     require('./routes/socket')(socket);
-
+    
+    socket.on('disconnect',()=>socket.disconnect())
+    
     // socket.on("disconnect", () => {
     //   console.log("Client disconnected");
     //   clearInterval(interval);
     // });
+    
   });
 
 app.listen(port, () => console.log(`Server is running on port ${port}`.yellow.bold));
