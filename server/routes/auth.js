@@ -19,6 +19,13 @@ router.post('/register', async (req, res) => {
   });
   if (emailExist) return res.status(400).send("Email already exists");
 
+  //this block of code is to check if the phone doesn't already exists in the db
+  const phoneExist = await User.findOne({
+    phone: req.body.phone
+  })
+
+  if (phoneExist) return res.status(400).send("Phone number already in use");
+
   //this block of code is to hash the password and store the hashed password in the database
   const salt = await bcryptjs.genSalt(10);
   const hashedPassword = await bcryptjs.hash(req.body.password, salt);
