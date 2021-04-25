@@ -103,9 +103,9 @@
        <td align="center"><a href="https://github.com/NikhileshJr08"><img width="64" src="https://avatars.githubusercontent.com/u/63784914" alt="f"></a></td>
     </tr>
     <tr>
-        <td align="center"> :hammer::construction::pencil: </td>
-        <td align="center"> :hammer::construction: </td>
-        <td align="center"> :warning::pencil: </td>
+        <td align="center"> Front-end</td>
+        <td align="center"> Back-end</td>
+        <td align="center"> Back-end</td>
     </tr>
   </tbody>
 </table>
@@ -123,3 +123,7 @@ If you are new to Git or GitHub, check out this [small tutorial from our team](h
 
 ## LICENSE
 This project is open source and available under the [MIT License](https://github.com/Chennai-Sharks/Fantasy-11).
+
+----
+
+   <p align="center">Made with :heart:, :computer: and some :coffee:</p>
