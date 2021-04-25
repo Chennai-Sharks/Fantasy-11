@@ -8,9 +8,7 @@ const server = app.listen(5000)
 const io = require('socket.io')(server);
 
 const User = require('./models/User');
-// server.listen(3000, () => {
-//     console.log(`listening on 3000`);
-// });
+
 dotenv.config(); //To access/config the DB connection token
 
 //Import Routes
@@ -40,12 +38,7 @@ io.on("connection", (socket) => {
     socket.emit('test',"vanakam di maaple server lendhu")
     require('./routes/socket')(socket);
     
-    socket.on('disconnect',()=>socket.disconnect())
-    
-    // socket.on("disconnect", () => {
-    //   console.log("Client disconnected");
-    //   clearInterval(interval);
-    // });
+    socket.on('disconnect',()=>socket.disconnect());
     
   });
 
