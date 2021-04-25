@@ -19,6 +19,13 @@ router.post('/register', async (req, res) => {
   });
   if (emailExist) return res.status(400).send("Email already exists");
 
+  //this block of code is to check if the phone doesn't already exists in the db
+  const phoneExist = await User.findOne({
+    phone: req.body.phone
+  })
+
+  if (phoneExist) return res.status(400).send("Phone number already in use");
+
   //this block of code is to hash the password and store the hashed password in the database
   const salt = await bcryptjs.genSalt(10);
   const hashedPassword = await bcryptjs.hash(req.body.password, salt);
@@ -62,6 +69,15 @@ router.post('/login', async (req, res) => {
   //create and assigning the tokens
   const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
   res.header('auth_Token', token).send(token);
+});
+
+//facebook login which checks if the email is present or not
+router.get('/facebook/login', async (req,res) => {
+  const user = await User.findOne({email: req.body.email});
+  if(!user) return res.status(400).send("Email not found");
+
+  const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
+  res.header('authToken', token).send(token);
 });
 
 
