@@ -4,9 +4,9 @@ const colors = require('colors');
 const dotenv = require('dotenv');
 var cors = require('cors');
 const cookieParser = require('cookie-parser');
-const server = app.listen(3000)
-const io = require('socket.io')(server);
+const server = app.listen(5000)
 
+const io = require('socket.io')(server);
 const User = require('./models/User');
 // server.listen(3000, () => {
 //     console.log(`listening on 3000`);
@@ -37,7 +37,7 @@ app.use('/api/scoreboard', scoreboardRoute);
 // Socket initialisation
 io.on("connection", (socket) => {
     console.log("New client connected");
-    socket.emit('test',"vanakam di maaple server lendhu")
+    socket.emit('test',{ "hi" : " message from server"})
     require('./routes/socket')(socket);
     
     // socket.on("disconnect", () => {
