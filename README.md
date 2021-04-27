@@ -17,75 +17,83 @@
    - [**Contributing**](#contributing)
    - [**License**](#license)
 
-----
+---
 
 ### Features
-  
-  - Login and Signup via
-    - username - Password
-    - Facebook
-    - Phone OTP
-  - Random Dummy Match Selection
-  - Fantasy team creation based on selected match
-  - Selection of team captain and vice-captain
-  - Scoreboard
 
-----
+- Login and Signup via
+  - username - Password
+  - Facebook
+  - Phone OTP
+- Random Dummy Match Selection
+- Fantasy team creation based on selected match
+- Selection of team captain and vice-captain
+- Scoreboard
+
+---
 
 ### Project Setup
-  
-  - Installing dependencies for server
-  ```
-  cd into the weebsite folder
-  npm install/yarn install 
-  ```
-  - Starting the client
-  ```
-  cd into the website folder
-  npm run dev/yarn dev
-  ```
-  
-  - Installing dependencies for server
-  ```
-  cd into the server folder
-  npm install/yarn install
-  ```
-  - Starting up the server
-  ``` 
-  cd into server
-  npm start
-  ```
-----
+
+- Installing dependencies for server
+
+```
+cd into the website folder
+npm install/yarn install
+```
+
+- Starting the client
+
+```
+cd into the website folder
+npm run dev/yarn dev
+```
+
+- Installing dependencies for server
+
+```
+cd into the server folder
+npm install/yarn install
+```
+
+- Starting up the server
+
+```
+cd into server
+npm start
+```
+
+---
 
 ### Screenshots of the app
 
-| Register Page                             | Login Page                                | Send OTP page                                 | 
-| ------------------------------------      | ------------------------------------      | --------------------------------------------- | 
-| <img src="/src/assets/Register page.png"> | <img src="/src/assets/Login Page.png">    | <img src="/src/assets/OTP page.png">          | 
+| Register Page                             | Login Page                             | Send OTP page                        |
+| ----------------------------------------- | -------------------------------------- | ------------------------------------ |
+| <img src="/src/assets/Register page.png"> | <img src="/src/assets/Login Page.png"> | <img src="/src/assets/OTP page.png"> |
 
-| Match Selection Page                        |  Selecting Players page               | Selecting Captain and vice-captain page    |
+| Match Selection Page                        | Selecting Players page                | Selecting Captain and vice-captain page    |
 | ------------------------------------------- | ------------------------------------- | ------------------------------------------ |
 | <img src="screenshots/forgot_password.png"> | <img src="screenshots/dashboard.png"> | <img src="screenshots/create_contact.png"> |
 
-| Match simulation page                       |  Scoreboard page                      | 
-| ------------------------------------------- | ------------------------------------- | 
-| <img src="screenshots/forgot_password.png"> | <img src="screenshots/dashboard.png"> | 
+| Match simulation page                       | Scoreboard page                       |
+| ------------------------------------------- | ------------------------------------- |
+| <img src="screenshots/forgot_password.png"> | <img src="screenshots/dashboard.png"> |
 
-----
+---
 
 ## Tools
-* [React](https://reactjs.org/)
-* [NodeJS](https://nodejs.org/en/) 
-* [ExpressJS](https://expressjs.com/)
-* [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-* [socket.io](https://socket.io/)
-* [Postman](https://www.postman.com/)
-* [Visual Studio Code](https://code.visualstudio.com/) 
-* [Atom](https://atom.io/)
-* [NPM](https://www.npmjs.com/) 
-* [Yarn](https://yarnpkg.com/)
 
-----
+- [React](https://reactjs.org/)
+- [NodeJS](https://nodejs.org/en/)
+- [ExpressJS](https://expressjs.com/)
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+- [socket.io](https://socket.io/)
+- [Postman](https://www.postman.com/)
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [Atom](https://atom.io/)
+- [NPM](https://www.npmjs.com/)
+- [Yarn](https://yarnpkg.com/)
+
+---
 
 ## Contributors
 
@@ -111,21 +119,23 @@
   </tbody>
 </table>
 
-----
+---
 
 ## Contributing
+
 - We welcome all suggestions and changes
 - Fork the repository, make the desired changes and open a pull request
 
 Fork? Pull request? What is all that? I don't know how to use GitHub!
 If you are new to Git or GitHub, check out this [small tutorial from our team](https://github.com/ASS-G/Git-Training-Kit) and [GitHub](https://guides.github.com/activities/hello-world/)
 
-----
+---
 
 ## LICENSE
+
 This project is open source and available under the [MIT License](https://github.com/Chennai-Sharks/Fantasy-11).
 
-----
+---
 
    <p align="center">Made with :heart:, :computer: and some :coffee:</p>
 </div>
