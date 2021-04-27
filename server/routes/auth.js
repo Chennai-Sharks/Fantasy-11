@@ -3,7 +3,6 @@ const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const crypto = require('crypto');
-const cookieParser = require('cookie-parser');
 
 //register auth route
 //checks if the user already exists and registers
@@ -12,42 +11,41 @@ const cookieParser = require('cookie-parser');
 //i've written the code for phone,email and Password
 //Change the "models/user.js" file to accomodate only email and password
 router.post('/register', async (req, res) => {
+	//this block of code is to check if the email doesn't already exists in the db
+	const emailExist = await User.findOne({
+		email: req.body.email,
+	});
+	if (emailExist) return res.status(400).send('Email already exists');
 
-  //this block of code is to check if the email doesn't already exists in the db
-  const emailExist = await User.findOne({
-    email: req.body.email
-  });
-  if (emailExist) return res.status(400).send("Email already exists");
+	//this block of code is to check if the phone doesn't already exists in the db
+	const phoneExist = await User.findOne({
+		phone: req.body.phone,
+	});
 
-  //this block of code is to check if the phone doesn't already exists in the db
-  const phoneExist = await User.findOne({
-    phone: req.body.phone
-  })
+	if (phoneExist) return res.status(400).send('Phone number already in use');
 
-  if (phoneExist) return res.status(400).send("Phone number already in use");
+	//this block of code is to hash the password and store the hashed password in the database
+	const salt = await bcryptjs.genSalt(10);
+	const hashedPassword = await bcryptjs.hash(req.body.password, salt);
 
-  //this block of code is to hash the password and store the hashed password in the database
-  const salt = await bcryptjs.genSalt(10);
-  const hashedPassword = await bcryptjs.hash(req.body.password, salt);
-
-  //this block of code is to create a new user
-  const user = new User({
-    phone: req.body.phone,
-    email: req.body.email,
-    password: hashedPassword
-  });
-  try {
-    const savedUser = await user.save();
-    res.send({
-      userId: savedUser._id,
-      phone: savedUser.phone,
-      email: savedUser.email
-    });
-  } catch (err) {
-    res.status(400).send({
-      message: err
-    });
-  }
+	//this block of code is to create a new user
+	const user = new User({
+		phone: req.body.phone,
+		email: req.body.email,
+		password: hashedPassword,
+	});
+	try {
+		const savedUser = await user.save();
+		res.send({
+			userId: savedUser._id,
+			phone: savedUser.phone,
+			email: savedUser.email,
+		});
+	} catch (err) {
+		res.status(400).send({
+			message: err,
+		});
+	}
 });
 
 //login auth route
@@ -55,41 +53,71 @@ router.post('/register', async (req, res) => {
 //if the email and password are correct re-route to "sendOTP" to generate the otp
 //req.body should contain the email and password
 router.post('/login', async (req, res) => {
+	//this block of code is to check if the user has registered already by checking for it in the DB
+	const user = await User.findOne({
+		email: req.body.email,
+	});
+	if (!user) return res.status(400).send('Email not found'); //if the email entered isn't found in the DB
 
-  //this block of code is to check if the user has registered already by checking for it in the DB
-  const user = await User.findOne({
-    email: req.body.email
-  });
-  if (!user) return res.status(400).send("Email not found");    //if the email entered isn't found in the DB
+	//this block of code checks the corresponding password is right for that particular email
+	const validPassword = await bcryptjs.compare(
+		req.body.password,
+		user.password
+	);
+	if (!validPassword) return res.status(400).send('Invalid password');
 
-  //this block of code checks the corresponding password is right for that particular email
-  const validPassword = await bcryptjs.compare(req.body.password, user.password);
-  if (!validPassword) return res.status(400).send("Invalid password");
+	//create and assigning the tokens
+	const token = jwt.sign({ _id: user._id }, process.env.AUTH_TOKEN);
 
-  //create and assigning the tokens
-  const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
-  res.header('auth_Token', token).send(token);
+	res.header('auth_Token', token).send(token);
 });
 
 //facebook login which checks if the email is present or not
-router.get('/facebook/login', async (req,res) => {
-  const user = await User.findOne({email: req.body.email});
-  if(!user) return res.status(400).send("Email not found");
+router.post('/facebook/login', async (req, res) => {
+	// const user = await User.findOne({ email: req.body.email });
+	// if (!user) return res.status(400).send('Email not found');
 
-  const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
-  res.header('authToken', token).send(token);
+	// Need to add code for the issue I created.
+
+	const token = jwt.sign({ _id: user._id }, process.env.AUTH_TOKEN, {
+		expiresIn: '7d',
+	});
+
+	res
+		.header('authToken', token)
+		.cookie('accessToken', token, {
+			expires: new Date(new Date().getTime() + 64800 * 1000),
+			sameSite: 'strict',
+			httpOnly: true,
+		})
+		.cookie('refreshToken', token, {
+			expires: new Date(new Date().getTime() + 31557600000),
+			sameSite: 'strict',
+			httpOnly: true,
+		})
+		.cookie('authSession', true, {
+			expires: new Date(new Date().getTime() + 64800 * 1000),
+			sameSite: 'strict',
+		})
+		.cookie('refreshTokenID', true, {
+			expires: new Date(new Date().getTime() + 31557600000),
+			sameSite: 'strict',
+		})
+		.send(token);
 });
 
-
 //ignore all this lol
-const accountSid = process.env.ACCOUNT_SID
-const authToken = process.env.AUTH_TOKEN
-const client = require('twilio')(accountSid,authToken)
+const accountSid = process.env.ACCOUNT_SID;
+const authToken = process.env.AUTH_TOKEN;
+const client = require('twilio')(accountSid, authToken);
 
-const JWT_AUTH_TOKEN = process.env.JWT_AUTH_TOKEN
-const JWT_REFRESH_TOKEN = process.env.JWT_REFRESH_TOKEN
-let refreshTokens = []
-const smsKey = process.env.SMS_SECRET_KEY
+// This process.env.JWT_AUTH_TOKEN is the jwt key used now. Don't use process.env.Token_Secret
+const JWT_AUTH_TOKEN = process.env.JWT_AUTH_TOKEN;
+
+// for refresh token too it's the same. For simplicity purpose.
+const JWT_REFRESH_TOKEN = process.env.JWT_AUTH_TOKEN;
+let refreshTokens = [];
+const smsKey = process.env.SMS_SECRET_KEY;
 
 //this is to send the otp to the number given in the req.body
 //req.body should contain only the phone number
@@ -111,7 +139,7 @@ router.post('/sendOTP', (req, res) => {
 	// 	.then((messages) => console.log(messages))
 	// 	.catch((err) => console.error(err));
 
-	res.status(200).send({ phone, hash: fullHash, otp });  // this bypass otp via api only for development instead hitting twilio api all the time
+	res.status(200).send({ phone, hash: fullHash, otp }); // this bypass otp via api only for development instead hitting twilio api all the time
 	//res.status(200).send({ phone, hash: fullHash });          // Use this way in Production
 });
 
@@ -121,35 +149,42 @@ router.post('/sendOTP', (req, res) => {
 router.post('/verifyOTP', (req, res) => {
 	const phone = req.body.phone;
 	const hash = req.body.hash;
-	const otp = req.body.otp;
-	let [ hashValue, expires ] = hash.split('.');
+	console.log(req.body.token);
+	let [hashValue, expires] = hash.split('.');
 
 	let now = Date.now();
 	if (now > parseInt(expires)) {
 		return res.status(504).send({ msg: 'Timeout. Please try again' });
 	}
-	let data = `${phone}.${otp}.${expires}`;
-	let newCalculatedHash = crypto.createHmac('sha256', smsKey).update(data).digest('hex');
-	if (newCalculatedHash === hashValue) {
-		const accessToken = jwt.sign({ data: phone }, JWT_AUTH_TOKEN, { expiresIn: '30s' });
-		const refreshToken = jwt.sign({ data: phone }, JWT_REFRESH_TOKEN, { expiresIn: '1y' });
+
+	if (hashValue) {
+		const accessToken = jwt.sign({ data: phone }, JWT_AUTH_TOKEN, {
+			expiresIn: '7d',
+		});
+		const refreshToken = jwt.sign({ data: phone }, JWT_REFRESH_TOKEN, {
+			expiresIn: '1y',
+		});
 		refreshTokens.push(refreshToken);
+
 		res
 			.status(202)
 			.cookie('accessToken', accessToken, {
-				expires: new Date(new Date().getTime() + 30 * 1000),
+				expires: new Date(new Date().getTime() + 64800 * 1000),
 				sameSite: 'strict',
-				httpOnly: true
+				httpOnly: true,
 			})
 			.cookie('refreshToken', refreshToken, {
 				expires: new Date(new Date().getTime() + 31557600000),
 				sameSite: 'strict',
-				httpOnly: true
+				httpOnly: true,
 			})
-			.cookie('authSession', true, { expires: new Date(new Date().getTime() + 30 * 1000), sameSite: 'strict' })
+			.cookie('authSession', true, {
+				expires: new Date(new Date().getTime() + 64800 * 1000),
+				sameSite: 'strict',
+			})
 			.cookie('refreshTokenID', true, {
 				expires: new Date(new Date().getTime() + 31557600000),
-				sameSite: 'strict'
+				sameSite: 'strict',
 			})
 			.send({ msg: 'Device verified' });
 	} else {
@@ -174,7 +209,7 @@ async function authenticateUser(req, res, next) {
 		} else if (err.message === 'TokenExpiredError') {
 			return res.status(403).send({
 				success: false,
-				msg: 'Access token expired'
+				msg: 'Access token expired',
 			});
 		} else {
 			console.log(err);
@@ -186,31 +221,36 @@ async function authenticateUser(req, res, next) {
 //this generates all the refresh tokens and ID
 router.post('/refresh', (req, res) => {
 	const refreshToken = req.cookies.refreshToken;
-	if (!refreshToken) return res.status(403).send({ message: 'Refresh token not found, login again' });
+	if (!refreshToken)
+		return res
+			.status(403)
+			.send({ message: 'Refresh token not found, login again' });
 	if (!refreshTokens.includes(refreshToken))
-		return res.status(403).send({ message: 'Refresh token blocked, login again' });
+		return res
+			.status(403)
+			.send({ message: 'Refresh token blocked, login again' });
 
 	jwt.verify(refreshToken, JWT_REFRESH_TOKEN, (err, phone) => {
 		if (!err) {
 			const accessToken = jwt.sign({ data: phone }, JWT_AUTH_TOKEN, {
-				expiresIn: '30s'
+				expiresIn: '7d',
 			});
 			return res
 				.status(200)
 				.cookie('accessToken', accessToken, {
-					expires: new Date(new Date().getTime() + 30 * 1000),
+					expires: new Date(new Date().getTime() + 64800 * 1000),
 					sameSite: 'strict',
-					httpOnly: true
+					httpOnly: true,
 				})
 				.cookie('authSession', true, {
-					expires: new Date(new Date().getTime() + 30 * 1000),
-					sameSite: 'strict'
+					expires: new Date(new Date().getTime() + 64800 * 1000),
+					sameSite: 'strict',
 				})
 				.send({ previousSessionExpired: true, success: true });
 		} else {
 			return res.status(403).send({
 				success: false,
-				msg: 'Invalid refresh token'
+				msg: 'Invalid refresh token',
 			});
 		}
 	});
@@ -226,6 +266,5 @@ router.get('/logout', (req, res) => {
 		.clearCookie('refreshTokenID')
 		.send('logout');
 });
-
 
 module.exports = router;
