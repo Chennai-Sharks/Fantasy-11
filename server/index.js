@@ -4,7 +4,7 @@ const colors = require('colors');
 const dotenv = require('dotenv');
 var cors = require('cors');
 const cookieParser = require('cookie-parser');
-const server = app.listen(5000)
+const server = app.listen(5000);
 const io = require('socket.io')(server);
 
 const User = require('./models/User');
@@ -23,9 +23,14 @@ const port = process.env.PORT;
 
 //Middleware
 app.use(express.json());
-app.use(cors());
+app.use(
+	cors({
+		origin: 'http://localhost:3000',
+		credentials: true, //access-control-allow-credentials:true
+		optionSuccessStatus: 200,
+	})
+);
 app.use(cookieParser());
-
 
 //Route Middlewares
 app.use('/api/users', authRoute);
@@ -33,13 +38,14 @@ app.use('/api/match', matchRoute);
 app.use('/api/scoreboard', scoreboardRoute);
 
 // Socket initialisation
-io.on("connection", (socket) => {
-    console.log("New client connected");
-    socket.emit('test',"vanakam di maaple server lendhu")
-    require('./routes/socket')(socket);
-    
-    socket.on('disconnect',()=>socket.disconnect());
-    
-  });
+io.on('connection', (socket) => {
+	console.log('New client connected');
+	socket.emit('test', 'vanakam di maaple server lendhu');
+	require('./routes/socket')(socket);
 
-app.listen(port, () => console.log(`Server is running on port ${port}`.yellow.bold));
+	socket.on('disconnect', () => socket.disconnect());
+});
+
+app.listen(port, () =>
+	console.log(`Server is running on port ${port}`.yellow.bold)
+);
