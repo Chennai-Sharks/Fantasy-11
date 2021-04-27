@@ -3,6 +3,7 @@
 		"target": "es5",
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
+		"baseUrl": ".",
 		"skipLibCheck": true,
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
@@ -12,6 +13,13 @@
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"isolatedModules": true,
+		"paths": {
+			"@styles/*": ["styles/*"],
+			"@stores/*": ["stores/*"],
+			"@pages/*": ["pages/*"],
+			"@components/*": ["components/*"],
+			"@containers/*": ["containers/*"]
+		},
 		"jsx": "preserve"
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
