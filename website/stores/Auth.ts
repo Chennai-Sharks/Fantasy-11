@@ -5,20 +5,25 @@ const cookies = new Cookies();
 axios.defaults.withCredentials = true;
 class Auth {
 	authenticated: boolean;
+	accessToken: string;
+	refreshToken: string;
 	constructor() {
 		this.authenticated = false;
+		this.accessToken = '';
+		this.refreshToken = '';
 	}
 
 	isAuthenticated() {
-		const accessToken = cookies.get('authSession');
+		this.accessToken = cookies.get('authSession');
 		const refreshToken = cookies.get('refreshTokenID');
-		if (!accessToken && !refreshToken) {
+		this.refreshToken = cookies.get('refreshToken');
+		if (!this.accessToken && !refreshToken) {
 			return (this.authenticated = false);
 		}
-		if (accessToken && refreshToken) {
+		if (this.accessToken && refreshToken) {
 			return (this.authenticated = true);
 		}
-		if (!accessToken && refreshToken) {
+		if (!this.accessToken && refreshToken) {
 			axios
 				.post('http://localhost:8888/refresh', {
 					withCredentials: true,

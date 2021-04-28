@@ -42,7 +42,7 @@ const Home: React.FC = () => {
 
 	React.useEffect(() => {
 		if (jwt.jwt && jwt.jwt.length > 2) {
-			router.push('home/matches');
+			router.push('Home/Matches');
 		}
 	}, [jwt.jwt]);
 

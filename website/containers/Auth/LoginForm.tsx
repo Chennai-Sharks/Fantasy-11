@@ -208,7 +208,7 @@ const LoginForm: React.FC = () => {
 								hash: hash.hash,
 							})
 							.then(() => {
-								router.replace('/home/matches');
+								router.replace('/Home/Matches');
 							})
 							.catch((error) => {
 								setsnackContent(error.toString());
