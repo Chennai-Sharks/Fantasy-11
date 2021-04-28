@@ -79,9 +79,13 @@ router.post('/facebook/login', async (req, res) => {
 
 	// Need to add code for the issue I created.
 
-	const token = jwt.sign({ _id: user._id }, process.env.AUTH_TOKEN, {
-		expiresIn: '7d',
-	});
+	const token = jwt.sign(
+		{ email: req.body.email },
+		process.env.JWT_AUTH_TOKEN,
+		{
+			expiresIn: '7d',
+		}
+	);
 
 	res
 		.header('authToken', token)
@@ -116,6 +120,7 @@ const JWT_AUTH_TOKEN = process.env.JWT_AUTH_TOKEN;
 
 // for refresh token too it's the same. For simplicity purpose.
 const JWT_REFRESH_TOKEN = process.env.JWT_AUTH_TOKEN;
+
 let refreshTokens = [];
 const smsKey = process.env.SMS_SECRET_KEY;
 
