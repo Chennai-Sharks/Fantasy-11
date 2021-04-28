@@ -1,21 +1,15 @@
-import {
-	Button,
-	Card,
-	Snackbar,
-	TextField,
-	Typography,
-} from '@material-ui/core';
+import { Button, Snackbar, TextField } from '@material-ui/core';
 import React from 'react';
-import auth from '../../stores/Auth';
 
-import classes from '../../styles/Login.module.scss';
+import classes from '@styles/Login.module.scss';
 import { Field, Form, Formik } from 'formik';
-import userDataStore from '../../stores/UserDataStore';
+import userDataStore from '@stores/UserDataStore';
 import axios, { AxiosResponse } from 'axios';
 import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
 import { HashLoader } from 'react-spinners';
-import jwtStore from '../../stores/jwtToken';
+import jwtStore from '@stores/jwtToken';
+import hashStore from '@stores/hashStore';
 
 interface UserDataInitialForm {
 	email: string;
@@ -31,8 +25,6 @@ interface JwtToken {
 }
 
 const LoginForm: React.FC = () => {
-	// console.log(auth.isAuthenticated());
-
 	const initialPhoneFormValues: UserDataPhoneForm = {
 		otp: '',
 	};
@@ -40,9 +32,8 @@ const LoginForm: React.FC = () => {
 	const [openAlert, setOpenAlert] = React.useState(false);
 	const [snackContent, setsnackContent] = React.useState(' ');
 
-	const [hash, setHash] = React.useState('');
-
 	const jwt = jwtStore((state) => state);
+	const hash = hashStore((state) => state);
 
 	const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
 		if (reason === 'clickaway') {
@@ -78,9 +69,15 @@ const LoginForm: React.FC = () => {
 
 	const verifyOtpMutation = useMutation(
 		(verifyOtp: { phone: string; hash: string; otp: string }) => {
-			return axios.post('http://localhost:4000/api/users/verifyOTP', {
-				...verifyOtp,
-			});
+			return axios.post(
+				'http://localhost:4000/api/users/verifyOTP',
+				{
+					...verifyOtp,
+				},
+				{
+					withCredentials: true,
+				}
+			);
 		}
 	);
 
@@ -110,13 +107,11 @@ const LoginForm: React.FC = () => {
 						mutation
 							.mutateAsync(values)
 							.then((response: AxiosResponse<JwtToken>) => {
-								console.log(response.data.token);
-								console.log(response.data);
 								jwt.setJwt(response.data.token);
 								mutationOtp
 									.mutateAsync(values.phone)
 									.then((res) => {
-										setHash(res.data.hash as string);
+										hash.sethash(res.data.hash);
 										console.log(res.data);
 									})
 									.catch((error) => {
@@ -135,21 +130,10 @@ const LoginForm: React.FC = () => {
 					}}
 				>
 					{({ isSubmitting, errors }) => (
-						<Form
-							style={{
-								display: 'flex',
-								flexDirection: 'column',
-								width: '80%',
-								height: '70%',
-								marginTop: '10px',
-								overflowX: 'hidden',
-								overflowY: 'auto',
-							}}
-						>
+						<Form className={classes.FormEmailStyle}>
 							<Field
 								variant='outlined'
 								type='input'
-								autoFocus={true}
 								name='email'
 								style={{
 									marginBottom: '30px',
@@ -164,7 +148,6 @@ const LoginForm: React.FC = () => {
 							<Field
 								variant='outlined'
 								type='input'
-								autoFocus={true}
 								name='phone'
 								style={{
 									marginBottom: '30px',
@@ -208,7 +191,6 @@ const LoginForm: React.FC = () => {
 				</Formik>
 			) : (
 				<Formik
-					// validateOnChange={true}
 					initialValues={initialPhoneFormValues}
 					validate={(values) => {
 						const errors: Record<string, string> = {};
@@ -223,10 +205,9 @@ const LoginForm: React.FC = () => {
 							.mutateAsync({
 								otp: values.otp,
 								phone: userData.phone,
-								hash: hash,
+								hash: hash.hash,
 							})
-							.then((res) => {
-								console.log(res);
+							.then(() => {
 								router.replace('/home/matches');
 							})
 							.catch((error) => {
