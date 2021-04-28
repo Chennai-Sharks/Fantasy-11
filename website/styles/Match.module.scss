@@ -6,22 +6,32 @@
 	height: 100%;
 	position: absolute;
 	display: flex;
-	flex-direction: column;
-	// align-items: center;
-	// justify-content: center;
+	flex-direction: row;
 }
 
 .leftPortionCard {
-	width: 40%;
+	width: 500px;
 	height: 100%;
 	display: flex;
+	overflow: auto;
 	flex-direction: column;
 	overflow-x: hidden;
 	overflow-y: auto;
 	border-radius: 0px;
 	align-items: center;
-
-	// border-right: 5px solid #fd3a4b;
+	@include responsive(tablet) {
+		z-index: 2;
+	}
+}
+.rightPortion {
+	left: 500px;
+	width: calc(100% - 500px);
+	position: fixed;
+	display: grid;
+	place-items: center;
+	@media screen and (max-width: 750px) {
+		visibility: hidden;
+	}
 }
 
 .title {
@@ -30,12 +40,25 @@
 	color: #07003b;
 	margin-top: 10px;
 	font-weight: bold;
-	@include responsive(mobile) {
-		text-align: center;
-		font-size: 35px;
-	}
+
 	@include responsive(tablet) {
 		text-align: center;
 		font-size: 35px;
 	}
+	@include responsive(mobile) {
+		text-align: center;
+		font-size: 35px;
+	}
+}
+
+.logo {
+	margin-top: 20%;
+}
+
+.subTitle {
+	font-family: Rubik, sans-serif;
+	font-size: 20px;
+	color: #07003b;
+	padding: 15px;
+	text-align: center;
 }
