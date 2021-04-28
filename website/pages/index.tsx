@@ -4,9 +4,48 @@ import { Card, Typography, Button } from '@material-ui/core';
 import { useRouter } from 'next/router';
 
 import classes from '../styles/Home.module.scss';
+import { useMutation } from 'react-query';
+import axios from 'axios';
+import jwtStore from '@stores/jwtToken';
+
+import FacebookLogin from 'react-facebook-login';
 
 const Home: React.FC = () => {
 	const router = useRouter();
+
+	const faceBookMutation = useMutation((newUser: { email: string }) => {
+		return axios.post(
+			'http://localhost:4000/api/users/facebook/login',
+			{
+				...newUser,
+			},
+			{
+				withCredentials: true,
+			}
+		);
+	});
+
+	const jwt = jwtStore((state) => state);
+
+	const responseFacebook = (response: any) => {
+		console.log(response);
+		faceBookMutation
+			.mutateAsync({
+				email: response.email,
+			})
+			.then((data) => {
+				jwt.setJwt(data.data);
+				console.log(jwt.jwt);
+			})
+			.catch((error) => {});
+	};
+
+	React.useEffect(() => {
+		if (jwt.jwt && jwt.jwt.length > 2) {
+			router.push('home/matches');
+		}
+	}, [jwt.jwt]);
+
 	return (
 		<div className={classes.background}>
 			<Card
@@ -47,7 +86,17 @@ const Home: React.FC = () => {
 						Register
 					</Button>
 				</div>
+
+				<FacebookLogin
+					appId='801446123894360'
+					callback={responseFacebook}
+					fields='id,email,name'
+					size='small'
+				/>
 			</Card>
+			<Typography className={classes.subTitle}>
+				Copyright 2021 Chennai Sharks
+			</Typography>
 		</div>
 	);
 };
