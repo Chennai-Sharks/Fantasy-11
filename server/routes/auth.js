@@ -154,7 +154,6 @@ router.post('/sendOTP', (req, res) => {
 router.post('/verifyOTP', (req, res) => {
 	const phone = req.body.phone;
 	const hash = req.body.hash;
-	console.log(req.body.token);
 	let [hashValue, expires] = hash.split('.');
 
 	let now = Date.now();
