@@ -19,7 +19,7 @@ import { useRouter } from 'next/router';
 import classes from '../../../styles/Match.module.scss';
 import versusMatchStore from '../../../stores/VersusMatchStore';
 import Head from 'next/head';
-import { motion, Variant } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const stagger = {
 	animate: {
