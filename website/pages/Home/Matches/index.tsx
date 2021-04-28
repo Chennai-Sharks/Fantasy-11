@@ -85,10 +85,13 @@ const MatchScreen: React.FC = () => {
 					{isLoading ? (
 						<MoonLoader />
 					) : isError ? (
-						<Button onClick={() => refetch()}>
-							You are not authenticated or the Server is busy right Now.Try
-							Again
-						</Button>
+						<div>
+							<Typography className={classes.subTitle}>
+								You are not authenticated or the Server is busy right Now.
+							</Typography>
+
+							<Button onClick={() => refetch()}>Try Again</Button>
+						</div>
 					) : (
 						(data.teamInfo as Array<{
 							match: string;
