@@ -12,12 +12,12 @@ import { useQuery } from 'react-query';
 import Image from 'next/image';
 
 import { MoonLoader } from 'react-spinners';
-import MatchCard from '../../../containers/Match/MatchCard';
+import MatchCard from '@containers/Match/MatchCard';
 
 import { useRouter } from 'next/router';
 
-import classes from '../../../styles/Match.module.scss';
-import versusMatchStore from '../../../stores/VersusMatchStore';
+import classes from '@styles/Match.module.scss';
+import versusMatchStore from '@stores/VersusMatchStore';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
 
