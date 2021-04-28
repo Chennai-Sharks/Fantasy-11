@@ -7,17 +7,16 @@ import {
 	TextField,
 	Typography,
 } from '@material-ui/core';
-import FacebookLogin from 'react-facebook-login';
 
-import classes from '../../styles/Login.module.scss';
-import styles from '../../styles/Home.module.scss';
+import classes from '@styles/Login.module.scss';
+import styles from '@styles/Home.module.scss';
 import { Field, Form, Formik } from 'formik';
 import { useMutation } from 'react-query';
 import axios, { AxiosResponse } from 'axios';
 import HashLoader from 'react-spinners/HashLoader';
-import PopUpDialog from '../../components/Dialog';
+import PopUpDialog from '@components/Dialog';
 import { useRouter } from 'next/router';
-import userDataStore from '../../stores/UserDataStore';
+import userDataStore from '@stores/UserDataStore';
 
 interface RegisterUser {
 	email: string;
@@ -36,10 +35,6 @@ const RegisterScreen: React.FC = () => {
 		password: '',
 	};
 
-	const responseFacebook = (response: any) => {
-		console.log(response);
-	};
-
 	const router = useRouter();
 
 	const userData = userDataStore((state) => state);
@@ -47,10 +42,6 @@ const RegisterScreen: React.FC = () => {
 	const [openDialog, setOpenDialog] = React.useState(false);
 	const [openAlert, setOpenAlert] = React.useState(false);
 	const [snackContent, setsnackContent] = React.useState(' ');
-
-	// const handleCloseDialog = () => {
-	// 	setOpenDialog(false);
-	// };
 
 	const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
 		if (reason === 'clickaway') {
@@ -91,22 +82,7 @@ const RegisterScreen: React.FC = () => {
 						</Typography>
 					</div>
 					<div className={classes.rightPortionCard}>
-						<FacebookLogin
-							appId='801446123894360'
-							callback={responseFacebook}
-							fields='id,email,name'
-						/>
-						<Typography
-							className={styles.title}
-							style={{
-								fontSize: '20px',
-								marginTop: '2%',
-							}}
-						>
-							Or
-						</Typography>
 						<Formik
-							validateOnChange={true}
 							initialValues={initialValues}
 							validate={(values) => {
 								const errors: Record<string, string> = {};
@@ -129,13 +105,14 @@ const RegisterScreen: React.FC = () => {
 								mutation
 									.mutateAsync(values)
 									.then((value: AxiosResponse<AuthServerResponse>) => {
+										console.log(value.data);
 										userData.setEmail(value.data.email);
 										userData.setphone(value.data.phone);
 										setOpenDialog(true);
 									})
 									.catch((error) => {
 										setsnackContent(
-											error.toString() +
+											error.response.data +
 												' You are already registered., login now'
 										);
 										setOpenAlert(true);
@@ -225,7 +202,6 @@ const RegisterScreen: React.FC = () => {
 				title={'Done!'}
 				okButtonText={'OK'}
 				onOkHandled={() => {
-					console.log('done');
 					router.replace('/login');
 				}}
 			/>
