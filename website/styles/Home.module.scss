@@ -8,24 +8,45 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
+
+	@include responsive(tablet) {
+		justify-content: center;
+	}
+
+	@include responsive(mobile) {
+		overflow-x: hidden;
+		overflow-y: auto;
+		@media only screen and (max-width: 400px) {
+			height: 140%;
+			justify-content: space-evenly;
+		}
+		height: 110%;
+		justify-content: space-evenly;
+	}
 }
 .Card {
 	width: 50%;
-	height: 65%;
+	height: 70%;
 	display: flex;
+	margin-top: 7%;
 	flex-direction: column;
 	align-items: center;
 	border-radius: 20px;
 	justify-content: center;
 
-	@include responsive(mobile) {
-		width: 90%;
-		height: 80%;
+	@include responsive(tablet2) {
+		width: 65%;
 	}
+
 	@include responsive(tablet) {
-		width: 90%;
+		width: 85%;
+		height: 82%;
+	}
+
+	@include responsive(mobile) {
 		height: 80%;
+		width: 85%;
 	}
 }
 .title {
@@ -35,7 +56,7 @@
 	font-weight: bold;
 	@include responsive(mobile) {
 		text-align: center;
-		font-size: 35px;
+		font-size: 40px;
 	}
 	@include responsive(tablet) {
 		text-align: center;
@@ -55,7 +76,8 @@
 	color: white;
 	width: 25%;
 	margin-top: 15px;
-	margin-left: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
 	height: 50px;
 	align-self: center;
 	&:hover {
@@ -63,11 +85,17 @@
 		border-radius: 20px;
 		border: 2px solid #fd3a4b;
 	}
+	@include responsive(mobile) {
+		text-align: center;
+		font-size: 12px;
+	}
 }
 
 .ButtonGroup {
 	display: flex;
 	width: 100%;
+	margin-bottom: 20px;
 	flex-direction: row;
 	justify-content: center;
+	align-items: center;
 }
