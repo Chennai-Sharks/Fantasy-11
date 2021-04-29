@@ -7,12 +7,10 @@
 	position: absolute;
 	display: flex;
 	flex-direction: row;
-	// align-items: center;
-	// justify-content: center;
 }
 
 .leftPortionCard {
-	width: 40%;
+	width: 600px;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
@@ -20,8 +18,20 @@
 	overflow-y: auto;
 	border-radius: 0px;
 	align-items: center;
+	@include responsive(tablet) {
+		z-index: 2;
+	}
+}
 
-	// border-right: 5px solid #fd3a4b;
+.rightPortion {
+	left: 600px;
+	width: calc(100% - 600px);
+	position: fixed;
+	display: grid;
+	place-items: center;
+	@media screen and (max-width: 800px) {
+		visibility: hidden;
+	}
 }
 
 .title {
@@ -45,4 +55,45 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-self: stretch;
+}
+
+.logo {
+	margin-top: 10%;
+}
+
+.subTitle {
+	font-family: Rubik, sans-serif;
+	font-size: 20px;
+	color: #07003b;
+	text-align: center;
+}
+
+.PlayerCard {
+	width: 95%;
+	height: 35%;
+	display: flex;
+	margin-top: 1.5rem;
+	flex-direction: row;
+
+	justify-content: space-between;
+	align-items: flex-end;
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.Button {
+	border-radius: 15px;
+	border: 2px solid grey;
+	width: 100px;
+	margin-right: 5px;
+	margin-left: 5px;
+
+	height: 40px;
+	font-size: 12px;
+	align-self: center;
+	&:hover {
+		border-radius: 15px;
+		border: 2px solid #fd3a4b;
+	}
 }
