@@ -1,21 +1,15 @@
-import {
-	AppBar,
-	Button,
-	Card,
-	Fab,
-	Toolbar,
-	Typography,
-} from '@material-ui/core';
+import { AppBar, Button, Card, Typography } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import React from 'react';
 import io, { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
-import captainStore from '../../../../../../../stores/CaptainStore';
-import idStore from '../../../../../../../stores/saveidStore';
-import selectedPlayersStore from '../../../../../../../stores/SelectedPlayersStore';
-import versusMatchStore from '../../../../../../../stores/VersusMatchStore';
+import captainStore from '@stores/CaptainStore';
+import idStore from '@stores/saveidStore';
+import selectedPlayersStore from '@stores/SelectedPlayersStore';
+import versusMatchStore from '@stores/VersusMatchStore';
+import Head from 'next/head';
 
-import classes from '../../../../../../../styles/CreateTeam.module.scss';
+import classes from '@styles/CreateTeam.module.scss';
 
 let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
@@ -85,6 +79,10 @@ const SelectCaptainScreen: React.FC = () => {
 
 	return (
 		<div className={classes.background}>
+			<Head>
+				<title>Fantasy 11 | Match</title>
+				<link rel='icon' href='/logo.png' />
+			</Head>
 			<Card raised className={classes.leftPortionCard}>
 				<AppBar
 					position='static'
