@@ -2,9 +2,9 @@ import Head from 'next/head';
 import React from 'react';
 import { Card, Typography } from '@material-ui/core';
 
-import classes from '../../styles/Login.module.scss';
-import styles from '../../styles/Home.module.scss';
-import LoginForm from '../../containers/Auth/LoginForm';
+import classes from '@styles/Login.module.scss';
+import styles from '@styles/Home.module.scss';
+import LoginForm from '@containers/Auth/LoginForm';
 
 const PhoneLoginForm: React.FC = () => {
 	return (
