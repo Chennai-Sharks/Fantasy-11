@@ -4,7 +4,7 @@
   "description": "socket server for fantasy11 project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "author": "Naveen Sriram R",
   "license": "ISC",

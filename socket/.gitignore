@@ -1,0 +1,20 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+
+# Build artefacts
+build/
+dist/
+dist-ssr/
+
+
+# Optional npm cache directory
+.npm
+
