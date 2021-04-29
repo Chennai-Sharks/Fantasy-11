@@ -9,7 +9,6 @@ yarn-error.log*
 # Dependency directories
 node_modules/
 jspm_packages/
-socket/JSON Files
 
 # Build artefacts
 build/
@@ -17,7 +16,7 @@ dist/
 dist-ssr/
 
 # package-lock.json is ignored in client as yarn.lock is already there. 
-website/package-lock.json
+package-lock.json
 !server/package-lock.json
 
 # Yarn Integrity file
