@@ -13,16 +13,21 @@ import {
 import axios from 'axios';
 import { useQuery } from 'react-query';
 
-import classes from '../../../../../styles/CreateTeam.module.scss';
+import classes from '@styles/CreateTeam.module.scss';
 import { MoonLoader } from 'react-spinners';
 import Box from '@material-ui/core/Box';
 import LinearProgress, {
 	LinearProgressProps,
 } from '@material-ui/core/LinearProgress';
-import versusMatchStore from '../../../../../stores/VersusMatchStore';
-import EachPlayer from '../../../../../containers/Create-Match/EachPlayer';
-import selectedPlayersStore from '../../../../../stores/SelectedPlayersStore';
-import idStore from '../../../../../stores/saveidStore';
+import versusMatchStore from '@stores/VersusMatchStore';
+import Head from 'next/head';
+
+// import EachPlayer from '@containers/Create-Match/EachPlayer';
+import Image from 'next/image';
+
+import selectedPlayersStore from '@stores/SelectedPlayersStore';
+import idStore from '@stores/saveidStore';
+import { DataGrid } from '@material-ui/data-grid';
 
 function LinearProgressWithLabel(
 	props: LinearProgressProps & { value: number }
@@ -43,35 +48,51 @@ function LinearProgressWithLabel(
 
 const CreateTeamScreen: React.FC = () => {
 	const [progress, setProgress] = React.useState(0);
-	const [creditprogress, setcreditProgress] = React.useState(100);
+	// const [creditprogress, setcreditProgress] = React.useState(100);
 
 	const idstore = idStore((state) => state);
 
 	const router = useRouter();
 
-	const [inc, setinc] = React.useState(0);
+	// const [inc, setinc] = React.useState(0);
 
 	const matchStore = versusMatchStore((state) => state);
 	const players = selectedPlayersStore((state) => state);
+	const [ischeckbox, setIsCheckbox] = React.useState(true);
 
-	const [selectedplayers, setselectedplayers] = React.useState(['']);
-	const [dis, setdis] = React.useState(false);
+	const [selectedplayers, setselectedplayers] = React.useState<string[]>([]);
 
-	console.log(selectedplayers);
+	console.log('selectedplayers:' + selectedplayers);
+
+	// const [dis, setdis] = React.useState(false);
 
 	const [totalCredits, settotalCredits] = React.useState(100);
 	let id: string;
+	let rows: any;
+
+	const columns = [
+		{ field: 'id', headerName: 'ID', width: 70 },
+		{ field: 'playername', headerName: 'Player Name', width: 300 },
+		{ field: 'credits', headerName: 'Credits', width: 130 },
+	];
 
 	React.useEffect(() => {
 		console.log(router.isReady);
-		if (router.isReady) id = router.query['id'] as string;
+		if (router.isReady) {
+			window.localStorage.setItem('id', router.query['id'] as string);
+		}
 	});
 
 	const { isLoading, isError, data, refetch } = useQuery(
 		'playerlist',
 		async () => {
+			id = window.localStorage.getItem('id') as string;
+
 			const { data } = await axios.get(
-				`http://localhost:4000/api/match/players/${id}.json`
+				`http://localhost:4000/api/match/players/${id}.json`,
+				{
+					withCredentials: true,
+				}
 			);
 			return data;
 		},
@@ -81,6 +102,16 @@ const CreateTeamScreen: React.FC = () => {
 			refetchOnWindowFocus: false,
 		}
 	);
+
+	if (data) {
+		rows = (data['players'] as string[]).map((eachPlayerName, index) => {
+			return {
+				id: index + 1,
+				playername: eachPlayerName,
+				credits: data['credits'][index] as number,
+			};
+		});
+	}
 
 	const useStyles = makeStyles({
 		root: {
@@ -92,6 +123,10 @@ const CreateTeamScreen: React.FC = () => {
 	const style = useStyles();
 	return (
 		<div className={classes.background}>
+			<Head>
+				<title>Fantasy 11 | Select Team</title>
+				<link rel='icon' href='/logo.png' />
+			</Head>
 			<Card raised className={classes.leftPortionCard}>
 				<AppBar
 					position='static'
@@ -108,118 +143,247 @@ const CreateTeamScreen: React.FC = () => {
 							Create Team
 						</Typography>
 
-						{/* <Typography variant='h6' style={{ marginLeft: '50%' }}>
-							Credits left {`${totalCredits}`}
-						</Typography> */}
+						<Typography variant='h6' style={{ marginLeft: '49%' }}>
+							Credits left: {`${totalCredits}`}
+						</Typography>
 					</Toolbar>
 					<Typography variant='h6' style={{ textAlign: 'center' }}>
 						{matchStore.oneTeam} vs {matchStore.twoTeam}
 					</Typography>
 					<div className={style.root}>
 						<LinearProgressWithLabel value={progress} />
-						{/* <Typography
-							variant='h6'
-							style={{ margin: '10px', textAlign: 'center' }}
-						>
-							Credits
-						</Typography>
-						<LinearProgressWithLabel value={creditprogress} /> */}
 					</div>
 				</AppBar>
-				<div className={classes.topTile}>
+				{/* <div className={classes.topTile}>
 					<Typography variant='h6' style={{ marginLeft: '20px' }}>
 						Players
 					</Typography>
 					<Typography variant='h6' style={{ marginRight: '20%' }}>
 						Credits
 					</Typography>
-				</div>
+				</div> */}
 
 				{isLoading ? (
 					<MoonLoader />
 				) : isError ? (
-					<Button>Try Again</Button>
+					<Button onClick={() => refetch()}>Try Again</Button>
 				) : (
-					(data['players'] as string[]).map((eachPlayerName, index) => {
-						return (
-							<EachPlayer
-								playername={eachPlayerName}
-								key={index}
-								credits={data['credits'][index]}
-								isdiabled={dis}
-								isnotplusFunction={() => {
-									// setcreditProgress(
-									// 	(prevprog) => prevprog + (data['credits'][index] as number)
-									// );
+					// (data['players'] as string[]).map((eachPlayerName, index) => {
+					// 	return (
+					// 		<EachPlayer
+					// 			playername={eachPlayerName}
+					// 			key={index}
+					// 			credits={data['credits'][index]}
+					// 			isdiabled={dis}
+					// 			isnotplusFunction={() => {
+					// 				if (inc === 0) return;
 
-									// console.log(totalCredits);
-									if (inc === 0) return;
+					// setselectedplayers((state) => {
+					// 	let newplayerslist = [...state];
+					// 	newplayerslist = newplayerslist.filter(
+					// 		(item) => item !== eachPlayerName
+					// 	);
 
+					// 	return newplayerslist;
+					// });
+					// 				if (inc !== 11) {
+					// 					setdis(false);
+					// setcreditProgress(
+					// 	(prevprog) =>
+					// 		prevprog + (data['credits'][index] as number)
+					// );
+					// 					console.log(totalCredits);
+					// setProgress((prevProgress) =>
+					// 	prevProgress <= 20 ? 0 : prevProgress - 9.09090909091
+					// );
+					// 				} else {
+					// 					setdis(true);
+					// 				}
+					// 				setinc((previnc) => previnc - 1);
+
+					// 				console.log(selectedplayers);
+					// 			}}
+					// 			isplusFunction={() => {
+					// 				if (progress === 100 || totalCredits === 0 || inc === 11) {
+					// 					setdis(true);
+
+					// 					return;
+					// 				}
+					// 				setdis(false);
+
+					// setProgress((prevProgress) =>
+					// 	prevProgress >= 85 ? 100 : prevProgress + 9.09090909091
+					// );
+					// 				console.log(totalCredits);
+					// 				setcreditProgress(
+					// 					(prevprog) => prevprog - (data['credits'][index] as number)
+					// 				);
+					// settotalCredits(
+					// 	(totalcredits) =>
+					// 		totalcredits - (data['credits'][index] as number)
+					// );
+					// 				console.log(totalCredits);
+					// 				setinc((previnc) => previnc + 1);
+
+					// 				setselectedplayers((state) => [...state, eachPlayerName]);
+					// 			}}
+					// 		/>
+					// 	);
+					// })
+
+					<div style={{ height: 470, width: '100%' }}>
+						<DataGrid
+							rows={rows}
+							columns={columns}
+							disableColumnSelector
+							onColumnHeaderClick={() => {
+								return;
+							}}
+							pageSize={22}
+							disableColumnFilter
+							disableColumnMenu
+							showColumnRightBorder
+							loading={isLoading}
+							disableColumnReorder
+							disableMultipleSelection
+							checkboxSelection={ischeckbox}
+							onRowSelected={(row) => {
+								// if (totalCredits < row.data['credit']) {
+								// 	return;
+								// }
+								if (selectedplayers.length === 11 || totalCredits === 0) {
+									setIsCheckbox(false);
+
+									if (progress !== 100)
+										settotalCredits((prevprog) => {
+											return prevprog + row.data['credits'];
+										});
+									return;
+								} else {
+									setIsCheckbox(true);
+								}
+								if (
+									row.isSelected &&
+									row.data['playername'] &&
+									selectedplayers.length <= 10
+								) {
+									setselectedplayers((state) => [
+										...state,
+										row.data['playername'],
+									]);
+									setProgress((prevProgress) =>
+										prevProgress >= 85 ? 100 : prevProgress + 9.09090909091
+									);
+									settotalCredits(
+										(totalcredits) => totalcredits - row.data['credits']
+									);
+								} else {
 									setselectedplayers((state) => {
 										let newplayerslist = [...state];
 										newplayerslist = newplayerslist.filter(
-											(item) => item !== eachPlayerName
+											(item) => item !== row.data['playername']
 										);
 
 										return newplayerslist;
 									});
-									if (inc !== 11) {
-										setdis(false);
-										setProgress((prevProgress) =>
-											prevProgress <= 20 ? 0 : prevProgress - 9.09090909091
-										);
-									} else {
-										setdis(true);
-									}
-									setinc((previnc) => previnc - 1);
-
-									console.log(selectedplayers);
-								}}
-								isplusFunction={() => {
-									if (progress === 100 || totalCredits === 0 || inc === 11) {
-										setdis(true);
-
-										return;
-									}
-									setdis(false);
-
 									setProgress((prevProgress) =>
-										prevProgress >= 85 ? 100 : prevProgress + 9.09090909091
+										prevProgress <= 20 ? 0 : prevProgress - 9.09090909091
 									);
-									setcreditProgress(
-										(prevprog) => prevprog - (data['credits'][index] as number)
-									);
-									// settotalCredits(
-									// 	(totalcredits) =>
-									// 		totalcredits - (data['credits'][index] as number)
-									// );
-									// console.log(totalCredits);
-									setinc((previnc) => previnc + 1);
-
-									setselectedplayers((state) => [...state, eachPlayerName]);
-								}}
-							/>
-						);
-					})
+									settotalCredits((prevprog) => {
+										return prevprog + row.data['credits'];
+									});
+								}
+							}}
+						/>
+					</div>
 				)}
+				<div
+					style={{
+						display: 'row',
+						justifyContent: 'center',
+						alignItems: 'center',
+					}}
+				>
+					<Fab
+						variant='extended'
+						size='small'
+						style={{
+							padding: '10px',
+							marginBottom: '10px',
+							marginTop: '10px',
+							backgroundColor: '#fd3a4b',
+						}}
+						color='primary'
+						aria-label='add'
+						onClick={() => {
+							if (selectedplayers.length <= 10) return;
+							players.setSelectedPlayers(selectedplayers);
+							id = window.localStorage.getItem('id') as string;
+							idstore.id = id;
+							router.push(`${id}/select-captain`);
+						}}
+					>
+						Continue
+					</Fab>
+					{!ischeckbox ? (
+						<Fab
+							variant='extended'
+							size='small'
+							style={{
+								padding: '10px',
+								marginBottom: '10px',
+								marginTop: '10px',
+								marginLeft: '10px',
+								backgroundColor: '#fd3a4b',
+							}}
+							color='primary'
+							aria-label='add'
+							onClick={() => {
+								setselectedplayers((state) => {
+									let newplayerslist = [...state];
+									let player = newplayerslist[10];
+									console.log(player);
+									let selectedRow = rows.filter(
+										(eachRow: any) => eachRow['playername'] === player
+									);
+									console.log(selectedRow[0]['credits']);
+									newplayerslist.pop();
+									settotalCredits((prevprog) => {
+										return prevprog + selectedRow[0]['credits'];
+									});
 
-				<Button></Button>
+									return newplayerslist;
+								});
+								setProgress((prevProgress) =>
+									prevProgress <= 20 ? 0 : prevProgress - 9.09090909091
+								);
+								setIsCheckbox(true);
+							}}
+						>
+							Remove last Selected Player
+						</Fab>
+					) : (
+						<div></div>
+					)}
+				</div>
 			</Card>
-			<Fab
-				variant='extended'
-				size='small'
-				color='primary'
-				aria-label='add'
-				onClick={() => {
-					if (inc !== 11) return;
-					selectedplayers.shift();
-					players.setSelectedPlayers(selectedplayers);
-					idstore.id = id;
-					router.push(`${id}/select-captain`);
-				}}
-			>
-				Continue
-			</Fab>
+			<div className={classes.rightPortion}>
+				<div className={classes.logo} />
+				<Image
+					src='/logo.png'
+					alt='Logo of fantasy-11'
+					width={80}
+					height={80}
+				/>
+				<Typography className={classes.title}>Selected Players:</Typography>
+				{selectedplayers.map((playername, index) => {
+					return (
+						<Typography key={index} align='left' className={classes.subTitle}>
+							{index + 1}: {playername}
+						</Typography>
+					);
+				})}
+			</div>
 		</div>
 	);
 };

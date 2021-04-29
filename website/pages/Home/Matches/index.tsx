@@ -106,7 +106,7 @@ const MatchScreen: React.FC = () => {
 											matchStore.setoneTeam(eachMatchInfo['teams'][0]);
 											matchStore.setTwoTeam(eachMatchInfo['teams'][1]);
 											router.push(
-												`matches/create-team/${eachMatchInfo['match'].substring(
+												`Matches/create-team/${eachMatchInfo['match'].substring(
 													0,
 													6
 												)}`
