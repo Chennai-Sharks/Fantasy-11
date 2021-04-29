@@ -1,4 +1,11 @@
 var fs = require('fs');
+const io = require('socket.io')(5000, {
+	cors: {
+	  origin: "https://example.com",
+	  methods: ["GET", "POST"]
+	}
+  });
+
 
 events = {
 	caught: 25,
@@ -12,7 +19,13 @@ events = {
 };
 // fielder points ,catch and stumped is 15 pts
 
-async function soc(socket) {
+io.on("connection", (socket) => {
+
+	console.log("New client connected");
+    socket.emit('test',"vanakam di maaple server lendhu")
+    
+	socket.on('disconnect',()=>socket.disconnect());
+    
 	socket.on('test', (data) => {
 		console.log(data);
 		socket.emit('testreply', 'hello world from server');
@@ -153,6 +166,7 @@ async function soc(socket) {
 
 		console.log('startMatch triggered');
 	});
-}
 
-module.exports = soc;
+});
+
+
