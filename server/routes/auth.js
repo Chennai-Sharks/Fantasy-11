@@ -5,11 +5,6 @@ const User = require('../models/User');
 const crypto = require('crypto');
 
 //register auth route
-//checks if the user already exists and registers
-//After registering re-route to "login"
-//req.body should contain the phone,email and password otherwise just email and password
-//i've written the code for phone,email and Password
-//Change the "models/user.js" file to accomodate only email and password
 router.post('/register', async (req, res) => {
 	//this block of code is to check if the email doesn't already exists in the db
 	const emailExist = await User.findOne({
@@ -49,9 +44,6 @@ router.post('/register', async (req, res) => {
 });
 
 //login auth route
-//after re-routing from register ask for email and password and check if it's correct
-//if the email and password are correct re-route to "sendOTP" to generate the otp
-//req.body should contain the email and password
 router.post('/login', async (req, res) => {
 	//this block of code is to check if the user has registered already by checking for it in the DB
 	const user = await User.findOne({
@@ -74,8 +66,8 @@ router.post('/login', async (req, res) => {
 
 //facebook login which checks if the email is present or not
 router.post('/facebook/login', async (req, res) => {
-	// const user = await User.findOne({ email: req.body.email });
-	// if (!user) return res.status(400).send('Email not found');
+	const user = await User.findOne({ email: req.body.email });
+	if (!user) return res.status(400).send('Email not found');
 
 	// Need to add code for the issue I created.
 
