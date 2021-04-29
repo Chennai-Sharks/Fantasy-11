@@ -12,6 +12,7 @@ router.post('/register', async (req, res) => {
   });
   if (emailExist) return res.status(400).send('Email already exists');
 
+  //if there is phone and pwd passed in the body then it means they've registered not via facebook
   if (req.body.phone && req.body.password) {
     //this block of code is to check if the phone doesn't already exists in the db
     const phoneExist = await User.findOne({
@@ -42,7 +43,7 @@ router.post('/register', async (req, res) => {
         message: err
       });
     }
-  } else {
+  } else { //if there is only email in the req.body, then just store the email data
     const user = new User({
       email: req.body.email
     });
@@ -84,8 +85,8 @@ router.post('/login', async (req, res) => {
 
 //facebook login which checks if the email is present or not
 router.post('/facebook/login', async (req, res) => {
-  // const user = await User.findOne({ email: req.body.email });
-  // if (!user) return res.status(400).send('Email not found');
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) return res.status(400).send('Email not found');
 
   // Need to add code for the issue I created.
 

@@ -87,11 +87,10 @@ const MatchScreen: React.FC = () => {
 					) : isError ? (
 						<div>
 							<Typography className={classes.subTitle}>
-								You are not authenticated or the Server is busy right now.
-								<br />
-								<br />
-								<Button onClick={() => refetch()}>Try Again</Button>
+								You are not authenticated or the Server is busy right Now.
 							</Typography>
+
+							<Button onClick={() => refetch()}>Try Again</Button>
 						</div>
 					) : (
 						(data.teamInfo as Array<{
