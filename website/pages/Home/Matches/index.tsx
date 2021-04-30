@@ -1,11 +1,4 @@
-import {
-	AppBar,
-	Button,
-	Card,
-	StylesProvider,
-	Toolbar,
-	Typography,
-} from '@material-ui/core';
+import { AppBar, Button, Card, Toolbar, Typography } from '@material-ui/core';
 import axios from 'axios';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -70,68 +63,70 @@ const MatchScreen: React.FC = () => {
 				<title>Fantasy 11 | Matches</title>
 				<link rel='icon' href='/logo.png' />
 			</Head>
-			<StylesProvider injectFirst>
-				<Card raised className={classes.leftPortionCard}>
-					<AppBar position='static' style={{ backgroundColor: '#fd3a4b' }}>
-						<Toolbar
+			<Card raised className={classes.leftPortionCard}>
+				<AppBar position='static' style={{ backgroundColor: '#fd3a4b' }}>
+					<Toolbar
+						style={{
+							display: 'flex',
+							flexDirection: 'row',
+							justifyContent: 'space-between',
+						}}
+					>
+						<Typography
+							variant='h6'
+							align='center'
 							style={{
-								display: 'flex',
-								flexDirection: 'row',
-								justifyContent: 'space-between',
+								fontWeight: 'bold',
 							}}
 						>
-							<Typography
-								variant='h6'
-								align='center'
-								style={{
-									fontWeight: 'bold',
-								}}
+							Welcome to Fantasy 11 League
+						</Typography>
+						<LogoutButton />
+					</Toolbar>
+				</AppBar>
+				<Typography className={classes.title}>Available Matches</Typography>
+
+				{isLoading ? (
+					<MoonLoader />
+				) : isError ? (
+					<div>
+						<Typography className={classes.subTitle}>
+							You are not authenticated or the Server is busy right Now.
+						</Typography>
+
+						<Button onClick={() => refetch()}>Try Again</Button>
+					</div>
+				) : (
+					(data.teamInfo as Array<{
+						match: string;
+						teams: string[];
+					}>).map((eachMatchInfo, index) => {
+						return (
+							<motion.div
+								style={{ width: '100%' }}
+								key={index}
+								variants={stagger}
 							>
-								Welcome to Fantasy 11 League
-							</Typography>
-							<LogoutButton />
-						</Toolbar>
-					</AppBar>
-					<Typography className={classes.title}>Available Matches</Typography>
-
-					{isLoading ? (
-						<MoonLoader />
-					) : isError ? (
-						<div>
-							<Typography className={classes.subTitle}>
-								You are not authenticated or the Server is busy right Now.
-							</Typography>
-
-							<Button onClick={() => refetch()}>Try Again</Button>
-						</div>
-					) : (
-						(data.teamInfo as Array<{
-							match: string;
-							teams: string[];
-						}>).map((eachMatchInfo, index) => {
-							return (
-								<motion.div style={{ width: '100%' }} variants={stagger}>
-									<MatchCard
-										key={index}
-										onTap={() => {
-											matchStore.setoneTeam(eachMatchInfo['teams'][0]);
-											matchStore.setTwoTeam(eachMatchInfo['teams'][1]);
-											router.push(
-												`Matches/create-team/${eachMatchInfo['match'].substring(
-													0,
-													6
-												)}`
-											);
-										}}
-										one={eachMatchInfo['teams'][0]}
-										two={eachMatchInfo['teams'][1]}
-									/>
-								</motion.div>
-							);
-						})
-					)}
-				</Card>
-			</StylesProvider>
+								<MatchCard
+									key={index}
+									onTap={() => {
+										matchStore.setoneTeam(eachMatchInfo['teams'][0]);
+										matchStore.setTwoTeam(eachMatchInfo['teams'][1]);
+										router.push(
+											`Matches/create-team/${eachMatchInfo['match'].substring(
+												0,
+												6
+											)}`
+										);
+									}}
+									one={eachMatchInfo['teams'][0]}
+									two={eachMatchInfo['teams'][1]}
+								/>
+							</motion.div>
+						);
+					})
+				)}
+			</Card>
 			<motion.div variants={stagger} className={classes.rightPortion}>
 				<div className={classes.logo} />
 				<Image
