@@ -82,7 +82,10 @@ const SelectCaptainScreen: React.FC = () => {
 			setTotalScore(data['total']);
 			setPlayerPoints(data['playerPoints']);
 		});
-		console.log(totalpoints);
+		socket.on('matchEnd', (data) => {
+			console.log('match is over');
+			console.log(data);
+		});
 	});
 
 	return (
