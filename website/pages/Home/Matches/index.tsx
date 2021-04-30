@@ -17,6 +17,7 @@ import classes from '@styles/Match.module.scss';
 import versusMatchStore from '@stores/VersusMatchStore';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
+import ScoreBoardButton from '@containers/ScoreBoardButton/ScoreBoardButton';
 
 const stagger = {
 	animate: {
@@ -81,6 +82,7 @@ const MatchScreen: React.FC = () => {
 						>
 							Welcome to Fantasy 11 League
 						</Typography>
+						<ScoreBoardButton />
 						<LogoutButton />
 					</Toolbar>
 				</AppBar>
