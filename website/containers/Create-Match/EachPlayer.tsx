@@ -1,4 +1,4 @@
-import { Card, IconButton, Typography } from '@material-ui/core';
+import { IconButton, Typography } from '@material-ui/core';
 import React from 'react';
 
 import classes from './EachPlayer.module.scss';
