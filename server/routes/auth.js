@@ -145,14 +145,14 @@ router.post('/sendOTP', (req, res) => {
 	const hash = crypto.createHmac('sha256', smsKey).update(data).digest('hex');
 	const fullHash = `${hash}.${expires}`;
 
-	client.messages
-		.create({
-			body: `Your One Time Login Password For Fantasy 11 is ${otp}`,
-			from: +18643830688,
-			to: `91${phone}`,
-		})
-		.then((messages) => console.log(messages))
-		.catch((err) => console.error(err));
+	// client.messages
+	// 	.create({
+	// 		body: `Your One Time Login Password For Fantasy 11 is ${otp}`,
+	// 		from: +18643830688,
+	// 		to: `91${phone}`,
+	// 	})
+	// 	.then((messages) => console.log(messages))
+	// 	.catch((err) => console.error(err));
 
 	res.status(200).send({ phone, hash: fullHash, otp }); // this bypass otp via api only for development instead hitting twilio api all the time
 	// res.status(200).send({ phone, hash: fullHash }); // Use this way in Production
