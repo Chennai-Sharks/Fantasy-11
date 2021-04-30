@@ -122,7 +122,10 @@ const LoginForm: React.FC = () => {
 								setShowInitialForm(false);
 							})
 							.catch((error) => {
-								setsnackContent(error.toString());
+								setsnackContent(
+									error.toString() +
+										'. Email is not registered or password is invalid'
+								);
 								setOpenAlert(true);
 							});
 
@@ -211,7 +214,7 @@ const LoginForm: React.FC = () => {
 								router.replace('/Home/Matches');
 							})
 							.catch((error) => {
-								setsnackContent(error.toString());
+								setsnackContent(error.toString() + ' invalid OTP try again.');
 								setOpenAlert(true);
 							});
 
