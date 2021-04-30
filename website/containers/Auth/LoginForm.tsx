@@ -55,14 +55,14 @@ const LoginForm: React.FC = () => {
 	const [showInitialForm, setShowInitialForm] = React.useState(true);
 
 	const mutation = useMutation((newUser: UserDataInitialForm) => {
-		return axios.post('http://localhost:4000/api/users/login/', {
+		return axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/users/login`, {
 			email: newUser.email,
 			password: newUser.password,
 		});
 	});
 
 	const mutationOtp = useMutation((phoneNo: string) => {
-		return axios.post('http://localhost:4000/api/users/sendOTP', {
+		return axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/users/sendOTP`, {
 			phone: phoneNo,
 		});
 	});
@@ -70,7 +70,7 @@ const LoginForm: React.FC = () => {
 	const verifyOtpMutation = useMutation(
 		(verifyOtp: { phone: string; hash: string; otp: string }) => {
 			return axios.post(
-				'http://localhost:4000/api/users/verifyOTP',
+				`${process.env.NEXT_PUBLIC_API_URL}/api/users/verifyOTP`,
 				{
 					...verifyOtp,
 				},
