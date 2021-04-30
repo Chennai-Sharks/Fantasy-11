@@ -7,11 +7,17 @@ import classes from '../styles/Home.module.scss';
 import { useMutation } from 'react-query';
 import axios from 'axios';
 import jwtStore from '@stores/jwtToken';
-
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 import FacebookLogin from 'react-facebook-login';
 
 const Home: React.FC = () => {
 	const router = useRouter();
+	React.useEffect(() => {
+		if (typeof cookies.get('authSession') !== 'undefined') {
+			router.replace('/Home/Matches');
+		}
+	}, []);
 
 	const faceBookMutation = useMutation((newUser: { email: string }) => {
 		return axios.post(
