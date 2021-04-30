@@ -83,13 +83,13 @@ npm start
 ## Tools
 
 - [React](https://reactjs.org/)
+- [Next.js](https://nextjs.org/)
 - [NodeJS](https://nodejs.org/en/)
 - [ExpressJS](https://expressjs.com/)
 - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
 - [socket.io](https://socket.io/)
 - [Postman](https://www.postman.com/)
 - [Visual Studio Code](https://code.visualstudio.com/)
-- [Atom](https://atom.io/)
 - [NPM](https://www.npmjs.com/)
 - [Yarn](https://yarnpkg.com/)
 
