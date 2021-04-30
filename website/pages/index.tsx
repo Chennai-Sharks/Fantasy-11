@@ -34,17 +34,12 @@ const Home: React.FC = () => {
 				email: response.email,
 			})
 			.then((data) => {
-				jwt.setJwt(data.data);
+				// jwt.setJwt(data.data);
+				router.push('Home/Matches');
 				console.log(jwt.jwt);
 			})
 			.catch((error) => {});
 	};
-
-	React.useEffect(() => {
-		if (jwt.jwt && jwt.jwt.length > 2) {
-			router.push('Home/Matches');
-		}
-	}, [jwt.jwt]);
 
 	return (
 		<div className={classes.background}>

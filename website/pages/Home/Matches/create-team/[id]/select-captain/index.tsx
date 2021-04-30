@@ -14,6 +14,8 @@ import selectedPlayersStore from '@stores/SelectedPlayersStore';
 import versusMatchStore from '@stores/VersusMatchStore';
 import Image from 'next/image';
 import Head from 'next/head';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 import classes from '@styles/CreateTeam.module.scss';
 
@@ -33,6 +35,14 @@ const SelectCaptainScreen: React.FC = () => {
 			});
 		}
 	};
+
+	React.useEffect(() => {
+		captain.setcaptain('');
+		captain.setvicecaptain('');
+		if (typeof cookies.get('authSession') === 'undefined') {
+			router.replace('/');
+		}
+	}, []);
 
 	return (
 		<div className={classes.background}>

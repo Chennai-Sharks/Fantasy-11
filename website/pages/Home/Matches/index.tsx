@@ -11,8 +11,12 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import Image from 'next/image';
 
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+
 import { MoonLoader } from 'react-spinners';
 import MatchCard from '@containers/Match/MatchCard';
+import LogoutButton from '@containers/Logout/LogoutButton';
 
 import { useRouter } from 'next/router';
 
@@ -31,6 +35,12 @@ const stagger = {
 
 const MatchScreen: React.FC = () => {
 	const router = useRouter();
+
+	React.useEffect(() => {
+		if (typeof cookies.get('authSession') === 'undefined') {
+			router.replace('/');
+		}
+	}, []);
 
 	const { isLoading, isError, data, refetch } = useQuery(
 		'matches',
@@ -65,8 +75,9 @@ const MatchScreen: React.FC = () => {
 					<AppBar position='static' style={{ backgroundColor: '#fd3a4b' }}>
 						<Toolbar
 							style={{
-								display: 'grid',
-								placeItems: 'center',
+								display: 'flex',
+								flexDirection: 'row',
+								justifyContent: 'space-between',
 							}}
 						>
 							<Typography
@@ -78,6 +89,7 @@ const MatchScreen: React.FC = () => {
 							>
 								Welcome to Fantasy 11 League
 							</Typography>
+							<LogoutButton />
 						</Toolbar>
 					</AppBar>
 					<Typography className={classes.title}>Available Matches</Typography>

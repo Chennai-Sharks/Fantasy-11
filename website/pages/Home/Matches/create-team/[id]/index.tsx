@@ -21,6 +21,10 @@ import LinearProgress, {
 } from '@material-ui/core/LinearProgress';
 import versusMatchStore from '@stores/VersusMatchStore';
 import Head from 'next/head';
+import LogoutButton from '@containers/Logout/LogoutButton';
+
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 // import EachPlayer from '@containers/Create-Match/EachPlayer';
 import Image from 'next/image';
@@ -78,6 +82,9 @@ const CreateTeamScreen: React.FC = () => {
 
 	React.useEffect(() => {
 		console.log(router.isReady);
+		if (typeof cookies.get('authSession') === 'undefined') {
+			router.replace('/');
+		}
 		if (router.isReady) {
 			window.localStorage.setItem('id', router.query['id'] as string);
 		}
@@ -135,17 +142,30 @@ const CreateTeamScreen: React.FC = () => {
 						height: '30%',
 					}}
 				>
-					<Toolbar>
+					<Toolbar
+						style={{
+							display: 'flex',
+							flexDirection: 'row',
+							justifyContent: 'space-between',
+						}}
+					>
 						<Typography
 							variant='h6'
 							style={{ margin: '10px', textAlign: 'center' }}
 						>
 							Create Team
 						</Typography>
-
-						<Typography variant='h6' style={{ marginLeft: '49%' }}>
-							Credits left: {`${totalCredits}`}
-						</Typography>
+						<div
+							style={{
+								display: 'flex',
+								flexDirection: 'row',
+							}}
+						>
+							<Typography variant='h6'>
+								Credits left: {`${totalCredits}`}
+							</Typography>
+							<LogoutButton />
+						</div>
 					</Toolbar>
 					<Typography variant='h6' style={{ textAlign: 'center' }}>
 						{matchStore.oneTeam} vs {matchStore.twoTeam}

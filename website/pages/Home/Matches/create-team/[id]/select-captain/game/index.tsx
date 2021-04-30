@@ -1,4 +1,4 @@
-import { AppBar, Button, Card, Typography } from '@material-ui/core';
+import { AppBar, Button, Card, Typography, Toolbar } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import React from 'react';
 import io, { Socket } from 'socket.io-client';
@@ -8,8 +8,13 @@ import idStore from '@stores/saveidStore';
 import selectedPlayersStore from '@stores/SelectedPlayersStore';
 import versusMatchStore from '@stores/VersusMatchStore';
 import Head from 'next/head';
+import Image from 'next/image';
+
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 import classes from '@styles/CreateTeam.module.scss';
+import LogoutButton from '@containers/Logout/LogoutButton';
 
 let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
@@ -39,6 +44,9 @@ const SelectCaptainScreen: React.FC = () => {
 	};
 
 	React.useEffect(() => {
+		if (typeof cookies.get('authSession') === 'undefined') {
+			router.replace('/');
+		}
 		const connectionOptions: any = {
 			'force new connection': true,
 			reconnectionAttempts: 'Infinity',
@@ -46,7 +54,7 @@ const SelectCaptainScreen: React.FC = () => {
 			transports: ['websocket'],
 		};
 
-		socket = io('https://fantasy11-app.herokuapp.com/5000/', connectionOptions);
+		socket = io('http://localhost:5000', connectionOptions);
 
 		console.log(selectedplayers.selectedPlayers);
 
@@ -88,35 +96,82 @@ const SelectCaptainScreen: React.FC = () => {
 					position='static'
 					style={{
 						backgroundColor: '#FD3A4A',
-						height: '30%',
+						height: '100px',
 					}}
 				>
-					<Typography
-						variant='h6'
-						style={{ margin: '10px', textAlign: 'center' }}
+					<Toolbar
+						style={{
+							display: 'flex',
+							flexDirection: 'row',
+							justifyContent: 'space-between',
+						}}
 					>
-						Match
-					</Typography>
+						<Typography
+							variant='h6'
+							style={{ margin: '10px', textAlign: 'center' }}
+						>
+							Match
+						</Typography>
+						<LogoutButton />
+					</Toolbar>
+
 					<Typography variant='h6' style={{ textAlign: 'center' }}>
 						{matchStore.oneTeam} vs {matchStore.twoTeam}
 					</Typography>
 				</AppBar>
-				<Card>
-					<Typography>Wickets: {wickets}</Typography>
-					<Typography>Total Score: {totalScore}</Typography>
-					<Typography>Player Points:</Typography>
+				<Card
+					raised
+					style={{
+						width: '90%',
+						height: '65%',
+						overflowX: 'hidden',
+						overflowY: 'auto',
+						marginTop: '20px',
+					}}
+				>
+					<div style={{ marginBottom: '10px' }}></div>
+					<Typography className={classes.subTitle}>
+						Wickets: {wickets}
+					</Typography>
+					<Typography className={classes.subTitle}>
+						Total Score: {totalScore}
+					</Typography>
+					<Typography
+						align='center'
+						style={{ marginTop: '0px' }}
+						className={classes.title}
+					>
+						Player Points:
+					</Typography>
 					{Object.keys(playerPoints).map((EachPlayer, index) => {
 						totalpoints = totalpoints + playerPoints[EachPlayer];
 
 						return (
-							<Typography key={index}>
+							<Typography className={classes.subTitle} key={index}>
 								{EachPlayer}:{playerPoints[EachPlayer]}
 							</Typography>
 						);
 					})}
 				</Card>
+				<div style={{ marginBottom: '20px' }}></div>
+
 				<Button onClick={() => {}}>Click here to see the scoreCard</Button>
 			</Card>
+			<div className={classes.rightPortion}>
+				<div className={classes.logo} />
+				<div className={classes.logo} />
+
+				<Image
+					src='/logo.png'
+					alt='Logo of fantasy-11'
+					width={80}
+					height={80}
+				/>
+				<Typography className={classes.title}>Fantasy 11</Typography>
+				<Typography className={classes.subTitle}>
+					Make sure you make the right choices
+				</Typography>
+			</div>
 		</div>
 	);
 };
