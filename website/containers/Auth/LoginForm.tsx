@@ -254,9 +254,9 @@ const LoginForm: React.FC = () => {
 								className={classes.Button}
 								type='submit'
 							>
-								{mutation.isLoading ? (
+								{verifyOtpMutation.isLoading ? (
 									<HashLoader
-										loading={mutation.isLoading}
+										loading={verifyOtpMutation.isLoading}
 										size={35}
 										color='black'
 									/>
