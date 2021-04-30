@@ -30,7 +30,6 @@ app.use(
 );
 app.use(cookieParser());
 
-
 //Route Middlewares
 app.use('/api/users', authRoute);
 app.use('/api/match', matchRoute);
@@ -38,4 +37,6 @@ app.use('/api/scoreboard', scoreboardRoute);
 
 // Socket initialisation
 
-app.listen(port, () => console.log(`Server is running on port ${port}`.yellow.bold));
+app.listen(port, () =>
+	console.log(`Server is running on port ${port}`.yellow.bold)
+);
