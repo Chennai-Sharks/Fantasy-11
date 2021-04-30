@@ -1,11 +1,10 @@
 var fs = require('fs');
 const io = require('socket.io')(5000, {
 	cors: {
-	  origin: "https://example.com",
-	  methods: ["GET", "POST"]
-	}
-  });
-
+		origin: 'http://localhost:3000',
+		methods: ['GET', 'POST'],
+	},
+});
 
 events = {
 	caught: 25,
@@ -19,12 +18,11 @@ events = {
 };
 // fielder points ,catch and stumped is 15 pts
 
-io.on("connection", (socket) => {
+io.on('connection', (socket) => {
+	console.log('New client connected');
+	socket.emit('test', 'vanakam di maaple server lendhu');
 
-	console.log("New client connected");
-    socket.emit('test',"vanakam di maaple server lendhu")
-
-	socket.on('disconnect',()=>socket.disconnect());
+	socket.on('disconnect', () => socket.disconnect());
 
 	socket.on('test', (data) => {
 		console.log(data);
@@ -37,7 +35,7 @@ io.on("connection", (socket) => {
 		var wickets = 0;
 		for (i = 0; i < 11; i++) playerPoints[playerData.players[i]] = 0;
 		// match data
-		jsonString = fs.readFileSync('./JSON Files/' + match.toString(), {
+		jsonString = fs.readFileSync('../server/JSON Files/' + match.toString(), {
 			encoding: 'utf-8',
 			flag: 'r',
 		});
@@ -166,5 +164,4 @@ io.on("connection", (socket) => {
 
 		console.log('startMatch triggered');
 	});
-
 });
