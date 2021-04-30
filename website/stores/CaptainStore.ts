@@ -28,6 +28,7 @@ const captainStore = create<State>(
 		}),
 		{
 			name: 'captainDetails',
+			getStorage: () => sessionStorage,
 		}
 	)
 );
