@@ -105,11 +105,11 @@ io.on('connection', (socket) => {
 		wickets1 = 0;
 		secondInnings = data.innings[1]['2nd innings'].deliveries;
 
-		for (j = 0; j < secondInnings.length; i++,j++) {
+		for (i = 0; i < secondInnings.length; i++) {
 			setTimeout(
 				(i) => {
-					ball = Object.keys(secondInnings[j]);
-					ballData = secondInnings[j][ball[0]];
+					ball = Object.keys(secondInnings[i]);
+					ballData = secondInnings[i][ball[0]];
 
 					//point calculations for wickets
 					if (ballData.hasOwnProperty('wicket')) {
@@ -154,15 +154,19 @@ io.on('connection', (socket) => {
 				},
 				i * 500,
 				i
-			); // setTimeout closing
+			);
 		} // for loop closing
 
 		// end of second innings
-		setTimeout(() => {
-			playerPoints[playerData.captain] *= 2;
-			playerPoints[playerData.viceCaptain] *= 1.5;
-			socket.emit('matchEnd', playerPoints);
-		}, i*500,i);
+		setTimeout(
+			() => {
+				playerPoints[playerData.captain] *= 2;
+				playerPoints[playerData.viceCaptain] *= 1.5;
+				socket.emit('matchEnd', playerPoints);
+			},
+			i * 500,
+			i
+		);
 
 		console.log('startMatch triggered');
 	});
