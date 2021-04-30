@@ -59,7 +59,12 @@ router.post('/login', async (req, res) => {
 	if (!validPassword) return res.status(400).send('Invalid password');
 
 	//create and assigning the tokens
-	const token = jwt.sign({ _id: user._id }, process.env.AUTH_TOKEN);
+	const token = jwt.sign(
+		{
+			_id: user._id,
+		},
+		process.env.AUTH_TOKEN
+	);
 
 	res.header('auth_Token', token).send(token);
 });
@@ -84,8 +89,6 @@ router.post('/facebook/login', async (req, res) => {
 			});
 		}
 	}
-
-	// Need to add code for the issue I created.
 
 	const token = jwt.sign(
 		{ email: req.body.email },
@@ -165,16 +168,30 @@ router.post('/verifyOTP', (req, res) => {
 
 	let now = Date.now();
 	if (now > parseInt(expires)) {
-		return res.status(504).send({ msg: 'Timeout. Please try again' });
+		return res.status(504).send({
+			msg: 'Timeout. Please try again',
+		});
 	}
 
 	if (hashValue) {
-		const accessToken = jwt.sign({ data: phone }, JWT_AUTH_TOKEN, {
-			expiresIn: '7d',
-		});
-		const refreshToken = jwt.sign({ data: phone }, JWT_REFRESH_TOKEN, {
-			expiresIn: '1y',
-		});
+		const accessToken = jwt.sign(
+			{
+				data: phone,
+			},
+			JWT_AUTH_TOKEN,
+			{
+				expiresIn: '7d',
+			}
+		);
+		const refreshToken = jwt.sign(
+			{
+				data: phone,
+			},
+			JWT_REFRESH_TOKEN,
+			{
+				expiresIn: '1y',
+			}
+		);
 		refreshTokens.push(refreshToken);
 
 		res
@@ -197,10 +214,15 @@ router.post('/verifyOTP', (req, res) => {
 				expires: new Date(new Date().getTime() + 31557600000),
 				sameSite: 'strict',
 			})
-			.send({ msg: 'Device verified' });
+			.send({
+				msg: 'Device verified',
+			});
 	} else {
 		console.log('not authenticated');
-		return res.status(400).send({ verification: false, msg: 'Incorrect OTP' });
+		return res.status(400).send({
+			verification: false,
+			msg: 'Incorrect OTP',
+		});
 	}
 });
 
@@ -224,7 +246,10 @@ async function authenticateUser(req, res, next) {
 			});
 		} else {
 			console.log(err);
-			return res.status(403).send({ err, msg: 'User not authenticated' });
+			return res.status(403).send({
+				err,
+				msg: 'User not authenticated',
+			});
 		}
 	});
 }
@@ -233,19 +258,25 @@ async function authenticateUser(req, res, next) {
 router.post('/refresh', (req, res) => {
 	const refreshToken = req.cookies.refreshToken;
 	if (!refreshToken)
-		return res
-			.status(403)
-			.send({ message: 'Refresh token not found, login again' });
+		return res.status(403).send({
+			message: 'Refresh token not found, login again',
+		});
 	if (!refreshTokens.includes(refreshToken))
-		return res
-			.status(403)
-			.send({ message: 'Refresh token blocked, login again' });
+		return res.status(403).send({
+			message: 'Refresh token blocked, login again',
+		});
 
 	jwt.verify(refreshToken, JWT_REFRESH_TOKEN, (err, phone) => {
 		if (!err) {
-			const accessToken = jwt.sign({ data: phone }, JWT_AUTH_TOKEN, {
-				expiresIn: '7d',
-			});
+			const accessToken = jwt.sign(
+				{
+					data: phone,
+				},
+				JWT_AUTH_TOKEN,
+				{
+					expiresIn: '7d',
+				}
+			);
 			return res
 				.status(200)
 				.cookie('accessToken', accessToken, {
@@ -257,7 +288,10 @@ router.post('/refresh', (req, res) => {
 					expires: new Date(new Date().getTime() + 64800 * 1000),
 					sameSite: 'strict',
 				})
-				.send({ previousSessionExpired: true, success: true });
+				.send({
+					previousSessionExpired: true,
+					success: true,
+				});
 		} else {
 			return res.status(403).send({
 				success: false,
