@@ -131,7 +131,7 @@ const CreateTeamScreen: React.FC = () => {
 	return (
 		<div className={classes.background}>
 			<Head>
-				<title>Fantasy 11 | Select Team</title>
+				<title>Fantasy 11 | Create Team</title>
 				<link rel='icon' href='/logo.png' />
 			</Head>
 			<Card raised className={classes.leftPortionCard}>
