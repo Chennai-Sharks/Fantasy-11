@@ -67,46 +67,76 @@ router.post('/login', async (req, res) => {
 //facebook login which checks if the email is present or not
 router.post('/facebook/login', async (req, res) => {
 	const user = await User.findOne({ email: req.body.email });
-	
+
+	//if the user doesn't exists, it creates a user with the email and sends the tokens
 	if (!user) {
 		const user = new User({email: req.body.email});
 		try{
 			const savedUser = await user.save();
-			res.send(savedUser);
+			const token = jwt.sign(
+				{ email: req.body.email },
+				process.env.JWT_AUTH_TOKEN,
+				{
+					expiresIn: '7d',
+				}
+			);
+
+			res
+				.header('authToken', token)
+				.cookie('accessToken', token, {
+					expires: new Date(new Date().getTime() + 64800 * 1000),
+					sameSite: 'strict',
+					httpOnly: true,
+				})
+				.cookie('refreshToken', token, {
+					expires: new Date(new Date().getTime() + 31557600000),
+					sameSite: 'strict',
+					httpOnly: true,
+				})
+				.cookie('authSession', true, {
+					expires: new Date(new Date().getTime() + 64800 * 1000),
+					sameSite: 'strict',
+				})
+				.cookie('refreshTokenID', true, {
+					expires: new Date(new Date().getTime() + 31557600000),
+					sameSite: 'strict',
+				})
+				.send(token);
 		} catch{
 			res.status(400).send({message: err});
 		}
+	}else{	//if the user exists, then it just sends the tokens
+		const token = jwt.sign(
+			{ email: req.body.email },
+			process.env.JWT_AUTH_TOKEN,
+			{
+				expiresIn: '7d',
+			}
+		);
+
+		res
+			.header('authToken', token)
+			.cookie('accessToken', token, {
+				expires: new Date(new Date().getTime() + 64800 * 1000),
+				sameSite: 'strict',
+				httpOnly: true,
+			})
+			.cookie('refreshToken', token, {
+				expires: new Date(new Date().getTime() + 31557600000),
+				sameSite: 'strict',
+				httpOnly: true,
+			})
+			.cookie('authSession', true, {
+				expires: new Date(new Date().getTime() + 64800 * 1000),
+				sameSite: 'strict',
+			})
+			.cookie('refreshTokenID', true, {
+				expires: new Date(new Date().getTime() + 31557600000),
+				sameSite: 'strict',
+			})
+			.send(token);
 	}
 
-	const token = jwt.sign(
-		{ email: req.body.email },
-		process.env.JWT_AUTH_TOKEN,
-		{
-			expiresIn: '7d',
-		}
-	);
-
-	res
-		.header('authToken', token)
-		.cookie('accessToken', token, {
-			expires: new Date(new Date().getTime() + 64800 * 1000),
-			sameSite: 'strict',
-			httpOnly: true,
-		})
-		.cookie('refreshToken', token, {
-			expires: new Date(new Date().getTime() + 31557600000),
-			sameSite: 'strict',
-			httpOnly: true,
-		})
-		.cookie('authSession', true, {
-			expires: new Date(new Date().getTime() + 64800 * 1000),
-			sameSite: 'strict',
-		})
-		.cookie('refreshTokenID', true, {
-			expires: new Date(new Date().getTime() + 31557600000),
-			sameSite: 'strict',
-		})
-		.send(token);
 });
 
 //ignore all this lol
