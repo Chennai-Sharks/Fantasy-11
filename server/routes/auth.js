@@ -67,7 +67,23 @@ router.post('/login', async (req, res) => {
 //facebook login which checks if the email is present or not
 router.post('/facebook/login', async (req, res) => {
 	const user = await User.findOne({ email: req.body.email });
-	if (!user) return res.status(400).send('Email not found');
+	if (!user) {
+		const user = new User({
+			email: req.body.email,
+		});
+		try {
+			const savedUser = await user.save();
+			res.send({
+				userId: savedUser._id,
+				phone: savedUser.phone,
+				email: savedUser.email,
+			});
+		} catch (err) {
+			res.status(400).send({
+				message: err,
+			});
+		}
+	}
 
 	// Need to add code for the issue I created.
 
@@ -80,7 +96,6 @@ router.post('/facebook/login', async (req, res) => {
 	);
 
 	res
-		.header('authToken', token)
 		.cookie('accessToken', token, {
 			expires: new Date(new Date().getTime() + 64800 * 1000),
 			sameSite: 'strict',
