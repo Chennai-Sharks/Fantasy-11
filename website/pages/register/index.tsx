@@ -16,7 +16,10 @@ import axios, { AxiosResponse } from 'axios';
 import HashLoader from 'react-spinners/HashLoader';
 import PopUpDialog from '@components/Dialog';
 import { useRouter } from 'next/router';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 import userDataStore from '@stores/UserDataStore';
+import userIdStore from '@stores/UserIdStore';
 
 interface RegisterUser {
 	email: string;
@@ -26,6 +29,7 @@ interface RegisterUser {
 interface AuthServerResponse {
 	phone: string;
 	email: string;
+	userId: string;
 }
 
 const RegisterScreen: React.FC = () => {
@@ -37,7 +41,14 @@ const RegisterScreen: React.FC = () => {
 
 	const router = useRouter();
 
+	React.useEffect(() => {
+		if (typeof cookies.get('authSession') !== 'undefined') {
+			router.replace('/Home/Matches');
+		}
+	}, []);
+
 	const userData = userDataStore((state) => state);
+	const userId = userIdStore((state) => state);
 
 	const [openDialog, setOpenDialog] = React.useState(false);
 	const [openAlert, setOpenAlert] = React.useState(false);
@@ -106,6 +117,7 @@ const RegisterScreen: React.FC = () => {
 									.mutateAsync(values)
 									.then((value: AxiosResponse<AuthServerResponse>) => {
 										console.log(value.data);
+										userId.setuserId(value.data.userId);
 										userData.setEmail(value.data.email);
 										userData.setphone(value.data.phone);
 										setOpenDialog(true);

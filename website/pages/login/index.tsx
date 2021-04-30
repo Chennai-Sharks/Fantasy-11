@@ -4,9 +4,20 @@ import { Card, Typography } from '@material-ui/core';
 
 import classes from '@styles/Login.module.scss';
 import styles from '@styles/Home.module.scss';
+import { useRouter } from 'next/router';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 import LoginForm from '@containers/Auth/LoginForm';
 
-const PhoneLoginForm: React.FC = () => {
+const LoginScreen: React.FC = () => {
+	const router = useRouter();
+
+	React.useEffect(() => {
+		if (typeof cookies.get('authSession') !== 'undefined') {
+			router.replace('/Home/Matches');
+		}
+	}, []);
+
 	return (
 		<React.Fragment>
 			<Head>
@@ -40,4 +51,4 @@ const PhoneLoginForm: React.FC = () => {
 	);
 };
 
-export default PhoneLoginForm;
+export default LoginScreen;
