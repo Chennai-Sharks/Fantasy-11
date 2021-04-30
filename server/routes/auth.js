@@ -67,9 +67,16 @@ router.post('/login', async (req, res) => {
 //facebook login which checks if the email is present or not
 router.post('/facebook/login', async (req, res) => {
 	const user = await User.findOne({ email: req.body.email });
-	if (!user) return res.status(400).send('Email not found');
-
-	// Need to add code for the issue I created.
+	
+	if (!user) {
+		const user = new User({email: req.body.email});
+		try{
+			const savedUser = await user.save();
+			res.send(savedUser);
+		} catch{
+			res.status(400).send({message: err});
+		}
+	}
 
 	const token = jwt.sign(
 		{ email: req.body.email },
