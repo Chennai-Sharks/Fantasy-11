@@ -1,6 +1,6 @@
 <div align = "left">
   <h3>
-    <img alt="header" src="/src/assets/logo.png" width="1200"></img>
+    <img alt="header" src="/screenshots/logo.png" width="1200"></img>
   </h3>
   <h3>
     Welcome to the IPL Fantasy 11 App. Fantasy 11 is a Game of Skill where you create a team of real players for an upcoming match and compete with other fans for big prizes.
@@ -66,17 +66,18 @@ npm start
 
 ### Screenshots of the app
 
-| Register Page                             | Login Page                             | Send OTP page                        |
+| Home Page                                 | Register Page                          |  Login Page                          |
 | ----------------------------------------- | -------------------------------------- | ------------------------------------ |
-| <img src="/src/assets/Register page.png"> | <img src="/src/assets/Login Page.png"> | <img src="/src/assets/OTP page.png"> |
+| <img src="/screenshots/home_screen.png"> | <img src="/screenshots/register_screen.png"> | <img src="/screenshots/login_screen.png"> |
 
-| Match Selection Page                        | Selecting Players page                | Selecting Captain and vice-captain page    |
+| Send OTP page                               | Match Selection Page                  |  Selecting Players page                    |
 | ------------------------------------------- | ------------------------------------- | ------------------------------------------ |
-| <img src="screenshots/forgot_password.png"> | <img src="screenshots/dashboard.png"> | <img src="screenshots/create_contact.png"> |
+| <img src="/screenshots/otp_screen.png"> | <img src="/screenshots/match_screen.png"> | <img src="/screenshots/create_team.png"> |
 
-| Match simulation page                       | Scoreboard page                       |
-| ------------------------------------------- | ------------------------------------- |
-| <img src="screenshots/forgot_password.png"> | <img src="screenshots/dashboard.png"> |
+
+| Selecting Captain and vice-captain page   | Match simulation page                  | Scoreboard page                      |
+| ----------------------------------------- | -------------------------------------- | ------------------------------------ |
+| <img src="/screenshots/select_captain.png"> | <img src="/screenshots/game_screen.png"> | <img src="/screenshots/home_screen.png"> |
 
 ---
 
