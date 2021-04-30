@@ -26,9 +26,12 @@ const LogoutButton: React.FC<LogoutButtonProps> = () => {
 					}}
 					onClick={async () => {
 						setOpenAlert(true);
-						await axios.get('http://localhost:4000/api/users/logout', {
-							withCredentials: true,
-						});
+						await axios.get(
+							`${process.env.NEXT_PUBLIC_API_URL}/api/users/logout`,
+							{
+								withCredentials: true,
+							}
+						);
 						router.replace('/');
 					}}
 				>
