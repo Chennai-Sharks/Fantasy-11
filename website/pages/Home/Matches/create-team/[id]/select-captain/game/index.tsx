@@ -15,6 +15,8 @@ const cookies = new Cookies();
 
 import classes from '@styles/CreateTeam.module.scss';
 import LogoutButton from '@containers/Logout/LogoutButton';
+import axios from 'axios';
+import userIdStore from '@stores/UserIdStore';
 
 let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
@@ -31,15 +33,13 @@ const SelectCaptainScreen: React.FC = () => {
 
 	const [totalScore, setTotalScore] = React.useState(0);
 	const [wickets, setWickets] = React.useState(0);
-	const [a, b] = React.useState(0);
+	const [isDone, setIsdone] = React.useState(false);
 	const [playerPoints, setPlayerPoints] = React.useState<any>({});
+	const userId = userIdStore((state) => state);
 
 	const myRedirectFunction = function () {
 		if (typeof window !== 'undefined') {
-			router.push({
-				pathname: 'select-captain/game',
-				query: { id: idstore.id },
-			});
+			router.push('/Home/score-card');
 		}
 	};
 
@@ -77,15 +77,35 @@ const SelectCaptainScreen: React.FC = () => {
 	]);
 
 	React.useEffect(() => {
-		socket.on('score', (data) => {
-			setWickets(data['wickets']);
-			setTotalScore(data['total']);
-			setPlayerPoints(data['playerPoints']);
-		});
-		socket.on('matchEnd', (data) => {
-			console.log('match is over');
-			console.log(data);
-		});
+		if (!isDone) {
+			socket.on('score', (data) => {
+				setWickets(data['wickets']);
+				setTotalScore(data['total']);
+				setPlayerPoints(data['playerPoints']);
+			});
+			socket.on('matchEnd', (data) => {
+				console.log('match is over');
+				// console.log(data);
+				setIsdone(true);
+				return;
+			});
+		} else {
+			console.log('close');
+			socket.close();
+			// console.log(totalpoints);
+			socket.disconnect();
+
+			axios.post(
+				`${process.env.NEXT_PUBLIC_API_URL}/api/match/points`,
+				{
+					userId: userId.userId,
+					match: [matchStore.oneTeam, matchStore.twoTeam],
+					totalPoints: totalpoints,
+				},
+				{ withCredentials: true }
+			);
+			console.log(socket.disconnected);
+		}
 	});
 
 	return (
@@ -158,7 +178,18 @@ const SelectCaptainScreen: React.FC = () => {
 				</Card>
 				<div style={{ marginBottom: '20px' }}></div>
 
-				<Button onClick={() => {}}>Click here to see the scoreCard</Button>
+				<Button
+					onClick={() => {
+						myRedirectFunction();
+					}}
+				>
+					Click here to see the scoreCard
+				</Button>
+				{isDone ? (
+					<Button onClick={() => {}}>Match Finished</Button>
+				) : (
+					<div></div>
+				)}
 			</Card>
 			<div className={classes.rightPortion}>
 				<div className={classes.logo} />
