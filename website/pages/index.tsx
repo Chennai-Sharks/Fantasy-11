@@ -21,7 +21,7 @@ const Home: React.FC = () => {
 
 	const faceBookMutation = useMutation((newUser: { email: string }) => {
 		return axios.post(
-			'http://localhost:4000/api/users/facebook/login',
+			`${process.env.NEXT_PUBLIC_API_URL}/api/users/facebook/login`,
 			{
 				...newUser,
 			},

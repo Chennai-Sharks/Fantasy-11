@@ -63,9 +63,12 @@ const RegisterScreen: React.FC = () => {
 	};
 
 	const mutation = useMutation((newUser: RegisterUser) => {
-		return axios.post('http://localhost:4000/api/users/register/', {
-			...newUser,
-		});
+		return axios.post(
+			`${process.env.NEXT_PUBLIC_API_URL}/api/users/register/`,
+			{
+				...newUser,
+			}
+		);
 	});
 
 	return (

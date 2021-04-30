@@ -54,7 +54,7 @@ const SelectCaptainScreen: React.FC = () => {
 			transports: ['websocket'],
 		};
 
-		socket = io('http://localhost:5000', connectionOptions);
+		socket = io(`${process.env.NEXT_PUBLIC_SOCKET_URL}`, connectionOptions);
 
 		console.log(selectedplayers.selectedPlayers);
 

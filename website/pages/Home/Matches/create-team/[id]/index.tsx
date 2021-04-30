@@ -96,7 +96,7 @@ const CreateTeamScreen: React.FC = () => {
 			id = window.localStorage.getItem('id') as string;
 
 			const { data } = await axios.get(
-				`http://localhost:4000/api/match/players/${id}.json`,
+				`${process.env.NEXT_PUBLIC_API_URL}/api/match/players/${id}.json`,
 				{
 					withCredentials: true,
 				}
@@ -139,7 +139,7 @@ const CreateTeamScreen: React.FC = () => {
 					position='static'
 					style={{
 						backgroundColor: '#FD3A4A',
-						height: '30%',
+						height: '20%',
 					}}
 				>
 					<Toolbar
@@ -251,7 +251,7 @@ const CreateTeamScreen: React.FC = () => {
 					// 	);
 					// })
 
-					<div style={{ height: 470, width: '100%' }}>
+					<div style={{ height: 570, width: '100%' }}>
 						<DataGrid
 							rows={rows}
 							columns={columns}

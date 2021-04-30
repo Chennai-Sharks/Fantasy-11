@@ -39,9 +39,12 @@ const MatchScreen: React.FC = () => {
 	const { isLoading, isError, data, refetch } = useQuery(
 		'matches',
 		async () => {
-			const { data } = await axios.get('http://localhost:4000/api/match', {
-				withCredentials: true,
-			});
+			const { data } = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/api/match`,
+				{
+					withCredentials: true,
+				}
+			);
 			return data;
 		},
 		{
