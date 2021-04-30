@@ -5,8 +5,6 @@ const dotenv = require('dotenv');
 var cors = require('cors');
 const cookieParser = require('cookie-parser');
 
-const User = require('./models/User');
-
 dotenv.config(); //To access/config the DB connection token
 
 //Import Routes
