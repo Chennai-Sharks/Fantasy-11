@@ -21,7 +21,6 @@ const userIdStore = create<State>(
 		}),
 		{
 			name: 'userId',
-			getStorage: () => sessionStorage,
 		}
 	)
 );
