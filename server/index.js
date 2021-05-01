@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const colors = require('colors');
+const session = require('express-session');
 const dotenv = require('dotenv');
 var cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -15,18 +15,36 @@ const scoreboardRoute = require('./routes/scoreboard');
 //Connect to DB
 const connectDB = require('./config/db');
 connectDB();
-const port = process.env.PORT;
+const port = process.env.PORT || 4000;
 
 //Middleware
 app.use(express.json());
+
+// This is to enable cookie in browser when using heroku
+app.set('trust proxy', 1);
+
+app.use(cookieParser());
+
+// app.use(
+// 	session({
+// 		name: 'random_session',
+// 		secret: process.env.COOKIE_SECRET || 'change it (super secret)',
+// 		resave: true,
+// 		saveUninitialized: false,
+// 		cookie: {
+// 			secure: true,
+// 			sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+// 		},
+// 	})
+// );
+
 app.use(
 	cors({
-		origin: process.env.CLIENT_URL,
+		origin: process.env.CLIENT_URL || 'https://fantasy-11.vercel.app',
 		credentials: true, //access-control-allow-credentials:true
 		optionSuccessStatus: 200,
 	})
 );
-app.use(cookieParser());
 
 //Route Middlewares
 app.use('/api/users', authRoute);

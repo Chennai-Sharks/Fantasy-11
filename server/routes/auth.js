@@ -101,21 +101,25 @@ router.post('/facebook/login', async (req, res) => {
 	res
 		.cookie('accessToken', token, {
 			expires: new Date(new Date().getTime() + 64800 * 1000),
-			sameSite: 'strict',
+			sameSite: 'none',
 			httpOnly: true,
+			path: '/',
 		})
 		.cookie('refreshToken', token, {
 			expires: new Date(new Date().getTime() + 31557600000),
-			sameSite: 'strict',
+			sameSite: 'none',
 			httpOnly: true,
+			path: '/',
 		})
 		.cookie('authSession', true, {
 			expires: new Date(new Date().getTime() + 64800 * 1000),
-			sameSite: 'strict',
+			sameSite: 'none',
+			path: '/',
 		})
 		.cookie('refreshTokenID', true, {
 			expires: new Date(new Date().getTime() + 31557600000),
-			sameSite: 'strict',
+			sameSite: 'none',
+			path: '/',
 		})
 		.send(token);
 });
@@ -126,10 +130,12 @@ const authToken = process.env.AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
 
 // This process.env.JWT_AUTH_TOKEN is the jwt key used now. Don't use process.env.Token_Secret
-const JWT_AUTH_TOKEN = process.env.JWT_AUTH_TOKEN;
+const JWT_AUTH_TOKEN =
+	process.env.JWT_AUTH_TOKEN || 'verySECRETKEYNOONECANSTEAL';
 
 // for refresh token too it's the same. For simplicity purpose.
-const JWT_REFRESH_TOKEN = process.env.JWT_AUTH_TOKEN;
+const JWT_REFRESH_TOKEN =
+	process.env.JWT_AUTH_TOKEN || 'verySECRETKEYNOONECANSTEAL';
 
 let refreshTokens = [];
 const smsKey = process.env.SMS_SECRET_KEY;
