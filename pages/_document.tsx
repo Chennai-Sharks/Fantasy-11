@@ -9,10 +9,7 @@ export default class MyDocument extends Document {
 			<Html lang='en'>
 				<Head>
 					<meta name='theme-color' content={theme.palette.primary.main} />
-					<meta
-						name='viewport'
-						content='minimum-scale=1, initial-scale=1, width=device-width'
-					/>
+
 					<meta
 						name='description'
 						content='A Game of Skill where you create a team of real players for an upcoming match and compete with other fans for big prizes. '

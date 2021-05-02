@@ -1,8 +1,14 @@
 import fs from 'fs';
 import jwt from 'jsonwebtoken';
+import getConfig from 'next/config';
+import path from 'path';
+const { serverRuntimeConfig } = getConfig();
 
 async function getMatches(req, res) {
-	var files = fs.readdirSync('JSON Files/');
+	console.log();
+	var files = fs.readdirSync(
+		path.join(serverRuntimeConfig.PROJECT_ROOT, '/JSON Files')
+	);
 	const token = req.cookies.accessToken;
 	if (!token) return res.status(401).send('Access denied');
 	try {
