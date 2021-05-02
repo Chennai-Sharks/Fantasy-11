@@ -7,7 +7,7 @@ const { serverRuntimeConfig } = getConfig();
 async function getMatches(req, res) {
 	console.log();
 	var files = fs.readdirSync(
-		path.join(serverRuntimeConfig.PROJECT_ROOT, '/JSON Files')
+		path.join(serverRuntimeConfig.PROJECT_ROOT, '/JSON Files/')
 	);
 	const token = req.cookies.accessToken;
 	if (!token) return res.status(401).send('Access denied');
