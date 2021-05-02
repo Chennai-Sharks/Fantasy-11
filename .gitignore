@@ -1,35 +1,36 @@
-# Logs
-logs
-*.log
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# Server
+server/
+# misc
+.DS_Store
+*.pem
+
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
 
-# Dependency directories
-node_modules/
-jspm_packages/
-socket/JSON files
 
-# Build artefacts
-build/
-dist/
-dist-ssr/
+# local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# package-lock.json is ignored in client as yarn.lock is already there. 
-package-lock.json
-!server/package-lock.json
-
-
-# Yarn Integrity file
-.yarn-integrity
-
-# Optional npm cache directory
-.npm
-
-# Optional eslint cache
-.eslintcache
-
-# TypeScript v1 declaration files
-typings/
-server/.env
+# vercel
+.vercel
