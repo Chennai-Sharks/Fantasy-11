@@ -1,0 +1,22 @@
+.PlayerCard {
+	width: 95%;
+	height: 15%;
+	display: flex;
+	margin-top: 1.5rem;
+	flex-direction: row;
+	justify-content: space-between;
+	// align-items: center;
+	// &:hover {
+	// 	cursor: pointer;
+	// }
+}
+
+.subTitle {
+	font-family: Rubik, sans-serif;
+	font-size: 18px;
+	margin-left: 10px;
+
+	color: #07003b;
+	padding: 15px;
+	text-align: center;
+}
