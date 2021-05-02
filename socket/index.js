@@ -35,7 +35,7 @@ io.on('connection', (socket) => {
 		var wickets = 0;
 		for (i = 0; i < 11; i++) playerPoints[playerData.players[i]] = 0;
 		// match data
-		jsonString = fs.readFileSync('../server/JSON Files/' + match.toString(), {
+		jsonString = fs.readFileSync('./JSON Files/' + match.toString(), {
 			encoding: 'utf-8',
 			flag: 'r',
 		});
