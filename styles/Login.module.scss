@@ -1,0 +1,91 @@
+@import './MediaQuery';
+
+.background {
+	background-color: #e5ebf0;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.Card {
+	width: 60%;
+	height: 75%;
+	display: flex;
+	flex-direction: row;
+	border-radius: 20px;
+	border: 20px;
+
+	@include responsive(tablet) {
+		flex-direction: column;
+
+		height: 80%;
+	}
+	@include responsive(mobile) {
+		flex-direction: column;
+
+		height: 90%;
+		width: 85%;
+	}
+}
+
+.leftPortionCard {
+	width: 40%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: #fd3a4b;
+	@include responsive(tablet) {
+		flex-direction: column;
+		width: 100%;
+		height: 40%;
+	}
+}
+
+.rightPortionCard {
+	width: 60%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	overflow-x: hidden;
+	overflow-y: auto;
+	@include responsive(tablet) {
+		flex-direction: column;
+		width: 100%;
+	}
+}
+.Button {
+	border-radius: 20px;
+	border: 2px solid;
+	width: 45%;
+	margin-top: 15px;
+	height: 50px;
+	align-self: center;
+	&:hover {
+		border-radius: 20px;
+		border: 2px solid #fd3a4b;
+	}
+}
+
+.FormEmailStyle {
+	display: flex;
+	flex-direction: column;
+	width: 80%;
+	height: 60%;
+	margin-top: 10px;
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	@include responsive(mobile) {
+		height: 80%;
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+}
