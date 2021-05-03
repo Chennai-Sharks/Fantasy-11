@@ -5,21 +5,21 @@ async function logout(req, res) {
 	res.setHeader('Set-Cookie', [
 		cookie.serialize('accessToken', '', {
 			httpOnly: true,
-			secure: process.env.NODE_ENV !== 'development',
+			secure: false,
 			sameSite: 'strict',
 			path: '/',
 			maxAge: -1,
 		}),
 		cookie.serialize('authSession', '', {
 			httpOnly: false,
-			secure: process.env.NODE_ENV !== 'development',
+			secure: false,
 			sameSite: 'strict',
 			path: '/',
 			maxAge: -1,
 		}),
 	]);
 
-	res.writeHead(302, { path: '/' });
+	// res.writeHead(302, { path: '/' });
 	res.send('done');
 }
 
