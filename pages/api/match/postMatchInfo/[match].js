@@ -14,10 +14,13 @@ async function postMatchInfo(req, res) {
 		try {
 			const { match } = req.query;
 
-			let jsonString = fs.readFileSync('JSON Files/' + match.toString(), {
-				endcoding: 'utf8',
-				flag: 'r',
-			});
+			let jsonString = fs.readFileSync(
+				path.join(process.cwd(), '/JSON Files/') + match.toString(),
+				{
+					endcoding: 'utf8',
+					flag: 'r',
+				}
+			);
 
 			const data = JSON.parse(jsonString);
 			resData.matchInfo.push({

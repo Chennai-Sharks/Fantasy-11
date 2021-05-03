@@ -18,10 +18,13 @@ async function preMatchInfo(req, res) {
 		resData.matchInfo = [];
 		try {
 			console.log(match);
-			let jsonString = fs.readFileSync('JSON Files/' + match.toString(), {
-				endcoding: 'utf8',
-				flag: 'r',
-			});
+			let jsonString = fs.readFileSync(
+				path.join(process.cwd(), '/JSON Files/') + match.toString(),
+				{
+					endcoding: 'utf8',
+					flag: 'r',
+				}
+			);
 
 			const data = JSON.parse(jsonString);
 			resData.matchInfo.push({

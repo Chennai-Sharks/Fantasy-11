@@ -11,13 +11,16 @@ async function selectedMatch(req, res) {
 		console.log(verified);
 		req.user = verified;
 		// Code starts
-		let playerData = fs.readFileSync('models/data.json', {
-			encoding: 'utf8',
-			flag: 'r',
-		});
+		let playerData = fs.readFileSync(
+			path.join(process.cwd(), '/models/data.json'),
+			{
+				encoding: 'utf8',
+				flag: 'r',
+			}
+		);
 		playerData = JSON.parse(playerData);
 		fs.readFile(
-			'./JSON Files/' + match.toString(),
+			path.join(process.cwd(), '/JSON Files/') + match.toString(),
 			'utf-8',
 			(err, jsonString) => {
 				if (err) console.log(err);
