@@ -77,7 +77,7 @@ npm start
 
 | Selecting Captain and vice-captain page   | Match simulation page                  | Scoreboard page                      |
 | ----------------------------------------- | -------------------------------------- | ------------------------------------ |
-| <img src="/screenshots/select_captain.png"> | <img src="/screenshots/game_screen.png"> | <img src="/screenshots/home_screen.png"> |
+| <img src="/screenshots/select_captain.png"> | <img src="/screenshots/game_screen.png"> | <img src="/screenshots/score_card.png"> |
 
 ---
 
