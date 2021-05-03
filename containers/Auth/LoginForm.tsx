@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import { HashLoader } from 'react-spinners';
 import jwtStore from '@stores/jwtToken';
 import hashStore from '@stores/hashStore';
+import userIdStore from '@stores/UserIdStore';
 
 interface UserDataInitialForm {
 	email: string;
@@ -22,6 +23,7 @@ interface UserDataPhoneForm {
 
 interface JwtToken {
 	token: string;
+	userId: string;
 }
 
 const LoginForm: React.FC = () => {
@@ -44,6 +46,7 @@ const LoginForm: React.FC = () => {
 	};
 
 	const router = useRouter();
+	const userIdstore = userIdStore((state) => state);
 
 	const userData = userDataStore((state) => state);
 	const initialValues: UserDataInitialForm = {
@@ -108,6 +111,8 @@ const LoginForm: React.FC = () => {
 							.mutateAsync(values)
 							.then((response: AxiosResponse<JwtToken>) => {
 								jwt.setJwt(response.data.token);
+								userIdstore.setuserId(response.data.userId);
+
 								mutationOtp
 									.mutateAsync(values.phone)
 									.then((res) => {

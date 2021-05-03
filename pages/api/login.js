@@ -23,7 +23,10 @@ async function login(req, res) {
 		process.env.JWT_AUTH_TOKEN
 	);
 
-	res.send(token);
+	res.json({
+		userId: user._id,
+		token: token,
+	});
 }
 
 export default connectDB(login);

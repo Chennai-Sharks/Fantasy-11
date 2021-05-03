@@ -19,6 +19,7 @@ import userIdStore from '@stores/UserIdStore';
 import classes from '@styles/CreateTeam.module.scss';
 import LogoutButton from '@containers/Logout/LogoutButton';
 import { AppBar, Button, Card, Typography, Toolbar } from '@material-ui/core';
+import ScoreBoardButton from '@containers/ScoreBoardButton/ScoreBoardButton';
 
 let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
@@ -160,7 +161,11 @@ const SelectCaptainScreen: React.FC = () => {
 						>
 							Match
 						</Typography>
-						<LogoutButton />
+						<div>
+							<ScoreBoardButton />
+
+							<LogoutButton />
+						</div>
 					</Toolbar>
 
 					<Typography variant='h6' style={{ textAlign: 'center' }}>
@@ -203,13 +208,6 @@ const SelectCaptainScreen: React.FC = () => {
 				</Card>
 				<div style={{ marginBottom: '20px' }}></div>
 
-				<Button
-					onClick={() => {
-						myRedirectFunction();
-					}}
-				>
-					Click here to see the scoreCard
-				</Button>
 				{isDone ? (
 					<Typography className={classes.subTitle}>Match Finished</Typography>
 				) : (

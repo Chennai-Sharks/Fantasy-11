@@ -10,6 +10,7 @@ import jwtStore from '@stores/jwtToken';
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 import FacebookLogin from 'react-facebook-login';
+import userIdStore from '@stores/UserIdStore';
 
 const Home: React.FC = () => {
 	const router = useRouter();
@@ -19,6 +20,8 @@ const Home: React.FC = () => {
 			router.replace('/Home/Matches');
 		}
 	}, []);
+
+	const userIdstore = userIdStore((state) => state);
 
 	const faceBookMutation = useMutation((newUser: { email: string }) => {
 		return axios.post(
@@ -39,8 +42,9 @@ const Home: React.FC = () => {
 			.mutateAsync({
 				email: response.email,
 			})
-			.then((data) => {
-				// jwt.setJwt(data.data);
+			.then((res) => {
+				console.log(res.data);
+				userIdstore.setuserId(res.data.userId as string);
 				router.push('Home/Matches');
 			})
 			.catch((error) => {});

@@ -5,12 +5,13 @@ import cookie from 'cookie';
 
 async function facebookLogin(req, res) {
 	const user = await User.findOne({ email: req.body.email });
+	let savedUser;
 	if (!user) {
 		const user = new User({
 			email: req.body.email,
 		});
 		try {
-			const savedUser = await user.save();
+			savedUser = await user.save();
 			res.send({
 				userId: savedUser._id,
 				phone: savedUser.phone,
@@ -46,7 +47,7 @@ async function facebookLogin(req, res) {
 			expires: new Date(new Date().getTime() + 648000 * 1000),
 		}),
 	]);
-	res.json({ token: token });
+	res.json({ token: token, userId: savedUser._id });
 }
 
 export default connectDB(facebookLogin);
