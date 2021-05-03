@@ -35,7 +35,6 @@ const Home: React.FC = () => {
 	const jwt = jwtStore((state) => state);
 
 	const responseFacebook = (response: any) => {
-		console.log(response);
 		faceBookMutation
 			.mutateAsync({
 				email: response.email,
@@ -43,7 +42,6 @@ const Home: React.FC = () => {
 			.then((data) => {
 				// jwt.setJwt(data.data);
 				router.push('Home/Matches');
-				console.log(jwt.jwt);
 			})
 			.catch((error) => {});
 	};

@@ -58,7 +58,7 @@ const SelectCaptainScreen: React.FC = () => {
 
 		socket = io(`${process.env.NEXT_PUBLIC_SOCKET_URL}`, connectionOptions);
 
-		console.log(selectedplayers.selectedPlayers);
+		// console.log(selectedplayers.selectedPlayers);
 
 		socket.emit(
 			'startMatch',
@@ -88,7 +88,7 @@ const SelectCaptainScreen: React.FC = () => {
 			socket.on('matchEnd', (data) => {
 				console.log('close');
 				let totalPlayerPointsByUser: number = 0;
-				console.log(data);
+				// console.log(data);
 				Object.keys(data).map((playername) => {
 					totalPlayerPointsByUser = totalPlayerPointsByUser + data[playername];
 				});

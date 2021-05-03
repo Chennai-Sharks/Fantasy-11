@@ -66,7 +66,7 @@ const CreateTeamScreen: React.FC = () => {
 
 	const [selectedplayers, setselectedplayers] = React.useState<string[]>([]);
 
-	console.log('selectedplayers:' + selectedplayers);
+	// console.log('selectedplayers:' + selectedplayers);
 
 	// const [dis, setdis] = React.useState(false);
 
@@ -359,11 +359,11 @@ const CreateTeamScreen: React.FC = () => {
 								setselectedplayers((state) => {
 									let newplayerslist = [...state];
 									let player = newplayerslist[10];
-									console.log(player);
+									// console.log(player);
 									let selectedRow = rows.filter(
 										(eachRow: any) => eachRow['playername'] === player
 									);
-									console.log(selectedRow[0]['credits']);
+									// console.log(selectedRow[0]['credits']);
 									newplayerslist.pop();
 									settotalCredits((prevprog) => {
 										return prevprog + selectedRow[0]['credits'];
