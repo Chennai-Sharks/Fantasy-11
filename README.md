@@ -34,49 +34,34 @@
 
 ### Project Setup
 
-- Installing dependencies for server
+- Running the project locally
 
 ```
-cd into the website folder
 npm install/yarn install
-```
-
-- Starting the client
-
-```
-cd into the website folder
 npm run dev/yarn dev
 ```
 
-- Installing dependencies for server
+- Running the project inside a Docker container
 
 ```
-cd into the server folder
-npm install/yarn install
-```
-
-- Starting up the server
-
-```
-cd into server
-npm start
+docker compose build
+docker compose up
 ```
 
 ---
 
 ### Screenshots of the app
 
-| Home Page                                 | Register Page                          |  Login Page                          |
-| ----------------------------------------- | -------------------------------------- | ------------------------------------ |
+| Home Page                                | Register Page                                | Login Page                                |
+| ---------------------------------------- | -------------------------------------------- | ----------------------------------------- |
 | <img src="/screenshots/home_screen.png"> | <img src="/screenshots/register_screen.png"> | <img src="/screenshots/login_screen.png"> |
 
-| Send OTP page                               | Match Selection Page                  |  Selecting Players page                    |
-| ------------------------------------------- | ------------------------------------- | ------------------------------------------ |
+| Send OTP page                           | Match Selection Page                      | Selecting Players page                   |
+| --------------------------------------- | ----------------------------------------- | ---------------------------------------- |
 | <img src="/screenshots/otp_screen.png"> | <img src="/screenshots/match_screen.png"> | <img src="/screenshots/create_team.png"> |
 
-
-| Selecting Captain and vice-captain page   | Match simulation page                  | Scoreboard page                      |
-| ----------------------------------------- | -------------------------------------- | ------------------------------------ |
+| Selecting Captain and vice-captain page     | Match simulation page                    | Scoreboard page                         |
+| ------------------------------------------- | ---------------------------------------- | --------------------------------------- |
 | <img src="/screenshots/select_captain.png"> | <img src="/screenshots/game_screen.png"> | <img src="/screenshots/score_card.png"> |
 
 ---
