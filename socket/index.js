@@ -46,7 +46,6 @@ io.on('connection', (socket) => {
 		for (i = 0; i < firstInnings.length; i++) {
 			setTimeout(
 				(i) => {
-					console.log(firstInnings[i]);
 					ball = Object.keys(firstInnings[i]);
 					ballData = firstInnings[i][ball[0]];
 
@@ -99,20 +98,13 @@ io.on('connection', (socket) => {
 		// end of first innings
 
 		// start of second innings
-
 		total1 = 0;
 		wickets1 = 0;
 		secondInnings = data.innings[1]['2nd innings'].deliveries;
-		//console.log(secondInnings);
-		for (let j = 0; j < secondInnings.length; i++, j++) {
+
+		for (let j = 0; j < secondInnings.length; j++) {
 			setTimeout(
 				(j) => {
-					console.log('j value' + j);
-					console.log(secondInnings[j]);
-
-					// ball = Object.keys(firstInnings[i]);
-					// ballData = firstInnings[i][ball[0]];
-
 					ball = Object.keys(secondInnings[j]);
 					ballData = secondInnings[j][ball[0]];
 
@@ -157,7 +149,7 @@ io.on('connection', (socket) => {
 						playerPoints: playerPoints,
 					});
 				},
-				j * 1000,
+				(i + j) * 1000,
 				j
 			);
 		} // for loop closing
