@@ -90,7 +90,7 @@ io.on('connection', (socket) => {
 						playerPoints: playerPoints,
 					});
 				},
-				i * 500,
+				i * 5000,
 				i
 			); // setTimeout closing
 		} // for loop closing
@@ -152,7 +152,7 @@ io.on('connection', (socket) => {
 						playerPoints: playerPoints,
 					});
 				},
-				i * 500,
+				i * 5000,
 				i
 			);
 		} // for loop closing
@@ -164,7 +164,7 @@ io.on('connection', (socket) => {
 				playerPoints[playerData.viceCaptain] *= 1.5;
 				socket.emit('matchEnd', playerPoints);
 			},
-			i * 500,
+			i * 5000,
 			i
 		);
 
