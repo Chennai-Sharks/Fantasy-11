@@ -71,7 +71,6 @@ docker compose up
 - [React](https://reactjs.org/)
 - [Next.js](https://nextjs.org/)
 - [NodeJS](https://nodejs.org/en/)
-- [ExpressJS](https://expressjs.com/)
 - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
 - [socket.io](https://socket.io/)
 - [Postman](https://www.postman.com/)
