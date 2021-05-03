@@ -101,8 +101,8 @@ io.on('connection', (socket) => {
 		total1 = 0;
 		wickets1 = 0;
 		secondInnings = data.innings[1]['2nd innings'].deliveries;
-
-		for (let j = 0; j < secondInnings.length; j++) {
+		let j = 0;
+		for (; j < secondInnings.length; j++) {
 			setTimeout(
 				(j) => {
 					ball = Object.keys(secondInnings[j]);
@@ -161,7 +161,7 @@ io.on('connection', (socket) => {
 				playerPoints[playerData.viceCaptain] *= 1.5;
 				socket.emit('matchEnd', playerPoints);
 			},
-			i * 1000,
+			(i + j) * 1000,
 			i
 		);
 
