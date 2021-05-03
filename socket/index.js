@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
 			flag: 'r',
 		});
 		const data = JSON.parse(jsonString);
-
+		socket.emit('team', data.innings[0]['1st innings'].team )
 		firstInnings = data.innings[0]['1st innings'].deliveries;
 		socket.emit('first_innings', data.innings[0]['1st innings'].team);
 		for (i = 0; i < firstInnings.length; i++) {
@@ -96,10 +96,13 @@ io.on('connection', (socket) => {
 		} // for loop closing
 
 		// end of first innings
-
+		i++;
 		// start of second innings
 		total1 = 0;
 		wickets1 = 0;
+		setTimeout(() => {
+			socket.emit('team', data.innings[1]['2nd innings'].team )
+		}, i*1000);
 		secondInnings = data.innings[1]['2nd innings'].deliveries;
 		let j = 0;
 		for (; j < secondInnings.length; j++) {
