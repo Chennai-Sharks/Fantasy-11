@@ -94,22 +94,20 @@ io.on('connection', (socket) => {
 				i
 			); // setTimeout closing
 		} // for loop closing
-		socket.emit('first_innings', data.innings[0]['1st innings'].team);
 
 		// end of first innings
 
 		// start of second innings
-		socket.emit('second_innings', data.innings[1]['2nd innings'].team);
 
 		total1 = 0;
 		wickets1 = 0;
 		secondInnings = data.innings[1]['2nd innings'].deliveries;
 
-		for (i = 0; i < secondInnings.length; i++) {
+		for (j = 0; j < secondInnings.length;i++, j++) {
 			setTimeout(
-				(i) => {
-					ball = Object.keys(secondInnings[i]);
-					ballData = secondInnings[i][ball[0]];
+				(j) => {
+					ball = Object.keys(secondInnings[j]);
+					ballData = secondInnings[j][ball[0]];
 
 					//point calculations for wickets
 					if (ballData.hasOwnProperty('wicket')) {
