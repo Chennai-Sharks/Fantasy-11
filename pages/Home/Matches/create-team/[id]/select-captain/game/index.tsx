@@ -17,6 +17,7 @@ import { useQuery } from 'react-query';
 import { MoonLoader } from 'react-spinners';
 import userIdStore from '@stores/UserIdStore';
 import classes from '@styles/CreateTeam.module.scss';
+import styles from '@styles/GameCard.module.scss';
 import LogoutButton from '@containers/Logout/LogoutButton';
 import { AppBar, Button, Card, Typography, Toolbar } from '@material-ui/core';
 import ScoreBoardButton from '@containers/ScoreBoardButton/ScoreBoardButton';
@@ -37,6 +38,7 @@ const SelectCaptainScreen: React.FC = () => {
 	const [totalScore, setTotalScore] = React.useState(0);
 	const [wickets, setWickets] = React.useState(0);
 	const [isDone, setIsdone] = React.useState(false);
+	const [playingTeam, setPlayingTeam] = React.useState('Loading ...');
 	const [playerPoints, setPlayerPoints] = React.useState<any>({});
 	const userId = userIdStore((state) => state);
 
@@ -116,6 +118,12 @@ const SelectCaptainScreen: React.FC = () => {
 		}
 	}, [totalpoints, matchStore.oneTeam, matchStore.twoTeam]);
 
+	React.useEffect(() => {
+		socket.on('team', (data) => {
+			setPlayingTeam(data);
+		});
+	});
+
 	const { isLoading, isError, data, refetch } = useQuery(
 		'preMatchInfo',
 		async () => {
@@ -176,19 +184,38 @@ const SelectCaptainScreen: React.FC = () => {
 					raised
 					style={{
 						width: '90%',
-						height: '65%',
+						height: '72%',
 						overflowX: 'hidden',
 						overflowY: 'auto',
 						marginTop: '20px',
 					}}
 				>
 					<div style={{ marginBottom: '10px' }}></div>
-					<Typography className={classes.subTitle}>
-						Wickets: {wickets}
-					</Typography>
-					<Typography className={classes.subTitle}>
-						Total Score: {totalScore}
-					</Typography>
+					<div className={styles.Column}>
+						<div
+							className={styles.Row}
+							style={{
+								width: '75%',
+							}}
+						>
+							<Typography className={classes.subTitle}>
+								Playing Team: {'  '}
+							</Typography>
+							<Typography className={classes.subTitle}>
+								{`${playingTeam}`}
+							</Typography>
+						</div>
+						{/* <br /> */}
+						<div className={styles.Row}>
+							<Typography className={classes.subTitle}>Total Score:</Typography>
+							<Typography className={classes.subTitle}>{totalScore}</Typography>
+						</div>
+						<div className={styles.Row}>
+							<Typography className={classes.subTitle}>Wickets:</Typography>
+							<Typography className={classes.subTitle}>{wickets}</Typography>
+						</div>
+					</div>
+
 					<Typography
 						align='center'
 						style={{ marginTop: '0px' }}
@@ -196,15 +223,22 @@ const SelectCaptainScreen: React.FC = () => {
 					>
 						Player Points:
 					</Typography>
-					{Object.keys(playerPoints).map((EachPlayer, index) => {
-						totalpoints = totalpoints + playerPoints[EachPlayer];
+					<div className={styles.Column}>
+						{Object.keys(playerPoints).map((EachPlayer, index) => {
+							totalpoints = totalpoints + playerPoints[EachPlayer];
 
-						return (
-							<Typography className={classes.subTitle} key={index}>
-								{EachPlayer}:{playerPoints[EachPlayer]}
-							</Typography>
-						);
-					})}
+							return (
+								<div className={styles.Row}>
+									<Typography className={classes.subTitle} key={index}>
+										{EachPlayer}:
+									</Typography>
+									<Typography className={classes.subTitle}>
+										{playerPoints[EachPlayer]}
+									</Typography>
+								</div>
+							);
+						})}
+					</div>
 				</Card>
 				<div style={{ marginBottom: '20px' }}></div>
 
