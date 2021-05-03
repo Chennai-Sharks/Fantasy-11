@@ -1,7 +1,7 @@
-import bcryptjs from 'bcrypt';
-import connectDB from '../../config/db';
-import User from '../../models/User';
 import jwt from 'jsonwebtoken';
+import User from '../../models/User';
+import connectDB from '../../config/db';
+import saltHash from 'password-salt-and-hash';
 
 async function login(req, res) {
 	const user = await User.findOne({
@@ -9,11 +9,12 @@ async function login(req, res) {
 	});
 	if (!user) return res.status(400).send('Email not found');
 
-	const validPassword = await bcryptjs.compare(
-		req.body.password,
-		user.password
+	let isPasswordMatch = saltHash.verifySaltHash(
+		user.salt,
+		user.password,
+		req.body.password
 	);
-	if (!validPassword) return res.status(400).send('Invalid password');
+	if (!isPasswordMatch) return res.status(400).send('Invalid password');
 
 	const token = jwt.sign(
 		{

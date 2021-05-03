@@ -1,6 +1,6 @@
-import bcryptjs from 'bcrypt';
 import connectDB from '../../config/db';
 import User from '../../models/User';
+import saltHash from 'password-salt-and-hash';
 
 async function register(req, res) {
 	const emailExist = await User.findOne({
@@ -14,13 +14,13 @@ async function register(req, res) {
 
 	if (phoneExist) return res.status(400).send('Phone number already in use');
 
-	const salt = await bcryptjs.genSalt(10);
-	const hashedPassword = await bcryptjs.hash(req.body.password, salt);
+	let hashPassword = saltHash.generateSaltHash(req.body.password);
 
 	const user = new User({
 		phone: req.body.phone,
 		email: req.body.email,
-		password: hashedPassword,
+		password: hashPassword.password,
+		salt: hashPassword.salt,
 	});
 	try {
 		const savedUser = await user.save();
