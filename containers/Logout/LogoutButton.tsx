@@ -26,9 +26,15 @@ const LogoutButton: React.FC<LogoutButtonProps> = () => {
 					}}
 					onClick={async () => {
 						setOpenAlert(true);
-						await axios.get(`/api/logout`, {
-							withCredentials: true,
-						});
+						await axios.post(
+							`/api/logout`,
+							{
+								key: 'static_key',
+							},
+							{
+								withCredentials: true,
+							}
+						);
 						router.replace('/');
 					}}
 				>
