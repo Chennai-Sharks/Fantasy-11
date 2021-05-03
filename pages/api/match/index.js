@@ -7,7 +7,7 @@ const { serverRuntimeConfig } = getConfig();
 async function getMatches(req, res) {
 	console.log();
 	var files = fs.readdirSync(
-		path.join(serverRuntimeConfig.PROJECT_ROOT, '/public/JSON Files/')
+		path.join(serverRuntimeConfig.PROJECT_ROOT, '/pages/JSON Files/')
 	);
 	const token = req.cookies.accessToken;
 	if (!token) return res.status(401).send('Access denied');
@@ -21,7 +21,7 @@ async function getMatches(req, res) {
 			const chosenFile = files[Math.floor(Math.random() * files.length)];
 			console.log(chosenFile);
 			const jsonString = fs.readFileSync(
-				path.join(serverRuntimeConfig.PROJECT_ROOT, '/public/JSON Files/') +
+				path.join(serverRuntimeConfig.PROJECT_ROOT, '/pages/JSON Files/') +
 					chosenFile.toString(),
 				{
 					encoding: 'utf8',
