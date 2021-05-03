@@ -14,6 +14,11 @@ const userSchema = new mongoose.Schema({
 		max: 1000,
 		min: 8,
 	},
+	salt: {
+		type: String,
+		max: 1000,
+		min: 2,
+	},
 	pointHistory: [],
 	date: {
 		type: Date,
