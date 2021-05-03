@@ -19,8 +19,8 @@ async function logout(req, res) {
 		}),
 	]);
 
+	res.writeHead(302, { path: '/' });
 	res.send('done');
-	// res.writeHead(302, { path: '/' });
 }
 
 export default connectDB(logout);
