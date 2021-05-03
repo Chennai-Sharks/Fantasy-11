@@ -4,9 +4,8 @@ import jwt from 'jsonwebtoken';
 import cookie from 'cookie';
 
 async function facebookLogin(req, res) {
-	const user = await User.findOne({ email: req.body.email });
-	let savedUser;
-	if (!user) {
+	let savedUser = await User.findOne({ email: req.body.email });
+	if (!savedUser) {
 		const user = new User({
 			email: req.body.email,
 		});
