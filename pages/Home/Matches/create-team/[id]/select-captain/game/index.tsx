@@ -29,7 +29,7 @@ const SelectCaptainScreen: React.FC = () => {
 	const selectedplayers = selectedPlayersStore((state) => state);
 	const idstore = idStore((state) => state);
 	const captaindata = captainStore((state) => state);
-	let totalpoints: number = 0;
+	let totalpoints: number = 0; // this is not used anywhere.
 
 	const router = useRouter();
 
@@ -88,7 +88,7 @@ const SelectCaptainScreen: React.FC = () => {
 			socket.on('matchEnd', (data) => {
 				console.log('close');
 				let totalPlayerPointsByUser: number = 0;
-				// console.log(data);
+				console.log(data);
 				Object.keys(data).map((playername) => {
 					totalPlayerPointsByUser = totalPlayerPointsByUser + data[playername];
 				});
