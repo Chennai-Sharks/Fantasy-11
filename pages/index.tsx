@@ -3,7 +3,7 @@ import React from 'react';
 import { Card, Typography, Button } from '@material-ui/core';
 import { useRouter } from 'next/router';
 
-import classes from '../styles/Home.module.scss';
+import classes from '@styles/Home.module.scss';
 import { useMutation } from 'react-query';
 import axios from 'axios';
 import jwtStore from '@stores/jwtToken';

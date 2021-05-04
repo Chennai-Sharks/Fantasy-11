@@ -24,9 +24,7 @@ import ScoreBoardButton from '@containers/ScoreBoardButton/ScoreBoardButton';
 
 let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
-type playerPoints = {};
-
-const SelectCaptainScreen: React.FC = () => {
+const GameScreen: React.FC = () => {
 	const matchStore = versusMatchStore((state) => state);
 	const selectedplayers = selectedPlayersStore((state) => state);
 	const idstore = idStore((state) => state);
@@ -243,7 +241,19 @@ const SelectCaptainScreen: React.FC = () => {
 				<div style={{ marginBottom: '20px' }}></div>
 
 				{isDone ? (
-					<Typography className={classes.subTitle}>Match Finished</Typography>
+					<>
+						<Typography className={classes.subTitle}>Match Finished</Typography>
+						<Button
+							className={styles.ContinuePlayingButton}
+							onClick={() => {
+								socket.close();
+								socket.disconnect();
+								router.replace('/Home/Matches');
+							}}
+						>
+							Continue Playing
+						</Button>
+					</>
 				) : (
 					<div></div>
 				)}
@@ -312,4 +322,4 @@ const SelectCaptainScreen: React.FC = () => {
 	);
 };
 
-export default SelectCaptainScreen;
+export default GameScreen;
