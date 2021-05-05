@@ -275,7 +275,9 @@ const GameScreen: React.FC = () => {
 				<div style={{ marginTop: '5px' }}>
 					{!isDone ? (
 						<Typography className={classes.subTitle}>
-							Match is going on...
+							{playingTeam === 'Loading ...'
+								? 'Loading ...'
+								: 'Match is going on...'}
 						</Typography>
 					) : isLoading ? (
 						<MoonLoader />
