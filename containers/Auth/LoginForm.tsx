@@ -1,4 +1,4 @@
-import { Button, Snackbar, TextField } from '@material-ui/core';
+import { Button, Snackbar, TextField, Typography } from '@material-ui/core';
 import React from 'react';
 
 import classes from '@styles/Login.module.scss';
@@ -9,33 +9,36 @@ import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
 import { HashLoader } from 'react-spinners';
 import jwtStore from '@stores/jwtToken';
-import hashStore from '@stores/hashStore';
+// import hashStore from '@stores/hashStore';
 import userIdStore from '@stores/UserIdStore';
+// import firebase from '../../FirebaseConfig';
 
 interface UserDataInitialForm {
 	email: string;
 	phone: string;
 	password: string;
 }
-interface UserDataPhoneForm {
-	otp: string;
-}
+// interface UserDataPhoneForm {
+// 	otp: string;
+// }
 
-interface JwtToken {
+interface Result {
 	token: string;
 	userId: string;
 }
 
 const LoginForm: React.FC = () => {
-	const initialPhoneFormValues: UserDataPhoneForm = {
-		otp: '',
-	};
+	// const initialPhoneFormValues: UserDataPhoneForm = {
+	// 	otp: '',
+	// };
+
+	// let phoneauth: firebase.auth.ConfirmationResult;
 
 	const [openAlert, setOpenAlert] = React.useState(false);
 	const [snackContent, setsnackContent] = React.useState(' ');
 
 	const jwt = jwtStore((state) => state);
-	const hash = hashStore((state) => state);
+	// const hash = hashStore((state) => state);
 
 	const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
 		if (reason === 'clickaway') {
@@ -55,38 +58,46 @@ const LoginForm: React.FC = () => {
 		phone: userData.phone,
 	};
 
-	const [showInitialForm, setShowInitialForm] = React.useState(true);
+	// const [showInitialForm, setShowInitialForm] = React.useState(true);
 
 	const mutation = useMutation((newUser: UserDataInitialForm) => {
-		return axios.post(`/api/login`, {
-			email: newUser.email,
-			password: newUser.password,
-		});
+		return axios.post(
+			`/api/login`,
+			{
+				email: newUser.email,
+				password: newUser.password,
+			},
+			{
+				withCredentials: true,
+			}
+		);
 	});
 
-	const mutationOtp = useMutation((phoneNo: string) => {
-		return axios.post(`/api/sendOtp`, {
-			phone: phoneNo,
-		});
-	});
+	// const mutationOtp = useMutation((phoneNo: string) => {
+	// 	return axios.post(`/api/sendOtp`, {
+	// 		phone: phoneNo,
+	// 	});
+	// });
 
-	const verifyOtpMutation = useMutation(
-		(verifyOtp: { phone: string; hash: string; otp: string }) => {
-			return axios.post(
-				`/api/verifyOtp`,
-				{
-					...verifyOtp,
-				},
-				{
-					withCredentials: true,
-				}
-			);
-		}
-	);
+	// const verifyOtpMutation = useMutation(
+	// 	(verifyOtp: { phone: string; hash: string; otp: string }) => {
+	// 		return axios.post(
+	// 			`/api/verifyOtp`,
+	// 			{
+	// 				...verifyOtp,
+	// 			},
+	// 			{
+	// 				withCredentials: true,
+	// 			}
+	// 		);
+	// 	}
+	// );
 
 	return (
 		<React.Fragment>
-			{showInitialForm ? (
+			{/* <div id='recaptcha'></div> */}
+			{
+				// showInitialForm ?
 				<Formik
 					validateOnChange={true}
 					initialValues={initialValues}
@@ -109,27 +120,37 @@ const LoginForm: React.FC = () => {
 
 						mutation
 							.mutateAsync(values)
-							.then((response: AxiosResponse<JwtToken>) => {
+							.then(async (response: AxiosResponse<Result>) => {
 								jwt.setJwt(response.data.token);
 								userIdstore.setuserId(response.data.userId);
+								router.replace('/Home/Matches');
 
-								mutationOtp
-									.mutateAsync(values.phone)
-									.then((res) => {
-										hash.sethash(res.data.hash);
-										console.log(res.data);
-									})
-									.catch((error) => {
-										setsnackContent(error.toString());
-										setOpenAlert(true);
-									});
+								// Firebase phone auth
+								// let recaptcha = new firebase.auth.RecaptchaVerifier(
+								// 	'recaptcha'
+								// );
 
-								setShowInitialForm(false);
+								// phoneauth = await firebase
+								// 	.auth()
+								// 	.signInWithPhoneNumber(`+91${values.phone}`, recaptcha);
+
+								// mutationOtp
+								// 	.mutateAsync(values.phone)
+								// 	.then((res) => {
+								// 		hash.sethash(res.data.hash);
+								// 		console.log(res.data);
+								// 	})
+								// 	.catch((error) => {
+								// 		setsnackContent(error.toString());
+								// 		setOpenAlert(true);
+								// 	});
+
+								// setShowInitialForm(false);
 							})
 							.catch((error) => {
 								setsnackContent(
 									error.toString() +
-										'. Email is not registered or password is invalid'
+										' or Email is not registered or password is invalid'
 								);
 								setOpenAlert(true);
 							});
@@ -157,6 +178,7 @@ const LoginForm: React.FC = () => {
 								variant='outlined'
 								type='input'
 								name='phone'
+								key='hello'
 								style={{
 									marginBottom: '30px',
 								}}
@@ -179,6 +201,7 @@ const LoginForm: React.FC = () => {
 								name='password'
 								as={TextField}
 							/>
+
 							<Button
 								disabled={isSubmitting}
 								className={classes.Button}
@@ -197,82 +220,103 @@ const LoginForm: React.FC = () => {
 						</Form>
 					)}
 				</Formik>
-			) : (
-				<Formik
-					initialValues={initialPhoneFormValues}
-					validate={(values) => {
-						const errors: Record<string, string> = {};
-						if (values.otp !== undefined && values.otp.length < 4)
-							errors.otp = 'OTP is invalid';
-						return errors;
-					}}
-					onSubmit={(values, actions) => {
-						actions.setSubmitting(true);
 
-						verifyOtpMutation
-							.mutateAsync({
-								otp: values.otp,
-								phone: userData.phone,
-								hash: hash.hash,
-							})
-							.then(() => {
-								router.replace('/Home/Matches');
-							})
-							.catch((error) => {
-								setsnackContent(error.toString() + ' invalid OTP try again.');
-								setOpenAlert(true);
-							});
+				// : (
+				// 	<Formik
+				// 		initialValues={initialPhoneFormValues}
+				// 		validate={(values) => {
+				// 			const errors: Record<string, string> = {};
+				// 			if (values.otp !== undefined && values.otp.length < 4)
+				// 				errors.otp = 'OTP is invalid';
+				// 			return errors;
+				// 		}}
+				// 		onSubmit={(values, actions) => {
+				// 			actions.setSubmitting(true);
+				// 			console.log(phoneauth);
+				// 			// phoneauth.then((result) => {
+				// 			// 	(result as firebase.auth.ConfirmationResult)
+				// 			// 		.confirm(values.otp)
+				// 			// 		.then((result) => router.replace('/Home/Matches'))
+				// 			// 		.catch((error) => {
+				// 			// 			setsnackContent(error.toString() + ' invalid OTP try again.');
+				// 			// 			setOpenAlert(true);
+				// 			// 		});
+				// 			// });
+				// 			phoneauth
+				// 				.confirm(values.otp)
+				// 				.then((result) => {
+				// 					router.replace('/Home/Matches');
+				// 				})
+				// 				.catch((error) => {
+				// 					setsnackContent(error.toString() + ' invalid OTP try again.');
+				// 					setOpenAlert(true);
+				// 				});
 
-						actions.setSubmitting(false);
-					}}
-				>
-					{({ isSubmitting, errors }) => (
-						<Form
-							style={{
-								display: 'flex',
-								flexDirection: 'column',
-								width: '80%',
-								height: '50%',
-								marginTop: '10px',
-								overflowX: 'hidden',
-								overflowY: 'auto',
-							}}
-						>
-							<Field
-								variant='outlined'
-								type='number'
-								autoFocus={false}
-								name='otp'
-								style={{
-									marginBottom: '30px',
-									marginTop: '10px',
-								}}
-								fullWidth
-								label='Enter OTP'
-								error={!!errors.otp}
-								helperText={errors.otp}
-								as={TextField}
-							/>
+				// 			// verifyOtpMutation
+				// 			// 	.mutateAsync({
+				// 			// 		otp: values.otp,
+				// 			// 		phone: userData.phone,
+				// 			// 		hash: hash.hash,
+				// 			// 	})
+				// 			// 	.then(() => {
+				// 			// 		router.replace('/Home/Matches');
+				// 			// 	})
+				// 			// 	.catch((error) => {
 
-							<Button
-								disabled={isSubmitting}
-								className={classes.Button}
-								type='submit'
-							>
-								{verifyOtpMutation.isLoading ? (
-									<HashLoader
-										loading={verifyOtpMutation.isLoading}
-										size={35}
-										color='black'
-									/>
-								) : (
-									'submit'
-								)}
-							</Button>
-						</Form>
-					)}
-				</Formik>
-			)}
+				// 			// 	});
+
+				// 			actions.setSubmitting(false);
+				// 		}}
+				// 	>
+				// 		{({ isSubmitting, errors }) => (
+				// 			<Form
+				// 				style={{
+				// 					display: 'flex',
+				// 					flexDirection: 'column',
+				// 					width: '80%',
+				// 					height: '50%',
+				// 					marginTop: '10px',
+				// 					overflowX: 'hidden',
+				// 					overflowY: 'auto',
+				// 				}}
+				// 			>
+				// 				<Typography>Verify Captcha to get OTP</Typography>
+				// 				<Field
+				// 					variant='outlined'
+				// 					type='number'
+				// 					autoFocus={false}
+				// 					name='otp'
+				// 					style={{
+				// 						marginBottom: '30px',
+				// 						marginTop: '10px',
+				// 					}}
+				// 					fullWidth
+				// 					label='Enter OTP'
+				// 					error={!!errors.otp}
+				// 					helperText={errors.otp}
+				// 					as={TextField}
+				// 				/>
+
+				// 				<Button
+				// 					disabled={isSubmitting}
+				// 					className={classes.Button}
+				// 					type='submit'
+				// 				>
+				// 					{verifyOtpMutation.isLoading ? (
+				// 						<HashLoader
+				// 							loading={verifyOtpMutation.isLoading}
+				// 							size={35}
+				// 							color='black'
+				// 						/>
+				// 					) : (
+				// 						'submit'
+				// 					)}
+				// 				</Button>
+				// 			</Form>
+				// 		)}
+				// 	</Formik>
+				// )
+			}
 			<Snackbar
 				open={openAlert}
 				autoHideDuration={3000}
