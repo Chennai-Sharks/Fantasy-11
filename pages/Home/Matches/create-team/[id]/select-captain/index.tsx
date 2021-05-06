@@ -21,6 +21,8 @@ import { useQuery } from 'react-query';
 import { MoonLoader } from 'react-spinners';
 import classes from '@styles/CreateTeam.module.scss';
 import selectedPlayersStore from '@stores/SelectedPlayersStore';
+import LogoutButton from '@containers/Logout/LogoutButton';
+import HomeButton from '@containers/HomeButton/HomeButton';
 
 const SelectCaptainScreen: React.FC = () => {
 	const matchStore = versusMatchStore((state) => state);
@@ -78,13 +80,23 @@ const SelectCaptainScreen: React.FC = () => {
 						height: '20%',
 					}}
 				>
-					<Toolbar>
+					<Toolbar
+						style={{
+							display: 'flex',
+							flexDirection: 'row',
+							justifyContent: 'space-between',
+						}}
+					>
 						<Typography
 							variant='h6'
 							style={{ margin: '10px', textAlign: 'center' }}
 						>
 							Select Captain and Vice Captain
 						</Typography>
+						<div>
+							<HomeButton />
+							<LogoutButton />
+						</div>
 					</Toolbar>
 					<Typography variant='h6' style={{ textAlign: 'center' }}>
 						{matchStore.oneTeam} vs {matchStore.twoTeam}

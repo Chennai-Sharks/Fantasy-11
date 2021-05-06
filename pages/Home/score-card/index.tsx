@@ -15,6 +15,7 @@ import userIdStore from '@stores/UserIdStore';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 import { MoonLoader } from 'react-spinners';
+import HomeButton from '@containers/HomeButton/HomeButton';
 
 const Scorecard: React.FC = () => {
 	const router = useRouter();
@@ -75,12 +76,17 @@ const Scorecard: React.FC = () => {
 						>
 							ScoreBoard
 						</Typography>
-						<LogoutButton />
+						<div>
+							<HomeButton />
+							<LogoutButton />
+						</div>
 					</Toolbar>
 				</AppBar>
 				{isLoading ? (
-					<div style={{ marginTop: '15px' }}>
-						<MoonLoader />
+					<div
+						style={{ marginTop: '15px', display: 'grid', placeItems: 'center' }}
+					>
+						<MoonLoader loading={isLoading} />
 					</div>
 				) : isError ? (
 					<Typography className={classes.subTitle}>

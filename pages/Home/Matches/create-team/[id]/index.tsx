@@ -32,6 +32,7 @@ import Image from 'next/image';
 import selectedPlayersStore from '@stores/SelectedPlayersStore';
 import idStore from '@stores/idStore';
 import { DataGrid } from '@material-ui/data-grid';
+import HomeButton from '@containers/HomeButton/HomeButton';
 
 function LinearProgressWithLabel(
 	props: LinearProgressProps & { value: number }
@@ -156,12 +157,17 @@ const CreateTeamScreen: React.FC = () => {
 							style={{
 								display: 'flex',
 								flexDirection: 'row',
+								justifyContent: 'space-between',
 							}}
 						>
 							<Typography variant='h6'>
 								Credits left: {`${totalCredits}`}
 							</Typography>
-							<LogoutButton />
+							<div>
+								<HomeButton />
+
+								<LogoutButton />
+							</div>
 						</div>
 					</Toolbar>
 					<Typography variant='h6' style={{ textAlign: 'center' }}>
