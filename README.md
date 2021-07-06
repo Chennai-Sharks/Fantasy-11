@@ -95,12 +95,7 @@ docker compose up
        <td align="center"><a href="https://github.com/Poujhit"><img width="64" src="https://avatars.githubusercontent.com/u/55449207" alt="f"></a></td>
        <td align="center"><a href="https://github.com/NaveenSriramR"><img width="64" src="https://avatars.githubusercontent.com/u/62332925" alt="f"></a></td>
        <td align="center"><a href="https://github.com/NikhileshJr08"><img width="64" src="https://avatars.githubusercontent.com/u/63784914" alt="f"></a></td>
-    </tr>
-    <tr>
-        <td align="center"> Front-end</td>
-        <td align="center"> Back-end</td>
-        <td align="center"> Back-end</td>
-    </tr>
+    </tr>    
   </tbody>
 </table>
 
