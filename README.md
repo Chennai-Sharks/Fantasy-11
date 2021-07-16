@@ -3,7 +3,7 @@
     <img alt="header" src="/screenshots/logo.png" width="1200"></img>
   </h3>
   <h3>
-    Welcome to the IPL Fantasy 11 App. Fantasy 11 is a Game of Skill where you create a team of real players for an upcoming match and compete with other fans for big prizes.
+    Welcome to the Fantasy 11 App. Fantasy 11 is a Game of Skill where you create a team of real players for an upcoming match and compete with other fans for big prizes.
     Your team earns points based on your players’ performances in the real-life match, so make sure you make the right choices!
   </h3>
  ----
@@ -24,7 +24,6 @@
 - Login and Signup via
   - username - Password
   - Facebook
-  - Phone OTP
 - Random Dummy Match Selection
 - Fantasy team creation based on selected match
 - Selection of team captain and vice-captain
