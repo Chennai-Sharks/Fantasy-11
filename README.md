@@ -1,11 +1,12 @@
 <div align = "left">
   <h3>
-    <img alt="header" src="/screenshots/logo.png" width="1200"></img>
+<!--     <img alt="header" src="/public/logo.png" width="50" align="center"></img> -->
   </h3>
   <h3>
-    Welcome to the IPL Fantasy 11 App. Fantasy 11 is a Game of Skill where you create a team of real players for an upcoming match and compete with other fans for big prizes.
+    Welcome to the Fantasy 11 App. Fantasy 11 is a Game of Skill where you create a team of real players for an upcoming match and compete with other fans for big prizes.
     Your team earns points based on your players’ performances in the real-life match, so make sure you make the right choices!
   </h3>
+  
  ----
   
   ## Contents
@@ -24,7 +25,6 @@
 - Login and Signup via
   - username - Password
   - Facebook
-  - Phone OTP
 - Random Dummy Match Selection
 - Fantasy team creation based on selected match
 - Selection of team captain and vice-captain
@@ -95,12 +95,7 @@ docker compose up
        <td align="center"><a href="https://github.com/Poujhit"><img width="64" src="https://avatars.githubusercontent.com/u/55449207" alt="f"></a></td>
        <td align="center"><a href="https://github.com/NaveenSriramR"><img width="64" src="https://avatars.githubusercontent.com/u/62332925" alt="f"></a></td>
        <td align="center"><a href="https://github.com/NikhileshJr08"><img width="64" src="https://avatars.githubusercontent.com/u/63784914" alt="f"></a></td>
-    </tr>
-    <tr>
-        <td align="center"> Front-end</td>
-        <td align="center"> Back-end</td>
-        <td align="center"> Back-end</td>
-    </tr>
+    </tr>    
   </tbody>
 </table>
 
