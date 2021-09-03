@@ -13,10 +13,6 @@
 # production
 /build
 
-FirebaseConfig.ts
-
-# Server
-server/
 # misc
 .DS_Store
 *.pem
