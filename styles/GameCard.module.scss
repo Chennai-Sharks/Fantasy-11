@@ -1,31 +1,31 @@
 .Column {
-	display: flex;
-	width: 100%;
-	flex-direction: column;
-	align-items: center;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
 }
 
 .Row {
-	display: flex;
-	width: 50%;
-	flex-direction: row;
-	justify-content: space-between;
+  display: flex;
+  width: 50%;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .ContinuePlayingButton {
-	border-radius: 20px;
-	background-color: #fd3a4b;
-	color: white;
-	width: 35%;
-	margin-top: 15px;
-	margin-bottom: 15px;
+  border-radius: 20px;
+  background-color: #fd3a4b;
+  color: white;
+  width: 35%;
+  margin-top: 15px;
+  margin-bottom: 15px;
 
-	margin-left: 5px;
-	margin-right: 5px;
-	height: 50px;
-	align-self: center;
-	&:hover {
-		color: black;
-		border-radius: 20px;
-		border: 2px solid #fd3a4b;
-	}
+  margin-left: 5px;
+  margin-right: 5px;
+  height: 50px;
+  align-self: center;
+  &:hover {
+    color: black;
+    border-radius: 20px;
+    border: 2px solid #fd3a4b;
+  }
 }
