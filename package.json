@@ -1,63 +1,59 @@
 {
-	"name": "fantasy-11",
-	"version": "2.0.0",
-	"description": "Fantasy 11, Make the right choices",
-	"private": true,
-	"scripts": {
-		"dev": "next dev",
-		"build": "next build",
-		"start": "next start"
-	},
-	"dependencies": {
-		"@material-ui/core": "^4.11.3",
-		"@material-ui/data-grid": "^4.0.0-alpha.26",
-		"@material-ui/icons": "^4.11.2",
-		"@types/react-responsive": "^8.0.2",
-		"axios": "^0.21.1",
-		"cookie": "^0.4.1",
-		"firebase": "^8.5.0",
-		"formik": "^2.2.6",
-		"framer-motion": "^4.1.11",
-		"jsonwebtoken": "^8.5.1",
-		"mongodb-client-encryption": "^1.2.6",
-		"mongoose": "^5.12.7",
-		"next": "11.1.1",
-		"next-images": "^1.7.0",
-		"password-salt-and-hash": "^1.0.5",
-		"react": "17.0.2",
-		"react-dom": "17.0.2",
-		"react-facebook-login": "^4.1.1",
-		"react-query": "^3.13.11",
-		"react-responsive": "^8.2.0",
-		"react-spinners": "^0.10.6",
-		"socket.io-client": "^4.0.1",
-		"twilio": "^3.61.0",
-		"universal-cookie": "^4.0.4",
-		"zustand": "^3.4.1"
-	},
-	"devDependencies": {
-		"@testing-library/jest-dom": "^5.12.0",
-		"@testing-library/react": "^11.2.7",
-		"@types/node": "^14.14.41",
-		"@types/react": "^17.0.3",
-		"@types/react-facebook-login": "^4.1.3",
-		"babel-jest": "^26.6.3",
-		"jest": "^26.6.3",
-		"sass": "^1.32.11",
-		"typescript": "^4.2.4"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/Chennai-Sharks/Fantasy-11.git"
-	},
-	"contributors": [
-		"Poujhit MU <poujhit.dev@gmail.com> (https://github.com/Poujhit/)",
-		"Nikhilesh S <nikhileshjr08@gmail.com> (https://github.com/NikhileshJr08)",
-		"R Naveen Sriram <naveensriram2000@gmail.com> (https://github.com/NaveenSriramR/)"
-	],
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/Chennai-Sharks/Fantasy-11/issues"
-	},
-	"homepage": "https://github.com/Chennai-Sharks/Fantasy-11#readme"
+  "name": "fantasy-11",
+  "version": "2.0.0",
+  "description": "Fantasy 11, Make the right choices",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "contributors": [
+    "Poujhit MU <poujhit.dev@gmail.com> (https://github.com/Poujhit)",
+    "Nikhilesh S <nikhileshjr08@gmail.com> (https://github.com/NikhileshJr08)",
+    "R Naveen Sriram <naveensriram2000@gmail.com> (https://github.com/NaveenSriramR)"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Chennai-Sharks/Fantasy-11#readme",
+  "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/data-grid": "^4.0.0-alpha.26",
+    "@material-ui/icons": "^4.11.2",
+    "axios": "^0.21.1",
+    "cookie": "^0.4.1",
+    "formik": "^2.2.9",
+    "framer-motion": "^4.1.17",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb-client-encryption": "^1.2.6",
+    "mongoose": "^5.13.8",
+    "next": "11.1.2",
+    "password-salt-and-hash": "^1.0.5",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-facebook-login": "^4.1.1",
+    "react-query": "^3.21.1",
+    "react-spinners": "^0.10.6",
+    "sass": "^1.39.0",
+    "socket.io-client": "^4.2.0",
+    "twilio": "^3.67.1",
+    "universal-cookie": "^4.0.4",
+    "zustand": "^3.5.10"
+  },
+  "devDependencies": {
+    "@types/cookie": "^0.4.1",
+    "@types/jsonwebtoken": "^8.5.5",
+    "@types/react": "17.0.19",
+    "@types/react-facebook-login": "^4.1.4",
+    "eslint": "7.32.0",
+    "eslint-config-next": "11.1.2",
+    "typescript": "4.4.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chennai-Sharks/Fantasy-11.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Chennai-Sharks/Fantasy-11/issues"
+  }
 }

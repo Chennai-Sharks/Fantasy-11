@@ -1,7 +1,4 @@
-const withImages = require('next-images');
-module.exports = withImages({});
+/** @type {import('next').NextConfig} */
 module.exports = {
-	serverRuntimeConfig: {
-		PROJECT_ROOT: __dirname,
-	},
-};
+  reactStrictMode: true,
+}
