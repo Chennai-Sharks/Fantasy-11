@@ -1,13 +1,13 @@
 {
   "name": "socket",
   "version": "1.0.0",
-  "description": "socket server for fantasy11 project",
+  "description": "socket server for fantasy 11",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "author": "Naveen Sriram R",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "fs": "0.0.1-security",
     "socket.io": "^4.0.1"
