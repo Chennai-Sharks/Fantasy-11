@@ -1,28 +1,29 @@
 import fs from 'fs';
 import path from 'path';
 import jwt from 'jsonwebtoken';
+import basePath from '@utils/basePath';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-async function preMatchInfo(req, res) {
-  console.log('premath try');
+interface CustomNextApiRequest extends NextApiRequest {
+  user: any;
+}
 
+async function preMatchInfo(req: CustomNextApiRequest, res: NextApiResponse) {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).send('Access denied');
 
   try {
-    console.log('inside try');
-    const verified = jwt.verify(token, process.env.JWT_AUTH_TOKEN);
-    console.log(verified);
+    const verified = jwt.verify(token, process.env.JWT_AUTH_TOKEN as string);
     req.user = verified;
     const { match } = req.query;
 
-    let resData = {};
+    let resData: Record<string, any> = {};
     resData.matchInfo = [];
     try {
-      console.log(match);
       let jsonString = fs.readFileSync(
-        path.join(process.cwd(), '/JSON Files/') + match.toString(),
+        path.join(basePath, '/JSON Files/') + match.toString(),
         {
-          endcoding: 'utf8',
+          encoding: 'utf8',
           flag: 'r',
         }
       );
@@ -37,14 +38,11 @@ async function preMatchInfo(req, res) {
         umpires: data.info.umpires,
         venue: data.info.venue,
       });
-      console.log(resData);
       res.send(resData);
     } catch (err) {
-      console.log('here');
       res.status(400).json({ message: 'error' });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send('Invalid Token');
   }
 }
