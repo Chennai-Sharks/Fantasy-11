@@ -1,7 +1,8 @@
 import cookie from 'cookie';
-import connectDB from '../../config/db';
+import connectDB from '@config/db';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-async function logout(req, res) {
+async function logout(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST')
     return res
       .status(405)
@@ -27,7 +28,7 @@ async function logout(req, res) {
     // res.writeHead(302, { path: '/' });
     res.send('done');
   } else {
-    req.status(404).send('not done');
+    res.status(404).send('not done');
   }
 }
 

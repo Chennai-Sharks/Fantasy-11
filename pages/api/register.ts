@@ -1,8 +1,10 @@
-import connectDB from '../../config/db';
-import User from '../../models/User';
-import saltHash from 'password-salt-and-hash';
+import connectDB from '@config/db';
+import User from '@models/User';
+import saltHash from '@utils/passwordHash';
 
-async function register(req, res) {
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+async function register(req: NextApiRequest, res: NextApiResponse) {
   const emailExist = await User.findOne({
     email: req.body.email,
   });

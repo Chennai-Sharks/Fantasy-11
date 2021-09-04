@@ -1,11 +1,13 @@
 import cookie from 'cookie';
 import jwt from 'jsonwebtoken';
-import User from '../../models/User';
+import User from '@models/User';
 
-import connectDB from '../../config/db';
-import saltHash from 'password-salt-and-hash';
+import connectDB from '@config/db';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-async function login(req, res) {
+import saltHash from '@utils/passwordHash';
+
+async function login(req: NextApiRequest, res: NextApiResponse) {
   const user = await User.findOne({
     email: req.body.email,
   });
@@ -22,7 +24,7 @@ async function login(req, res) {
     {
       _id: user._id,
     },
-    process.env.JWT_AUTH_TOKEN
+    process.env.JWT_AUTH_TOKEN as string
   );
 
   res.setHeader('Set-Cookie', [
@@ -33,7 +35,7 @@ async function login(req, res) {
       path: '/',
       expires: new Date(new Date().getTime() + 648000 * 1000),
     }),
-    cookie.serialize('authSession', true, {
+    cookie.serialize('authSession', true as any, {
       httpOnly: false,
       secure: process.env.NODE_ENV !== 'development',
       sameSite: 'strict',

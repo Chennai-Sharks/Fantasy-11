@@ -1,11 +1,14 @@
+// NOT USED IN PRODUCTION
+
 import twilio from 'twilio';
 import crypto from 'crypto';
-import connectDB from '../../config/db';
+import connectDB from '@config/db';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-async function sendOTP(req, res) {
+async function sendOTP(req: NextApiRequest, res: NextApiResponse) {
   const accountSid = process.env.ACCOUNT_SID;
   const authToken = process.env.AUTH_TOKEN;
-  const smsKey = process.env.SMS_SECRET_KEY;
+  const smsKey = process.env.SMS_SECRET_KEY as string;
   const phone = req.body.phone;
   const otp = Math.floor(100000 + Math.random() * 900000);
   const ttl = 2 * 1000 * 1000;
@@ -19,7 +22,7 @@ async function sendOTP(req, res) {
   client.messages
     .create({
       body: `Your One Time Login Password For Fantasy 11 is ${otp}`,
-      from: +18643830688,
+      from: '+18643830688',
       to: `91${phone}`,
     })
     .then((messages) => console.log(messages))

@@ -1,8 +1,11 @@
+// NOT USED IN PRODUCTION
+
 import jwt from 'jsonwebtoken';
 import cookie from 'cookie';
-import connectDB from '../../config/db';
+import connectDB from '@config/db';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-async function verifyOtp(req, res) {
+async function verifyOtp(req: NextApiRequest, res: NextApiResponse) {
   const phone = req.body.phone;
   const hash = req.body.hash;
   let [hashValue, expires] = hash.split('.');
@@ -19,7 +22,7 @@ async function verifyOtp(req, res) {
       {
         data: phone,
       },
-      process.env.JWT_AUTH_TOKEN,
+      process.env.JWT_AUTH_TOKEN as string,
       {
         expiresIn: '7d',
       }
@@ -33,7 +36,7 @@ async function verifyOtp(req, res) {
         path: '/',
         expires: new Date(new Date().getTime() + 648000 * 1000),
       }),
-      cookie.serialize('authSession', true, {
+      cookie.serialize('authSession', true as any, {
         httpOnly: false,
         secure: process.env.NODE_ENV !== 'development',
         sameSite: 'strict',
@@ -44,13 +47,10 @@ async function verifyOtp(req, res) {
     res.status(200).send('done');
   } else {
     console.log('not authenticated');
-    return res
-      .status(405)
-      .send({
-        verification: false,
-        msg: 'Incorrect OTP',
-      })
-      .end();
+    return res.status(405).send({
+      verification: false,
+      msg: 'Incorrect OTP',
+    });
   }
 }
 
