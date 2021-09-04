@@ -8,6 +8,10 @@ async function getMatches(req, res) {
   fs.readdirSync(basePath).forEach((file) => {
     console.log(file);
   });
+  console.log('after');
+  fs.readdirSync(`basePath/.next`).forEach((file) => {
+    console.log(file);
+  });
   if (process.env.NODE_ENV === 'production') {
     basePath = path.join(process.cwd(), '.next/server/chunks');
     console.log('here');
