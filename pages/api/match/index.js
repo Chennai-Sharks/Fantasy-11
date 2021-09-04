@@ -5,13 +5,13 @@ import path from 'path';
 async function getMatches(req, res) {
   console.log(process.cwd());
   let basePath = process.cwd();
+  fs.readdirSync(basePath).forEach((file) => {
+    console.log(file);
+  });
   if (process.env.NODE_ENV === 'production') {
     basePath = path.join(process.cwd(), '.next/server/chunks');
     console.log('here');
     console.log(basePath);
-    fs.readdirSync(basePath).forEach((file) => {
-      console.log(file);
-    });
   }
   var files = fs.readdirSync(path.join(basePath, '/JSON Files/'));
   const token = req.cookies.accessToken;
