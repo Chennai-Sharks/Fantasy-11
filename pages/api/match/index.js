@@ -5,11 +5,9 @@ import path from 'path';
 async function getMatches(req, res) {
   console.log(process.cwd());
   let basePath = process.cwd();
-  fs.readdirSync(basePath).forEach((file) => {
-    console.log(file);
-  });
+
   console.log('after');
-  fs.readdirSync(`basePath/.next`).forEach((file) => {
+  fs.readdirSync(`${basePath}/.next`).forEach((file) => {
     console.log(file);
   });
   if (process.env.NODE_ENV === 'production') {
