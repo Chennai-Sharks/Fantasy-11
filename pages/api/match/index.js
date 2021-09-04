@@ -9,6 +9,9 @@ async function getMatches(req, res) {
     basePath = path.join(process.cwd(), '.next/server/chunks');
     console.log('here');
     console.log(basePath);
+    fs.readdirSync(basePath).forEach((file) => {
+      console.log(file);
+    });
   }
   var files = fs.readdirSync(path.join(basePath, '/JSON Files/'));
   const token = req.cookies.accessToken;
