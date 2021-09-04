@@ -18,7 +18,10 @@
       "@stores/*": ["stores/*"],
       "@pages/*": ["pages/*"],
       "@components/*": ["components/*"],
-      "@containers/*": ["containers/*"]
+      "@containers/*": ["containers/*"],
+      "@utils/*": ["utils/*"],
+      "@config/*": ["config/*"],
+      "@models/*": ["models/*"]
     },
     "jsx": "preserve"
   },
