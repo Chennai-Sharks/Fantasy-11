@@ -1,6 +1,7 @@
 import React from 'react';
 import theme from '../theme/theme';
 
+// eslint-disable-next-line @next/next/no-document-import-in-page
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/core/styles';
 
@@ -32,6 +33,7 @@ MyDocument.getInitialProps = async (ctx) => {
 
   ctx.renderPage = () =>
     originalRenderPage({
+      // eslint-disable-next-line react/display-name
       enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
     });
 

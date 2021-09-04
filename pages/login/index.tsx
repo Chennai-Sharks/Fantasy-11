@@ -10,45 +10,45 @@ const cookies = new Cookies();
 import LoginForm from '@containers/Auth/LoginForm';
 
 const LoginScreen: React.FC = () => {
-	const router = useRouter();
+  const router = useRouter();
 
-	React.useEffect(() => {
-		if (typeof cookies.get('authSession') !== 'undefined') {
-			router.replace('/Home/Matches');
-		}
-	}, []);
+  React.useEffect(() => {
+    if (typeof cookies.get('authSession') !== 'undefined') {
+      router.replace('/Home/Matches');
+    }
+  }, [router]);
 
-	return (
-		<React.Fragment>
-			<Head>
-				<title>Fantasy 11 | Login</title>
-			</Head>
-			<div className={classes.background}>
-				<Card
-					className={classes.Card}
-					variant='elevation'
-					raised
-					style={{
-						borderRadius: '20px',
-					}}
-				>
-					<div className={classes.leftPortionCard}>
-						<Typography
-							className={styles.title}
-							style={{
-								color: 'white',
-							}}
-						>
-							Login
-						</Typography>
-					</div>
-					<div className={classes.rightPortionCard}>
-						<LoginForm />
-					</div>
-				</Card>
-			</div>
-		</React.Fragment>
-	);
+  return (
+    <React.Fragment>
+      <Head>
+        <title>Fantasy 11 | Login</title>
+      </Head>
+      <div className={classes.background}>
+        <Card
+          className={classes.Card}
+          variant='elevation'
+          raised
+          style={{
+            borderRadius: '20px',
+          }}
+        >
+          <div className={classes.leftPortionCard}>
+            <Typography
+              className={styles.title}
+              style={{
+                color: 'white',
+              }}
+            >
+              Login
+            </Typography>
+          </div>
+          <div className={classes.rightPortionCard}>
+            <LoginForm />
+          </div>
+        </Card>
+      </div>
+    </React.Fragment>
+  );
 };
 
 export default LoginScreen;

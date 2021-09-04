@@ -8,7 +8,7 @@ import { QueryClientProvider, QueryClient } from 'react-query';
 import { StylesProvider } from '@material-ui/core';
 
 const clientQuery = new QueryClient();
-import '@styles/Globals.scss';
+import '@styles/GlobalStyles.scss';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   React.useEffect(() => {
