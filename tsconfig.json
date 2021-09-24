@@ -17,6 +17,7 @@
       "@styles/*": ["styles/*"],
       "@stores/*": ["stores/*"],
       "@pages/*": ["pages/*"],
+      "@views/*": ["views/*"],
       "@components/*": ["components/*"],
       "@containers/*": ["containers/*"],
       "@utils/*": ["utils/*"],
