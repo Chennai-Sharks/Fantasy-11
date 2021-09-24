@@ -15,7 +15,7 @@ const ScoreBoardButton: React.FC<ScoreBoardButtonProps> = () => {
           backgroundColor: '#fd3a4b',
         }}
         onClick={() => {
-          router.push('/Home/score-card');
+          router.push('/home/score-card');
         }}
       >
         <DashboardIcon style={{ color: 'white' }} />
