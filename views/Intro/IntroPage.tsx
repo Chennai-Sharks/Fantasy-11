@@ -21,7 +21,7 @@ const IntroPage: React.FC<IntroPageProps> = () => {
   React.useEffect(() => {
     console.log(cookies.get('authSession'));
     if (typeof cookies.get('authSession') !== 'undefined') {
-      router.replace('/Home/Matches');
+      router.replace('/home/matches');
     }
   }, [router]);
 

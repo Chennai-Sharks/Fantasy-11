@@ -14,7 +14,7 @@ const HomeButton: React.FC<HomeButtonProps> = () => {
             backgroundColor: '#fd3a4b',
           }}
           onClick={() => {
-            router.push('/Home/Matches');
+            router.push('/home/matches');
           }}
         >
           <SportsCricketIcon style={{ color: 'white' }} />

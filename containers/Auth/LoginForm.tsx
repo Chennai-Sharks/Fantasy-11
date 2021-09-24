@@ -86,7 +86,7 @@ const LoginForm: React.FC = () => {
             .then(async (response: AxiosResponse<Result>) => {
               jwt.setJwt(response.data.token);
               userIdstore.setuserId(response.data.userId);
-              router.replace('/Home/Matches');
+              router.replace('/home/matches');
             })
             .catch((error) => {
               setsnackContent(

@@ -256,7 +256,7 @@ const GameScreen: React.FC = () => {
               onClick={() => {
                 socket.close();
                 socket.disconnect();
-                router.replace('/Home/Matches');
+                router.replace('/home/matches');
               }}
             >
               Continue Playing

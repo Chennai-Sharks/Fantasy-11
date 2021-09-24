@@ -14,7 +14,7 @@ const LoginScreen: React.FC = () => {
 
   React.useEffect(() => {
     if (typeof cookies.get('authSession') !== 'undefined') {
-      router.replace('/Home/Matches');
+      router.replace('/home/matches');
     }
   }, [router]);
 
