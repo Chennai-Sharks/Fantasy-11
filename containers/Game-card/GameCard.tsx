@@ -1,5 +1,4 @@
-import { Button, Card, Snackbar, Typography } from '@material-ui/core';
-import axios from 'axios';
+import { Card, Typography } from '@material-ui/core';
 import React from 'react';
 
 import classes from '../Match/MatchCard.module.scss';
