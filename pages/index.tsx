@@ -66,7 +66,7 @@ const Home: React.FC = () => {
           for an upcoming match and compete with other fans for big prizes.
         </Typography>
         <Typography className={classes.subTitle}>
-          Your team earns points based on your players’ performances in the
+          Your team earns points based on your players performances in the
           real-life match, so make sure you make the right choices!
         </Typography>
         <Typography className={classes.subTitle}>
