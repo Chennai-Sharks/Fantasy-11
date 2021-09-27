@@ -4,20 +4,22 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
+import axios from 'axios';
+import { useQuery } from 'react-query';
 import Cookies from 'universal-cookie';
-const cookies = new Cookies();
+import { MoonLoader } from 'react-spinners';
+import { AppBar, Button, Card, Toolbar, Typography } from '@material-ui/core';
+
+import userIdStore from '@stores/UserIdStore';
+import LogoutButton from '@containers/Logout/LogoutButton';
+import HomeButton from '@containers/HomeButton/HomeButton';
 
 import classes from '@styles/CreateTeam.module.scss';
 import cardStyles from '@styles/ScoreCard.module.scss';
-import LogoutButton from '@containers/Logout/LogoutButton';
-import { AppBar, Button, Card, Toolbar, Typography } from '@material-ui/core';
-import userIdStore from '@stores/UserIdStore';
-import { useQuery } from 'react-query';
-import axios from 'axios';
-import { MoonLoader } from 'react-spinners';
-import HomeButton from '@containers/HomeButton/HomeButton';
 
-const Scorecard: React.FC = () => {
+const cookies = new Cookies();
+
+const ScoreBoardPage: React.FC = () => {
   const router = useRouter();
   const useridstore = userIdStore((state) => state);
 
@@ -129,4 +131,4 @@ const Scorecard: React.FC = () => {
   );
 };
 
-export default Scorecard;
+export default ScoreBoardPage;
