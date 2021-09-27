@@ -46,7 +46,7 @@ const IntroPage: React.FC<IntroPageProps> = () => {
       })
       .then((res) => {
         userIdstore.setuserId(res.data.userId as string);
-        router.push('Home/Matches');
+        router.push('home/matches');
       });
   };
 
