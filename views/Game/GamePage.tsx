@@ -44,7 +44,7 @@ const GamePage: React.FC = () => {
 
   //   const myRedirectFunction = function () {
   //     if (typeof window !== 'undefined') {
-  //       router.push('/Home/score-card');
+  //       router.push('/Home/scoreboard');
   //     }
   //   };
 
