@@ -18,7 +18,7 @@
       "@stores/*": ["stores/*"],
       "@pages/*": ["pages/*"],
       "@views/*": ["views/*"],
-      "@components/*": ["components/*"],
+      "@common/*": ["common/*"],
       "@containers/*": ["containers/*"],
       "@utils/*": ["utils/*"],
       "@config/*": ["config/*"],
