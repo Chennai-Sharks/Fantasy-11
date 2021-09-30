@@ -26,8 +26,8 @@ import { DataGrid } from '@material-ui/data-grid';
 import idStore from '@stores/idStore';
 import versusMatchStore from '@stores/VersusMatchStore';
 import selectedPlayersStore from '@stores/SelectedPlayersStore';
-import HomeButton from '@containers/HomeButton/HomeButton';
-import LogoutButton from '@containers/Logout/LogoutButton';
+import HomeButton from '@common/HomeButton/HomeButton';
+import LogoutButton from '@common/LogoutButton/LogoutButton';
 
 import classes from '@styles/CreateTeam.module.scss';
 

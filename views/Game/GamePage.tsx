@@ -17,8 +17,8 @@ import captainStore from '@stores/CaptainStore';
 import versusMatchStore from '@stores/VersusMatchStore';
 import selectedPlayersStore from '@stores/SelectedPlayersStore';
 import userIdStore from '@stores/UserIdStore';
-import LogoutButton from '@containers/Logout/LogoutButton';
-import ScoreBoardButton from '@containers/ScoreBoardButton/ScoreBoardButton';
+import LogoutButton from '@common/LogoutButton/LogoutButton';
+import ScoreBoardButton from '@common/ScoreBoardButton/ScoreBoardButton';
 
 import styles from '@styles/GameCard.module.scss';
 import classes from '@styles/CreateTeam.module.scss';

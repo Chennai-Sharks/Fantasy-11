@@ -17,7 +17,7 @@ import { Field, Form, Formik } from 'formik';
 import { useMutation } from 'react-query';
 import HashLoader from 'react-spinners/HashLoader';
 
-import PopUpDialog from '@components/Dialog';
+import PopUpDialog from '@common/Dialog/Dialog';
 import userDataStore from '@stores/UserDataStore';
 import userIdStore from '@stores/UserIdStore';
 

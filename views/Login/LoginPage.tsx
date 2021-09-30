@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import Cookies from 'universal-cookie';
 import { Card, Typography } from '@material-ui/core';
 
-import LoginForm from '@containers/Auth/LoginForm';
+import LoginForm from './components/LoginForm';
 
 import styles from '@styles/Home.module.scss';
 import classes from '@styles/Login.module.scss';

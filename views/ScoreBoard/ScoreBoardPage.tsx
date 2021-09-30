@@ -11,8 +11,8 @@ import { MoonLoader } from 'react-spinners';
 import { AppBar, Button, Card, Toolbar, Typography } from '@material-ui/core';
 
 import userIdStore from '@stores/UserIdStore';
-import LogoutButton from '@containers/Logout/LogoutButton';
-import HomeButton from '@containers/HomeButton/HomeButton';
+import LogoutButton from '@common/LogoutButton/LogoutButton';
+import HomeButton from '@common/HomeButton/HomeButton';
 
 import classes from '@styles/CreateTeam.module.scss';
 import cardStyles from '@styles/ScoreCard.module.scss';

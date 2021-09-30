@@ -21,8 +21,8 @@ import idStore from '@stores/idStore';
 import captainStore from '@stores/CaptainStore';
 import versusMatchStore from '@stores/VersusMatchStore';
 import selectedPlayersStore from '@stores/SelectedPlayersStore';
-import LogoutButton from '@containers/Logout/LogoutButton';
-import HomeButton from '@containers/HomeButton/HomeButton';
+import LogoutButton from '@common/LogoutButton/LogoutButton';
+import HomeButton from '@common/HomeButton/HomeButton';
 
 import classes from '@styles/CreateTeam.module.scss';
 
