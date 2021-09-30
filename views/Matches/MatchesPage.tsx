@@ -11,10 +11,10 @@ import { motion } from 'framer-motion';
 import { MoonLoader } from 'react-spinners';
 import { AppBar, Button, Card, Toolbar, Typography } from '@material-ui/core';
 
-import MatchCard from '@containers/Match/MatchCard';
+import MatchCard from './components/MatchCard';
 import versusMatchStore from '@stores/VersusMatchStore';
-import LogoutButton from '@containers/Logout/LogoutButton';
-import ScoreBoardButton from '@containers/ScoreBoardButton/ScoreBoardButton';
+import LogoutButton from '@common/LogoutButton/LogoutButton';
+import ScoreBoardButton from '@common/ScoreBoardButton/ScoreBoardButton';
 
 import classes from '@styles/Match.module.scss';
 
