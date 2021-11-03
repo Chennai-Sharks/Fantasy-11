@@ -1,21 +1,15 @@
-import { Button, Snackbar, Tooltip } from '@material-ui/core';
 import axios from 'axios';
 import React from 'react';
 import { useRouter } from 'next/router';
+import { Button, CircularProgress, Tooltip } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PopUpDialog from '@common/Dialog/Dialog';
 
 interface LogoutButtonProps {}
 
 const LogoutButton: React.FC<LogoutButtonProps> = () => {
   const router = useRouter();
-  const [openAlert, setOpenAlert] = React.useState(false);
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenAlert(false);
-  };
+  const [openDialog, setOpenDialog] = React.useState(false);
 
   return (
     <React.Fragment>
@@ -25,7 +19,7 @@ const LogoutButton: React.FC<LogoutButtonProps> = () => {
             backgroundColor: '#fd3a4b',
           }}
           onClick={async () => {
-            setOpenAlert(true);
+            setOpenDialog(true);
             await axios.post(
               `/api/logout`,
               {
@@ -41,16 +35,26 @@ const LogoutButton: React.FC<LogoutButtonProps> = () => {
           <ExitToAppIcon style={{ color: 'white' }} />
         </Button>
       </Tooltip>
-      <Snackbar
-        open={openAlert}
-        autoHideDuration={3000}
-        onClose={handleClose}
-        message={'Logging Out...'}
-        action={
-          <Button onClick={handleClose} style={{ color: 'white' }}>
-            Close
-          </Button>
+
+      <PopUpDialog
+        open={openDialog}
+        content={
+          <div
+            style={{
+              width: '100px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <CircularProgress
+              style={{
+                color: '#fd3a4b',
+              }}
+            />
+          </div>
         }
+        title={'Logging out...'}
       />
     </React.Fragment>
   );
