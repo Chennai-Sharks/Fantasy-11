@@ -6,11 +6,12 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { useMutation } from 'react-query';
 import FacebookLogin from 'react-facebook-login';
-import { Card, Typography, Button } from '@material-ui/core';
+import { Card, Typography, Button, CircularProgress } from '@material-ui/core';
 
 import userIdStore from '@stores/UserIdStore';
 
 import classes from '@styles/Home.module.scss';
+import PopUpDialog from '@common/Dialog/Dialog';
 
 const cookies = new Cookies();
 
@@ -18,10 +19,14 @@ interface IntroPageProps {}
 
 const IntroPage: React.FC<IntroPageProps> = () => {
   const router = useRouter();
+  const [openDialog, setOpenDialog] = React.useState(false);
+
   React.useEffect(() => {
-    console.log(cookies.get('authSession'));
+    setOpenDialog(true);
     if (typeof cookies.get('authSession') !== 'undefined') {
       router.replace('/home/matches');
+    } else {
+      setOpenDialog(false);
     }
   }, [router]);
 
@@ -40,6 +45,7 @@ const IntroPage: React.FC<IntroPageProps> = () => {
   });
 
   const responseFacebook = (response: any) => {
+    setOpenDialog(true);
     faceBookMutation
       .mutateAsync({
         email: response.email,
@@ -101,6 +107,26 @@ const IntroPage: React.FC<IntroPageProps> = () => {
       <Typography className={classes.subTitle}>
         Copyright 2021 Chennai Sharks
       </Typography>
+      <PopUpDialog
+        open={openDialog}
+        content={
+          <div
+            style={{
+              width: '100px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <CircularProgress
+              style={{
+                color: '#fd3a4b',
+              }}
+            />
+          </div>
+        }
+        title={'Logging in..'}
+      />
     </div>
   );
 };
