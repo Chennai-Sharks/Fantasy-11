@@ -183,7 +183,10 @@ const SelectCaptainPage: React.FC = () => {
         </Fab>
 
         {isLoading ? (
-          <MoonLoader />
+          <>
+            <div style={{ marginTop: '50px' }} />
+            <MoonLoader />
+          </>
         ) : isError ? (
           <Typography
             style={{ marginTop: '10px' }}
