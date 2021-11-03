@@ -16,8 +16,17 @@ import HomeButton from '@common/HomeButton/HomeButton';
 
 import classes from '@styles/CreateTeam.module.scss';
 import cardStyles from '@styles/ScoreCard.module.scss';
+import { withStyles } from '@material-ui/styles';
 
 const cookies = new Cookies();
+
+const styles = () => ({
+  '@global': {
+    '.MuiCard-root': {
+      overflow: 'unset',
+    },
+  },
+});
 
 const ScoreBoardPage: React.FC = () => {
   const router = useRouter();
@@ -62,7 +71,6 @@ const ScoreBoardPage: React.FC = () => {
         className={classes.leftPortionCard2}
         style={{
           height: (data?.length as number) < 5 ? '100%' : undefined, // this is what makes scoreboard scrollable
-          overflow: 'unset !important',
         }}
       >
         <AppBar
@@ -154,4 +162,4 @@ const ScoreBoardPage: React.FC = () => {
   );
 };
 
-export default ScoreBoardPage;
+export default withStyles(styles)(ScoreBoardPage);
