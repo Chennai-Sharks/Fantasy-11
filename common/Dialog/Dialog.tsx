@@ -11,9 +11,9 @@ import {
 interface PopUpDialogProps {
   open: boolean;
   title: string;
-  content: string;
-  onOkHandled: React.MouseEventHandler<HTMLButtonElement>;
-  okButtonText: string;
+  content: string | JSX.Element;
+  onOkHandled?: React.MouseEventHandler<HTMLButtonElement>;
+  okButtonText?: string;
 }
 
 const PopUpDialog: React.FC<PopUpDialogProps> = (props) => {
@@ -32,9 +32,11 @@ const PopUpDialog: React.FC<PopUpDialogProps> = (props) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={props.onOkHandled} color='primary' autoFocus>
-          {props.okButtonText}
-        </Button>
+        {props.onOkHandled && (
+          <Button onClick={props.onOkHandled} color='primary' autoFocus>
+            {props.okButtonText}
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );
