@@ -10,16 +10,9 @@ async function register(req: NextApiRequest, res: NextApiResponse) {
   });
   if (emailExist) return res.status(400).send('Email already exists');
 
-  const phoneExist = await User.findOne({
-    phone: req.body.phone,
-  });
-
-  if (phoneExist) return res.status(400).send('Phone number already in use');
-
   let hashPassword = saltHash.generateSaltHash(req.body.password);
 
   const user = new User({
-    phone: req.body.phone,
     email: req.body.email,
     password: hashPassword.password,
     salt: hashPassword.salt,
@@ -28,7 +21,6 @@ async function register(req: NextApiRequest, res: NextApiResponse) {
     const savedUser = await user.save();
     res.send({
       userId: savedUser._id,
-      phone: savedUser.phone,
       email: savedUser.email,
     });
   } catch (err) {

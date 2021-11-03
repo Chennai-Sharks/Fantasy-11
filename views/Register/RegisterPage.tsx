@@ -30,20 +30,17 @@ interface RegisterPageProps {}
 
 interface RegisterUser {
   email: string;
-  phone: string;
   password: string;
 }
 
 interface AuthServerResponse {
-  phone: string;
   email: string;
   userId: string;
 }
 
-const RegisterPage: React.FC<RegisterPageProps> = (props) => {
+const RegisterPage: React.FC<RegisterPageProps> = () => {
   const initialValues: RegisterUser = {
     email: '',
-    phone: '',
     password: '',
   };
 
@@ -62,7 +59,7 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
   const [openAlert, setOpenAlert] = React.useState(false);
   const [snackContent, setsnackContent] = React.useState(' ');
 
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+  const handleClose = (_: React.SyntheticEvent, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -102,20 +99,21 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
           </div>
           <div className={classes.rightPortionCard}>
             <Formik
+              validateOnBlur={false}
+              validateOnChange={false}
+              validateOnMount={false}
               initialValues={initialValues}
               validate={(values) => {
                 const errors: Record<string, string> = {};
                 const regexpEmail = new RegExp(
                   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                 );
-                const regexPhone = new RegExp(/^[6-9]\d{9}$/);
 
                 if (!regexpEmail.test(values.email))
                   errors.email = 'Email Invalid';
                 if (values.password.length <= 6)
                   errors.password = 'Password length should be greater than 6.';
-                if (!regexPhone.test(values.phone))
-                  errors.phone = 'Phone Number Invalid';
+
                 return errors;
               }}
               onSubmit={(values, actions) => {
@@ -127,13 +125,12 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
                     console.log(value.data);
                     userId.setuserId(value.data.userId);
                     userData.setEmail(value.data.email);
-                    userData.setphone(value.data.phone);
                     setOpenDialog(true);
                   })
                   .catch((error) => {
                     setsnackContent(
                       error.response.data +
-                        ' You are already registered., login now'
+                        ' You are already registered. Login now'
                     );
                     setOpenAlert(true);
                   });
@@ -155,7 +152,7 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
                   <Field
                     variant='outlined'
                     style={{
-                      marginBottom: '20px',
+                      marginBottom: '40px',
                     }}
                     type='input'
                     autoFocus={true}
@@ -164,19 +161,6 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
                     label='Email'
                     error={!!errors.email}
                     helperText={errors.email}
-                    as={TextField}
-                  />
-                  <Field
-                    variant='outlined'
-                    type='phone'
-                    fullWidth
-                    style={{
-                      marginBottom: '20px',
-                    }}
-                    error={!!errors.phone}
-                    label='Phone Number'
-                    helperText={errors.phone}
-                    name='phone'
                     as={TextField}
                   />
                   <Field

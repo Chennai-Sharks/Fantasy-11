@@ -13,7 +13,6 @@ import userIdStore from '@stores/UserIdStore';
 
 interface UserDataInitialForm {
   email: string;
-  phone: string;
   password: string;
 }
 
@@ -43,7 +42,6 @@ const LoginForm: React.FC = () => {
   const initialValues: UserDataInitialForm = {
     email: userData.email,
     password: userData.password,
-    phone: userData.phone,
   };
 
   const mutation = useMutation((newUser: UserDataInitialForm) => {
@@ -69,13 +67,11 @@ const LoginForm: React.FC = () => {
           const regexp = new RegExp(
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           );
-          const regexPhone = new RegExp(/^[6-9]\d{9}$/);
 
           if (!regexp.test(values.email)) errors.email = 'Email Invalid';
           if (values.password.length <= 6)
             errors.password = 'Password length should be greater than 6.';
-          if (!regexPhone.test(values.phone))
-            errors.phone = 'Phone Number Invalid';
+
           return errors;
         }}
         onSubmit={(values, actions) => {
@@ -89,10 +85,7 @@ const LoginForm: React.FC = () => {
               router.replace('/home/matches');
             })
             .catch((error) => {
-              setsnackContent(
-                error.toString() +
-                  ' or Email is not registered or password is invalid'
-              );
+              setsnackContent(error.response.data);
               setOpenAlert(true);
             });
 
@@ -106,25 +99,11 @@ const LoginForm: React.FC = () => {
               type='input'
               name='email'
               style={{
-                marginBottom: '30px',
+                marginBottom: '40px',
                 marginTop: '10px',
               }}
               fullWidth
               label='Email'
-              error={!!errors.email}
-              helperText={errors.email}
-              as={TextField}
-            />
-            <Field
-              variant='outlined'
-              type='input'
-              name='phone'
-              key='hello'
-              style={{
-                marginBottom: '30px',
-              }}
-              fullWidth
-              label='Phone Number'
               error={!!errors.email}
               helperText={errors.email}
               as={TextField}

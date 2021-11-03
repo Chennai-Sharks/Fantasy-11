@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  phone: {
-    type: Number,
-    trim: true,
-  },
   email: {
     type: String,
     lowercase: true,
