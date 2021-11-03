@@ -60,7 +60,7 @@ const ScoreBoardPage: React.FC = () => {
       </Head>
       <Card
         className={classes.leftPortionCard}
-        style={{ width: '500px', overflowY: 'scroll' }}
+        style={{ width: '500px', height: data?.length === 5 ? 'auto' : '100%' }}
       >
         <AppBar
           position='static'
