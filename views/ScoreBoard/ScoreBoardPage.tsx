@@ -58,7 +58,10 @@ const ScoreBoardPage: React.FC = () => {
         <title>Fantasy 11 | Scoreboard</title>
         <link rel='icon' href='/logo.png' />
       </Head>
-      <Card className={classes.leftPortionCard}>
+      <Card
+        className={classes.leftPortionCard}
+        style={{ width: '500px', overflowY: 'scroll' }}
+      >
         <AppBar
           position='static'
           style={{
@@ -96,7 +99,7 @@ const ScoreBoardPage: React.FC = () => {
             <br />
             <Button onClick={() => refetch()}>Try Again</Button>
           </Typography>
-        ) : (
+        ) : data?.length !== 0 ? (
           data?.map((eachMatch, index) => {
             return (
               <Card key={index} elevation={5} className={cardStyles.ScoreCard}>
@@ -112,6 +115,18 @@ const ScoreBoardPage: React.FC = () => {
               </Card>
             );
           })
+        ) : (
+          <Typography className={classes.subTitle} style={{ padding: '20px' }}>
+            No ScoreBoard data available for this user. Play some games to see
+            your scoreboard.
+            <br />
+            <Button
+              style={{ marginTop: '30px' }}
+              onClick={() => router.push('/home/matches/')}
+            >
+              Matches Page
+            </Button>
+          </Typography>
         )}
       </Card>
       <div className={classes.rightPortion}>
@@ -126,6 +141,11 @@ const ScoreBoardPage: React.FC = () => {
         />
         <Typography className={classes.title}>Fantasy 11</Typography>
         <Typography className={classes.subTitle}>Score Card</Typography>
+        <div style={{ marginTop: '30px' }} />
+
+        <Typography className={classes.subTitle} style={{ fontWeight: 'bold' }}>
+          Profile Info
+        </Typography>
       </div>
     </div>
   );
