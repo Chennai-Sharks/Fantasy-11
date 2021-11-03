@@ -17,6 +17,7 @@ import HomeButton from '@common/HomeButton/HomeButton';
 import classes from '@styles/CreateTeam.module.scss';
 import cardStyles from '@styles/ScoreCard.module.scss';
 import { withStyles } from '@material-ui/styles';
+import ProfileInfo from './components/ProfileInfo';
 
 const cookies = new Cookies();
 
@@ -157,6 +158,7 @@ const ScoreBoardPage: React.FC = () => {
         <Typography className={classes.subTitle} style={{ fontWeight: 'bold' }}>
           Profile Info
         </Typography>
+        <ProfileInfo />
       </div>
     </div>
   );
