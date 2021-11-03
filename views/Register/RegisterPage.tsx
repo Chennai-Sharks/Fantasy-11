@@ -128,10 +128,7 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
                     setOpenDialog(true);
                   })
                   .catch((error) => {
-                    setsnackContent(
-                      error.response.data +
-                        ' You are already registered. Login now'
-                    );
+                    setsnackContent(error.response.data);
                     setOpenAlert(true);
                   });
 
