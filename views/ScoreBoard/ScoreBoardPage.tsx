@@ -62,10 +62,11 @@ const ScoreBoardPage: React.FC = () => {
         className={classes.leftPortionCard2}
         style={{
           height: (data?.length as number) < 5 ? '100%' : undefined, // this is what makes scoreboard scrollable
+          overflow: 'unset',
         }}
       >
         <AppBar
-          position='static'
+          position='sticky'
           style={{
             backgroundColor: '#FD3A4A',
           }}
