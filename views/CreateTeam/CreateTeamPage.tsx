@@ -168,12 +168,19 @@ const CreateTeamPage: React.FC = () => {
             {matchStore.oneTeam} vs {matchStore.twoTeam}
           </Typography>
           <div className={style.root}>
-            <LinearProgressWithLabel value={progress} />
+            <LinearProgressWithLabel
+              style={{ color: '#FD3A4A' }}
+              value={progress}
+            />
           </div>
         </AppBar>
 
         {isLoading ? (
-          <MoonLoader />
+          <>
+            <div style={{ marginTop: '30px' }} />
+            <MoonLoader />
+            <div style={{ marginTop: '30px' }} />
+          </>
         ) : isError ? (
           <Button onClick={() => refetch()}>Try Again</Button>
         ) : (
@@ -317,13 +324,23 @@ const CreateTeamPage: React.FC = () => {
           height={80}
         />
         <Typography className={classes.title}>Selected Players:</Typography>
-        {selectedplayers.map((playername, index) => {
-          return (
-            <Typography key={index} align='left' className={classes.subTitle}>
-              {index + 1}: {playername}
-            </Typography>
-          );
-        })}
+        {selectedplayers.length !== 0 ? (
+          selectedplayers.map((playername, index) => {
+            return (
+              <Typography
+                key={index + playername}
+                align='left'
+                className={classes.subTitle}
+              >
+                {index + 1}: {playername}
+              </Typography>
+            );
+          })
+        ) : (
+          <Typography align='left' className={classes.subTitle}>
+            No Players selected.
+          </Typography>
+        )}
       </div>
     </div>
   );
