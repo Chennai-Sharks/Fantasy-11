@@ -60,7 +60,9 @@ const LoginForm: React.FC = () => {
   return (
     <React.Fragment>
       <Formik
-        validateOnChange={true}
+        validateOnBlur={false}
+        validateOnChange={false}
+        validateOnMount={false}
         initialValues={initialValues}
         validate={(values) => {
           const errors: Record<string, string> = {};
