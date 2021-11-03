@@ -23,6 +23,19 @@
   }
 }
 
+.leftPortionCard2 {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-radius: 0px;
+  align-items: center;
+  @include responsive(tablet) {
+    z-index: 2;
+  }
+}
+
 .rightPortion {
   left: 600px;
   width: calc(100% - 600px);

@@ -59,8 +59,10 @@ const ScoreBoardPage: React.FC = () => {
         <link rel='icon' href='/logo.png' />
       </Head>
       <Card
-        className={classes.leftPortionCard}
-        style={{ width: '500px', height: data?.length === 5 ? 'auto' : '100%' }}
+        className={classes.leftPortionCard2}
+        style={{
+          height: (data?.length as number) < 5 ? '100%' : undefined, // this is what makes scoreboard scrollable
+        }}
       >
         <AppBar
           position='static'
