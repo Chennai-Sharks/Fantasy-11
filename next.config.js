@@ -3,7 +3,7 @@ const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   webpack: function (config, { dev, isServer }) {
     // Fixes npm packages that depend on `fs` module
     if (!isServer) {
